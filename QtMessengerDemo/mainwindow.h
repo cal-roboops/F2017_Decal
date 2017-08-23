@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTextEdit>
 
 namespace Ui {
 class MainWindow;
@@ -16,9 +17,11 @@ public:
     ~MainWindow();
 private slots:
     void on_button1_clicked();
+    void on_submitData_clicked();
 
 private:
     Ui::MainWindow *ui;
+    QTextEdit *data;
 };
 
 #endif // MAINWINDOW_H

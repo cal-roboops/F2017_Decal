@@ -17,14 +17,37 @@
    <widget class="QPushButton" name="button1">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>210</y>
+      <x>180</x>
+      <y>360</y>
       <width>93</width>
       <height>28</height>
      </rect>
     </property>
     <property name="text">
      <string>button1</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="data">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>230</y>
+      <width>311</width>
+      <height>87</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="submitData">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>330</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Submit</string>
     </property>
    </widget>
   </widget>
@@ -34,7 +57,7 @@
      <x>0</x>
      <y>0</y>
      <width>1101</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
