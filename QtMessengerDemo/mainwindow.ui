@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1101</width>
-    <height>583</height>
+    <width>1129</width>
+    <height>622</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="button1">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>360</y>
+      <x>10</x>
+      <y>520</y>
       <width>93</width>
       <height>28</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QTextEdit" name="data">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>230</y>
+      <x>20</x>
+      <y>20</y>
       <width>311</width>
       <height>87</height>
      </rect>
@@ -40,8 +40,8 @@
    <widget class="QPushButton" name="submitData">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>330</y>
+      <x>20</x>
+      <y>120</y>
       <width>93</width>
       <height>28</height>
      </rect>
@@ -50,13 +50,36 @@
      <string>Submit</string>
     </property>
    </widget>
+   <widget class="QTextEdit" name="receivedData">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>160</y>
+      <width>291</width>
+      <height>87</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>125</y>
+      <width>91</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Received Data</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1101</width>
+     <width>1129</width>
      <height>26</height>
     </rect>
    </property>
