@@ -10,42 +10,41 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    receive_data_over_network();
+    setup_network();
 }
 
 MainWindow::~MainWindow()
 {
+    delete socket;
     delete ui;
 }
 
-void MainWindow::on_button1_clicked()
-{
-    qDebug() << "Pushed button1"; // printing to console
-}
-
-void MainWindow::on_submitData_clicked()
-{
-    QString data = ui->data->toPlainText();
-    QByteArray arr = data.toLocal8Bit();
-    char* processedData = arr.data();
-    qDebug() << processedData;
-    QUdpSocket socket2;
-    socket2.writeDatagram(arr, QHostAddress("127.0.0.1"), 8088);
-}
-
-void MainWindow::receive_data_over_network()
+void MainWindow::setup_network()
 {
     socket = new QUdpSocket(this);
     socket->bind(8088);
-    connect(socket, SIGNAL(readyRead()), this, SLOT(on_receive()));
+    connect(socket, SIGNAL(readyRead()), this, SLOT(on_recvMSG()));
 }
 
-void MainWindow::on_receive()
+void MainWindow::on_sendMSG_clicked()
 {
-    while (socket->hasPendingDatagrams()) {
-        QByteArray datagram;
+    QByteArray data = ui->msgEdit->toPlainText().toLocal8Bit();
+    QHostAddress ip = QHostAddress(ui->ipEdit->toPlainText());
+    socket->writeDatagram(data, ip, 8088);
+}
+
+void MainWindow::on_recvMSG()
+{
+    QByteArray datagram;
+    while (socket->hasPendingDatagrams())
+    {
         datagram.resize(socket->pendingDatagramSize());
         socket->readDatagram(datagram.data(), datagram.size());
-        ui->receivedData->append(datagram.data());
+        ui->recvData->append(datagram.data());
     }
+}
+
+void MainWindow::on_clearRECV_clicked()
+{
+    ui->recvData->clear();
 }

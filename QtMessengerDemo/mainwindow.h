@@ -17,17 +17,15 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void receive_data_over_network();
+    void setup_network();
 
 private slots:
-    void on_button1_clicked();
-    void on_submitData_clicked();
-    void on_receive();
+    void on_sendMSG_clicked();
+    void on_recvMSG();
+    void on_clearRECV_clicked();
 
 private:
     Ui::MainWindow *ui;
-    QTextEdit *data;
-    QTextEdit *receivedData;
     QUdpSocket *socket;
 };
 

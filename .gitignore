@@ -1,3 +1,8 @@
 *.pro.user
 build-QtMessengerDemo-Desktop_Qt_5_9_1_MinGW_32bit-Debug/*
-
+.qmake.stash
+Makefile*
+QtMessengerDemo/debug/*
+QtMessengerDemo/release/*.o
+QtMessengerDemo/release/*.cpp
+QtMessengerDemo/release/*.h
