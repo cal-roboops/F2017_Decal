@@ -23,6 +23,7 @@ private slots:
     void on_sendMSG_clicked();
     void on_recvMSG();
     void on_clearRECV_clicked();
+    void on_webcam_clicked();
 
 private:
     Ui::MainWindow *ui;

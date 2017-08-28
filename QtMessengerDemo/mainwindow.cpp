@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <stdio.h>
 #include <iostream>
+#include <QProcess>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -47,4 +48,12 @@ void MainWindow::on_recvMSG()
 void MainWindow::on_clearRECV_clicked()
 {
     ui->recvData->clear();
+}
+
+void MainWindow::on_webcam_clicked()
+{
+//    terminal command : "C:\Program Files (x86)\VideoLAN\VLC\vlc.exe" -vvvv dshow://"Lenovo EasyCamera"
+
+    QString command = "\"C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe\" -vvvv dshow://\"Lenovo EasyCamera\"";
+    QProcess::execute(command);
 }

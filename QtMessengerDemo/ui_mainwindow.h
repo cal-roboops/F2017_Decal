@@ -34,13 +34,14 @@ public:
     QLabel *ip_Label;
     QTextEdit *recvData;
     QPushButton *clearRECV;
+    QPushButton *webcam;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->setEnabled(true);
-        MainWindow->resize(664, 232);
+        MainWindow->resize(845, 384);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         msgEdit = new QTextEdit(centralWidget);
@@ -72,6 +73,9 @@ public:
         clearRECV = new QPushButton(centralWidget);
         clearRECV->setObjectName(QStringLiteral("clearRECV"));
         clearRECV->setGeometry(QRect(400, 190, 93, 28));
+        webcam = new QPushButton(centralWidget);
+        webcam->setObjectName(QStringLiteral("webcam"));
+        webcam->setGeometry(QRect(90, 280, 93, 28));
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -88,10 +92,11 @@ public:
         ipEdit->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">127.0.0.1</p></body></html>", Q_NULLPTR));
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8.25pt;\">127.0.0.1</span></p></body></html>", Q_NULLPTR));
         ip_Label->setText(QApplication::translate("MainWindow", "Desitination IP", Q_NULLPTR));
         clearRECV->setText(QApplication::translate("MainWindow", "Clear", Q_NULLPTR));
+        webcam->setText(QApplication::translate("MainWindow", "Webcam", Q_NULLPTR));
     } // retranslateUi
 
 };
