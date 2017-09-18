@@ -4,7 +4,4 @@ build-QtMessengerDemo-Desktop_Qt_5_9_1_MinGW_32bit-Debug/*
 Qt*/Makefile*
 */debug/*
 */release/*
-*/release/*.o
-*/release/*.cpp
-*/release/*.h
 *.user
