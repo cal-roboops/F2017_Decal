@@ -1,19 +1,19 @@
 * ADG719 MACROMODEL
 * Description: Converter
 * Generic Desc: Single SPDT 1 ohm analog switch 1.8V
-* Developed by: Y.WONG 
+* Developed by: Y.WONG
 * Revision History: 08/10/2012 - Updated to new header style
 * 1.0 (08/2008)
 * Copyright 2012 by Analog Devices, Inc.
 *
-* Refer to http://www.analog.com/Analog_Root/static/techSupport/designTools/spiceModels/license/spice_general.html for License Statement. Use of this model 
+* Refer to http://www.analog.com/Analog_Root/static/techSupport/designTools/spiceModels/license/spice_general.html for License Statement. Use of this model
 * indicates your acceptance of the terms and provisions in the License Statement.
 *
 * BEGIN Notes:
 *
 * Not Modeled:
-*    
-* Parameters modeled include: 
+*
+* Parameters modeled include:
 *
 * END Notes
 *
@@ -21,11 +21,11 @@
 *      1  = IN
 *      2  = VDD
 *      3  = GND
-*      4  = S1 
+*      4  = S1
 *      5  = D
 *      6  = S2
 *****************
-.SUBCKT ADG719 1 2 3 4 5 6 
+.SUBCKT ADG719 1 2 3 4 5 6
 
 X1 4 5 1 2 3 LOWONSWITCH
 X2 6 5 1 2 3 HIGHONSWITCH
@@ -43,7 +43,7 @@ CC 4 6 0.22p
 *      101 = S
 *      102 = D
 *      103 = VIN
-*      104 = VDD 
+*      104 = VDD
 *      105 = GND
 *****************
 
@@ -63,7 +63,7 @@ X4 101 102 110 104 105 SWITCH
 *      101 = S
 *      102 = D
 *      103 = VIN
-*      104 = VDD 
+*      104 = VDD
 *      105 = GND
 *****************
 
@@ -119,21 +119,21 @@ EBUFFER 204 203 205 203 1
 *      201 = S
 *      202 = D
 *      203 = VIN
-*      204 = VDD 
+*      204 = VDD
 *      205 = GND
 *****************
 
-.SUBCKT SWITCH  201 202 203 204 205 
+.SUBCKT SWITCH  201 202 203 204 205
 
 *ANALOG SWITCH
 S1 201 208 203 205 SMOD1
 S2 204 207 203 205 SMOD2
-S3 204 207 201 205 SMOD3 
+S3 204 207 201 205 SMOD3
 S4 204 207 202 205 SMOD3
 RD 207 205 5G
 S5 208 202 207 205 SMOD4
 
-DS1 201 204 DX 
+DS1 201 204 DX
 DS2 205 201 DX
 DD1 202 204 DX
 DD2 205 202 DX
@@ -141,7 +141,7 @@ DD2 205 202 DX
 *ON OFF ISOLATION*
 CSD 201 202 0.1p
 
-*BANDWIDTH  
+*BANDWIDTH
 CSB 201 204 7.192p
 CDB 202 204 7.192p
 
@@ -172,14 +172,14 @@ RFEN 304 306 6k
 CFEN 306 302 2.0p
 DBREAKEN 306 305 DZ
 RBEN 305 304 3k
-EENBUFFEROUT 303 302 306 302 1 
+EENBUFFEROUT 303 302 306 302 1
 
 *MODELS USED
 .MODEL DZ D(IS=1E-14 N=0.04)
 .ENDS
 
 *****************
-* OPERATING VOLTAGE 
+* OPERATING VOLTAGE
 *
 * Connections
 *      601 = INPUT
@@ -187,7 +187,7 @@ EENBUFFEROUT 303 302 306 302 1
 *      603 = VDD
 *      604 = GND
 *****************
-.SUBCKT VSENSE 601 602 603 604 
+.SUBCKT VSENSE 601 602 603 604
 SD1 601 606 603 604 SMOD3
 SD2 606 607 603 604 SMOD4
 RD0 607 604 5G

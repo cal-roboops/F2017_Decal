@@ -5,7 +5,7 @@ WINDOW 0 0 -56 Bottom 2
 WINDOW 3 0 56 Top 2
 SYMATTR Prefix X
 SYMATTR Value ADG719
-SYMATTR ModelFile C:\Users\Laptop\Desktop\AIAA\F2017_Decal\Circuits\Simulation\ADG719.cir
+SYMATTR ModelFile .\ADG719.cir
 PIN -64 -32 LEFT 8
 PINATTR PinName IN
 PINATTR SpiceOrder 1
