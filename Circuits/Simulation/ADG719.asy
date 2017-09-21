@@ -1,0 +1,26 @@
+Version 4
+SymbolType BLOCK
+RECTANGLE Normal 64 48 -64 -48
+WINDOW 0 0 -56 Bottom 2
+WINDOW 3 0 56 Top 2
+SYMATTR Prefix X
+SYMATTR Value ADG719
+SYMATTR ModelFile C:\Users\Laptop\Desktop\AIAA\F2017_Decal\Circuits\Simulation\ADG719.cir
+PIN -64 -32 LEFT 8
+PINATTR PinName IN
+PINATTR SpiceOrder 1
+PIN -64 0 LEFT 8
+PINATTR PinName VDD
+PINATTR SpiceOrder 2
+PIN -64 32 LEFT 8
+PINATTR PinName GND
+PINATTR SpiceOrder 3
+PIN 64 -32 RIGHT 8
+PINATTR PinName S1
+PINATTR SpiceOrder 4
+PIN 64 0 RIGHT 8
+PINATTR PinName D
+PINATTR SpiceOrder 5
+PIN 64 32 RIGHT 8
+PINATTR PinName S2
+PINATTR SpiceOrder 6
