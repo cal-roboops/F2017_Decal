@@ -5,3 +5,4 @@ Qt*/Makefile*
 */debug/*
 */release/*
 *.user
+Circuits/*.raw

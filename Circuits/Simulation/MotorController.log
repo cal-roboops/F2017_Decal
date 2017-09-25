@@ -1,4 +1,4 @@
-Circuit: * H:\MITCHELL STUFF 2\Work\Berkeley\Berkeley_AIAA\Code_F2017\Circuits\Simulation\MotorController.asc
+Circuit: * C:\Users\Laptop\Desktop\AIAA\F2017_Decal\Circuits\Simulation\MotorController.asc
 
 WARNING: Less than two connections to node V_36V.  This node is used by V36V.
 WARNING: Less than two connections to node V_1V.  This node is used by V1V.
@@ -20,21 +20,21 @@ Ignoring empty pin current: Ix(u4:2:1:201)
 Ignoring empty pin current: Ix(u4:2:2:603)
 Ignoring empty pin current: Ix(u4:2:3:301)
 
-Date: Thu Sep 21 13:51:51 2017
-Total elapsed time: 9.863 seconds.
+Date: Thu Sep 21 19:16:10 2017
+Total elapsed time: 23.080 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 135752
-traniter = 135713
-tranpoints = 42273
-accept = 32301
-rejected = 9972
-matrix size = 184
-fillins = 104
+totiter = 169141
+traniter = 169102
+tranpoints = 50926
+accept = 38278
+rejected = 12648
+matrix size = 188
+fillins = 107
 solver = Normal
-Thread vector: 48.5/28.0[7] 20.7/8.5[7] 13.4/8.9[7] 5.1/3.3[4]  2592/500
-Matrix Compiler1: 15.06 KB object code size  10.8/8.0/[4.1]
-Matrix Compiler2: off  [4.9]/6.1/6.4
+Thread vector: 58.0/20.4[7] 38.4/8.2[7] 40.1/9.4[7] 1.0/1.6[1]  2592/500
+Matrix Compiler1: off  [6.1]/7.5/7.0
+Matrix Compiler2: 16.65 KB object code size  9.2/11.7/[1.2]
 
