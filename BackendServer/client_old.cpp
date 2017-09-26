@@ -67,6 +67,7 @@ int main()
 		cout << "Connecting to server..." << endl;
 	}
 
+	recv(client, buffer, bufSize, 0);
 	cout << "Connection confirmed" << endl;
 	cout << "Enter # to end the connection." << endl;
 
@@ -74,11 +75,6 @@ int main()
 		cout << "Client: ";
 		cin.getline(buffer, sizeof(buffer));
 		send(client, buffer, bufSize, 0);
-
-		if (buffer[0] == '#') {
-			cout << "Disconnection from server successful." << endl;
-			break;
-		}
 	};
 
 	close(client);
