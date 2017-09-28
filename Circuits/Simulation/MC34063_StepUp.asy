@@ -1,0 +1,14 @@
+Version 4
+SymbolType BLOCK
+RECTANGLE Normal -80 -32 80 48
+TEXT 0 -64 Top 2 MC34063_StepUp
+WINDOW 0 0 -64 Bottom 2
+PIN -80 0 LEFT 8
+PINATTR PinName Vcc
+PINATTR SpiceOrder 1
+PIN 80 0 RIGHT 8
+PINATTR PinName Vout
+PINATTR SpiceOrder 2
+PIN 0 48 BOTTOM 8
+PINATTR PinName GND
+PINATTR SpiceOrder 3
