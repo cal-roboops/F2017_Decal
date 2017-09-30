@@ -17,15 +17,11 @@
 #include <string.h>
 #include <unistd.h>
 
-
 using namespace std;
 
-int main()
-{
-
-	string str;
-
+int main() {
 	int client;
+	int iResult;
 	int portNum = 8088;
 	int bufSize = 1024;
 	char buffer[bufSize];
@@ -36,25 +32,27 @@ int main()
 	// Setup Windows sockets if on windows
 	#ifdef WIN32
 	WSADATA wsaData;
-	int iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
-  if (iResult != 0) {
+	iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
+
+  	if (iResult != 0) {
       cout << "WSAStartup failed with error: " << iResult << endl;
       return -1;
-  }
+  	}
 	#endif
 
 	// Initializing socket.
 	client = socket(AF_INET, SOCK_STREAM, 0);
 
-	if (client < 0) 
-	{
+	if (client < 0) {
 		cout << "Error creating socket." << endl;
 		exit(1);
+	} else {
+		cout << "Client socket created." << endl;
 	}
-	cout << "Client socket created." << endl;
 
 	server_addr.sin_family = AF_INET;
 	server_addr.sin_port = htons(portNum);
+
 	#ifdef WIN32
 	InetPton(AF_INET, ip, &(server_addr.sin_addr));
 	#else
@@ -62,25 +60,18 @@ int main()
 	#endif
 
 	// Connecting to socket server.
-	if (connect(client, (struct sockaddr*)&server_addr, sizeof(server_addr)) == 0)
-	{
+	if (connect(client, (struct sockaddr*) &server_addr, sizeof(server_addr)) == 0) {
 		cout << "Connecting to server..." << endl;
 	}
 
-	cout << "Connection confirmed" << endl;
-	cout << "Enter # to end the connection." << endl;
+	cout << "Connection confirmed." << endl;
+	cout << "Use ctrl + c to end the connection.\n" << endl;
 
 	while (true) {
 		cout << "Client: ";
 		cin.getline(buffer, sizeof(buffer));
 		send(client, buffer, bufSize, 0);
-
-		if (buffer[0] == '#') {
-			cout << "Disconnection from server successful." << endl;
-			break;
-		}
-	};
-
+	}
 	close(client);
 	return 0;
 }
