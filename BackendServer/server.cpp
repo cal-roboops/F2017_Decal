@@ -28,9 +28,8 @@ struct Thread {
 
 const long roverIP = 0;
 const int bufSize = 1024;
-list <struct Thread*> threads;
 
-void terminateThread(long, int);
+void terminateThread(struct Thread*);
 
 void *handleInput(void*);
 
@@ -104,7 +103,6 @@ void createThread(int socketID, long ipAddr, int p) {
 	t -> ip = ipAddr;
 	t -> port = p;
 
-	threads.push_back(t);
 	pthread_create(pt, NULL, handleInput, (void*) t);
 }
 
@@ -128,30 +126,15 @@ void *handleInput(void* threadStruct) {
 			} else {
 				cout << "\nDisconnected with Client (IP: " << t -> ip << ", Port: " << t -> port << ").\n" << endl;
 			}
-			terminateThread(t -> ip, t -> port);
+			terminateThread(t);
 			close(socketID);
 			return NULL;
 		}
 	}
 }
 
-void terminateThread(long ipAddr, int p) {
-	for (list<struct Thread*> :: iterator it = threads.begin(); it != threads.end(); it++) {
-		struct Thread* t = *it;
-
-		if ((t -> ip == ipAddr) && (t -> port == p)) {
-			pthread_cancel(*(t -> pthread));
-			free(t -> pthread);
-			free(t);
-			threads.erase(it);
-			break;
-		} 
-	}
+void terminateThread(struct Thread* t) {
+	pthread_cancel(*(t -> pthread));
+	free(t -> pthread);
+	free(t);
 }
-
-
-
-
-
-
-
