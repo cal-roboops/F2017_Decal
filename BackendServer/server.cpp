@@ -29,7 +29,8 @@ void *handleInput(void*);
 
 void createThread(int, long, int);
 
-int main() {
+int main()
+{
 	const int MAX_SIZE_BACKLOG_QUEUE = 5;
 	int serverListener;
 	int client;
@@ -38,46 +39,57 @@ int main() {
 
 	struct sockaddr_in server_addr, client_addr;
 
-  	serverListener = socket(AF_INET, SOCK_STREAM, 0);
+	serverListener = socket(AF_INET, SOCK_STREAM, 0);
 
-  	if (serverListener < 0) {
-  		cout << "Error establishing connection." << endl;
-  	} else {
-  		cout << "Server socket connection established." << endl;
-  	}
+	if (serverListener < 0)
+  {
+		cout << "Error establishing connection." << endl;
+	} else
+  {
+		cout << "Server socket connection established." << endl;
+	}
 
-  	server_addr.sin_family = AF_INET;
-  	server_addr.sin_port = htons(portNum);
-  	server_addr.sin_addr.s_addr = INADDR_ANY; // will be replaced by IP of communication receiver on rover
+	server_addr.sin_family = AF_INET;
+	server_addr.sin_port = htons(portNum);
+	server_addr.sin_addr.s_addr = INADDR_ANY; // will be replaced by IP of communication receiver on rover
 
-  	if (bind(serverListener, (struct sockaddr*) &server_addr, sizeof(server_addr)) < 0) {
-		cout << "Error binding socket." << endl;
+	if (bind(serverListener, (struct sockaddr*) &server_addr, sizeof(server_addr)) < 0)
+  {
+		  cout << "Error binding socket." << endl;
 		exit(1);
-	} else {
+	} else 
+  {
 		cout << "Ready to receive clients..." << endl;
 	}
 
 	listen(serverListener, MAX_SIZE_BACKLOG_QUEUE);
 
-	while (true) {
+	while (true)
+  {
 		client = accept(serverListener, (struct sockaddr*) &client_addr, (socklen_t*) &size);
 
-		if (client < 0) {
+		if (client < 0)
+    {
 			cout << "Error on accepting client." << endl;
-		} else {
-			if (client_addr.sin_addr.s_addr == roverIP) {
+		} else
+    {
+			if (client_addr.sin_addr.s_addr == roverIP)
+      {
 				cout << "\nSuccessfully connected to ROVER.\n" << endl;
-			} else {
+			} else
+      {
 				cout << "\nSuccessfully connected to new client." << endl;
 				cout << "Client IP: " << client_addr.sin_addr.s_addr << endl;
 				cout << "Client port: " << ntohs(client_addr.sin_port) << "\n" << endl;
 			}
+
 			createThread(client, client_addr.sin_addr.s_addr, ntohs(client_addr.sin_port));
 		}
 	} 
 }
 
-void createThread(int socketID, long ipAddr, int p) {
+void createThread(int socketID, long ipAddr, int p)
+{
 	pthread_t* pt = (pthread_t*) malloc(sizeof(pthread_t));
 	struct Thread* t = (struct Thread*) malloc(sizeof(struct Thread));
 
@@ -89,26 +101,36 @@ void createThread(int socketID, long ipAddr, int p) {
 	pthread_create(pt, NULL, handleInput, (void*) t);
 }
 
-void *handleInput(void* threadStruct) {
+void *handleInput(void* threadStruct)
+{
 	struct Thread* t = (struct Thread*) threadStruct;
 	int socketID = t -> socket_desc;
 	char buffer[bufSize];
 
-	while (true) {
-		if (recv(socketID, buffer, bufSize, 0) > 0) {
-			if (buffer[0] == 0) {
+	while (true)
+  {
+		if (recv(socketID, buffer, bufSize, 0) > 0)
+    {
+			if (buffer[0] == 0)
+      {
 				continue;
-			} else if (t -> ip == roverIP) {
+			} else if (t -> ip == roverIP)
+      {
 				cout << "ROVER: " << buffer << endl;
-			} else {
+			} else
+      {
 				cout << "Client (IP: " << t -> ip << ", Port: " << t -> port << "): " << buffer << endl;
 			}
-		} else {
-			if (t -> ip == roverIP) {
+		} else
+    {
+			if (t -> ip == roverIP)
+      {
 				cout << "\nDisconnected with ROVER.\n" << endl;
-			} else {
+			} else
+      {
 				cout << "\nDisconnected with Client (IP: " << t -> ip << ", Port: " << t -> port << ").\n" << endl;
 			}
+
 			terminateThread(t);
 			close(socketID);
 			return NULL;
@@ -116,7 +138,8 @@ void *handleInput(void* threadStruct) {
 	}
 }
 
-void terminateThread(struct Thread* t) {
+void terminateThread(struct Thread* t)
+{
 	pthread_cancel(*(t -> pthread));
 	free(t -> pthread);
 	free(t);

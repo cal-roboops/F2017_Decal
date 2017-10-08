@@ -1,9 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
 #include <QFile>
 #include <QFileDialog>
 #include <QHostAddress>
 #include <QTextStream>
+#include <QProcess>
+#include <qglobal.h>
+
 #include <windows.h>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -37,8 +41,8 @@ void MainWindow::on_connect_clicked()
     }
 
     // Setup & connect to socket
-    QString ipAddr = ui->ipEdit->toPlainText();
-    int port = (ui->portEdit->toPlainText()).toInt();
+    QString ipAddr = ui->serv_ipEdit->toPlainText();
+    int port = (ui->serv_portEdit->toPlainText()).toInt();
     socket->connectToHost(ipAddr, port);
 
     // Need to wait for connection
@@ -91,9 +95,50 @@ void MainWindow::on_sendMSG_clicked()
     socket->write(ui->msgEdit->toPlainText().toLocal8Bit());
 }
 
+void MainWindow::on_recvMSG()
+{
+    QByteArray data;
+    while (!socket->atEnd())
+    {
+        data = socket->readAll();
+        ui->recvData->append(data.data());
+    }
+}
+
 void MainWindow::on_clearRECV_clicked()
 {
     ui->recvData->clear();
+}
+
+void MainWindow::on_openStream_clicked()
+{
+    QString command;
+    #ifdef Q_OS_WIN32
+    command = "C:\\Program Files\\VideoLAN\\VLC\\vlc.exe";
+    if (!QFile::exists(command))
+    {
+        command = "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe";
+    }
+    #else
+    commad = "/usr/bin/vlc";
+    #endif
+
+    if (!QFile::exists(command))
+    {
+        ui->infoLabel->setText("ERROR: VLC not found!");
+        return;
+    }
+
+    #ifdef Q_OS_WIN32
+    command = "\"" + command + "\"";
+    #endif
+
+    command += " rtp://@";
+    command += ui->st_ipEdit->toPlainText();
+    command += ":" + ui->st_portEdit->toPlainText();
+
+    QProcess *process = new QProcess(this);
+    process->start(command);
 }
 
 void MainWindow::on_selectTestSuite_clicked()
@@ -208,16 +253,6 @@ void MainWindow::on_runTestSuite_clicked()
     {
         ui->infoLabel->setText("Error opening test file!");
         return;
-    }
-}
-
-void MainWindow::on_recvMSG()
-{
-    QByteArray data;
-    while (!socket->atEnd())
-    {
-        data = socket->readAll();
-        ui->recvData->append(data.data());
     }
 }
 

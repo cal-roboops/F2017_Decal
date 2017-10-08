@@ -19,12 +19,16 @@ public:
 private slots:
     void on_connect_clicked();
     void on_disconnect_clicked();
+
     void on_sendMSG_clicked();
+    void on_recvMSG();
     void on_clearRECV_clicked();
+
+    void on_openStream_clicked();
+
     void on_selectTestSuite_clicked();
     void on_runTestSuite_clicked();
 
-    void on_recvMSG();
     void on_disconnect();
 
 private:

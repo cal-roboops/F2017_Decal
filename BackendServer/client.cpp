@@ -19,7 +19,8 @@
 
 using namespace std;
 
-int main() {
+int main()
+{
 	int client;
 	int iResult;
 	int portNum = 8088;
@@ -34,19 +35,22 @@ int main() {
 	WSADATA wsaData;
 	iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
 
-  	if (iResult != 0) {
-      cout << "WSAStartup failed with error: " << iResult << endl;
-      return -1;
-  	}
+	if (iResult != 0)
+	{
+    cout << "WSAStartup failed with error: " << iResult << endl;
+    return -1;
+	}
 	#endif
 
 	// Initializing socket.
 	client = socket(AF_INET, SOCK_STREAM, 0);
 
-	if (client < 0) {
+	if (client < 0)
+	{
 		cout << "Error creating socket." << endl;
 		exit(1);
-	} else {
+	} else
+	{
 		cout << "Client socket created." << endl;
 	}
 
@@ -60,18 +64,21 @@ int main() {
 	#endif
 
 	// Connecting to socket server.
-	if (connect(client, (struct sockaddr*) &server_addr, sizeof(server_addr)) == 0) {
+	if (connect(client, (struct sockaddr*) &server_addr, sizeof(server_addr)) == 0)
+	{
 		cout << "Connecting to server..." << endl;
 	}
 
 	cout << "Connection confirmed." << endl;
 	cout << "Use ctrl + c to end the connection.\n" << endl;
 
-	while (true) {
+	while (true)
+	{
 		cout << "Client: ";
 		cin.getline(buffer, sizeof(buffer));
 		send(client, buffer, bufSize, 0);
 	}
+	
 	close(client);
 	return 0;
 }

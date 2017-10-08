@@ -1,18 +1,15 @@
-lin: server_lin client_lin
+lin: client_lin
 
-win: server_win client_win
+win: client_win
 
-server_lin:
+server:
 	g++ server.cpp -o server -lpthread
 
 client_lin:
 	g++ client.cpp -o client
 
-server_win:
-	g++ server.cpp -o server.exe -Wall -Wno-long-long -lws2_32 -lwsock32
-
 client_win:
-	g++ client.cpp -o client.exe -Wall -Wno-long-long -lws2_32 -lwsock32
+	g++ client.cpp -o client -Wall -Wno-long-long -lws2_32 -lwsock32
 
 clean:
-	rm -f server.exe client.exe
+	rm -f server client
