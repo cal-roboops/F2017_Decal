@@ -4,18 +4,12 @@
 #include <string.h>
 #include <unistd.h>
 #include <list>
-
-#ifdef WIN32
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#else
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/types.h>
 #include <netdb.h>
 #include <pthread.h>
-#endif
 
 using namespace std;
 
@@ -43,17 +37,6 @@ int main() {
 	int size = sizeof(struct sockaddr_in);
 
 	struct sockaddr_in server_addr, client_addr;
-
-	// Setup Windows sockets if on windows
-	#ifdef WIN32
-	WSADATA wsaData;
-	int iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
-
-  	if (iResult != 0) { 
-  		cout << "WSAStartup failed with error: " << iResult << endl;
-      	return 1;
-  	}
-	#endif
 
   	serverListener = socket(AF_INET, SOCK_STREAM, 0);
 
