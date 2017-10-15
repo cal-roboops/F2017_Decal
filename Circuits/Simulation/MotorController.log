@@ -1,22 +1,23 @@
-Circuit: * H:\MITCHELL STUFF 2\Work\Berkeley\Berkeley_AIAA\Code_F2017\Circuits\Simulation\MotorController.asc
+Circuit: * C:\Users\Laptop\Desktop\AIAA\F2017_Decal\Circuits\Simulation\MotorController.asc
 
 WARNING: Specified period is not longer than the sum of Trise, Tfall, and Ton for vfpga_fspeed.  Increasing period to 0.001002
-Per .tran options, skipping operating point for transient analysis.
+Direct Newton iteration for .op point succeeded.
 
-Date: Fri Oct 06 22:02:49 2017
-Total elapsed time: 1.772 seconds.
+Date: Sun Oct 15 14:25:02 2017
+Total elapsed time: 7.343 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 55389
-traniter = 55389
-tranpoints = 24036
-accept = 19074
-rejected = 4962
-matrix size = 131
-fillins = 44
+totiter = 383051
+traniter = 383017
+tranpoints = 164311
+accept = 132172
+rejected = 32139
+matrix size = 106
+fillins = 100
 solver = Normal
-Matrix Compiler1: 10.16 KB object code size  4.7/3.6/[1.2]
-Matrix Compiler2: 11.58 KB object code size  2.6/3.2/[1.0]
+Thread vector: 9.3/6.5[2] 3.7/2.8[2] 1.1/1.0[2] 0.5/1.2[1]  2592/500
+Matrix Compiler1: 12.11 KB object code size  3.6/1.5/[0.8]
+Matrix Compiler2: 10.47 KB object code size  1.0/1.5/[0.6]
 

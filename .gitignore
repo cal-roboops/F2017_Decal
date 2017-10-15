@@ -1,5 +1,5 @@
 *.pro.user
-build-QtMessengerDemo-Desktop_Qt_5_9_1_MinGW_32bit-Debug/*
+build-Qt*/*
 .qmake.stash
 Qt*/Makefile*
 */debug/*
