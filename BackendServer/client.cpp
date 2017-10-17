@@ -94,7 +94,9 @@ int main() {
 		serialized = Json::writeString(writer, jobj);
 
 		send(client, serialized.c_str(), bufSize, 0);
-		cout << "\n";
+
+		recv(client, buffer, bufSize, 0);
+		cout << "\n" << "SERVER: " << buffer << "\n" << endl;
 	}
 	
 	close(client);

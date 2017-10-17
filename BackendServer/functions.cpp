@@ -1,12 +1,15 @@
-#include <iostream>
-#include <string.h>
 #include "functions.h"
 
 using namespace std;
+const int messageSize = 1024;
 
-void test(pthread_mutex_t* lock, string key) {
+void test(pthread_mutex_t* lock, string key, void* data, int clientSocket, int roverSocket) {
 	pthread_mutex_lock(lock);
-	cout << "Test Output: " << key << "\n" << endl;
+
+	cout << "Test complete.\n" << endl;
+	//send(roverSocket, command, size, 0);
+	send(clientSocket, "Message received.", messageSize, 0);
+
 	pthread_mutex_unlock(lock);
 }
 

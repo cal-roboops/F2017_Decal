@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <list>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -28,6 +27,7 @@ struct Thread {
 const long roverIP = 0;
 const int bufSize = 1024;
 const int numFuncs = 5;
+struct Thread* roverThread;
 struct Function* functions[numFuncs];
 
 void terminateThread(struct Thread*);
@@ -95,6 +95,10 @@ void createThread(int socketID, long ipAddr, int p) {
 	t -> port = p;
 
 	pthread_create(pt, NULL, handleInput, (void*) t);
+
+	if (ipAddr == roverIP) {
+		roverThread = t;
+	}
 }
 
 void *handleInput(void* threadStruct) {
@@ -121,22 +125,26 @@ void *handleInput(void* threadStruct) {
 				parsingSuccessful = Json::parseFromStream(reader, istr, &jobj, &errs);
 
 				if (!parsingSuccessful) {
-					cout << "\nFailed to deserialize input.\n" << endl;
+					cout << "Test Failed: could not deserialize command\n" << endl;
+					send(t -> socket_desc, "Failed to deserialize command.", bufSize, 0);
 				} else {
 					cout << "Client (IP: " << t -> ip << ", Port: " << t -> port << "): Key: " << jobj[0] << ", Value: " << jobj[1] << endl;
 					val = jobj[1].asInt();
 
 					if (val < numFuncs && val >= 0) {
+						// check to make sure roverThread != NULL
 						f = functions[jobj[1].asInt()];
-						f -> func(&(f -> lock), jobj[0].asString());
+						f -> func(&(f -> lock), jobj[0].asString(), f -> data, t -> socket_desc, -1); // -1 will be replaced with roverThread -> socket_desc
 					} else {
-						cout << "Test Output: value out of range" << "\n" << endl;
+						cout << "Test Failed: value out of range\n" << endl;
+						send(t -> socket_desc, "Value out of range.", bufSize, 0);
 					}
 				}
 			}
 		} else {
 			if (t -> ip == roverIP) {
 				cout << "\nDisconnected with ROVER.\n" << endl;
+				roverThread = NULL;
 			} else {
 				cout << "\nDisconnected with Client (IP: " << t -> ip << ", Port: " << t -> port << ").\n" << endl;
 			}
