@@ -8,7 +8,7 @@ su uServer
 ./server &
 
 # Setup stream variables
-roverIP=127.0.0.1
+roverIP=192.0.0.10
 multiIP=239.255.0
 multiPort=9001
 vlcOptions="--sout-all --sout-keep"

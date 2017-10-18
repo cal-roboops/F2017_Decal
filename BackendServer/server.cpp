@@ -24,7 +24,7 @@ struct Thread {
 	int port;
 };
 
-const long roverIP = 0;
+const long roverIP = 167772352;
 const int bufSize = 1024;
 const int numFuncs = 5;
 struct Thread* roverThread;
@@ -118,29 +118,38 @@ void *handleInput(void* threadStruct) {
 		if (recv(socketID, buffer, bufSize, 0) > 0) {
 			if (buffer[0] == 0) {
 				continue;
-			} else if (t -> ip == roverIP) {
-				cout << "ROVER: " << buffer << endl;
-			} else {
-				istringstream istr(buffer);
-				parsingSuccessful = Json::parseFromStream(reader, istr, &jobj, &errs);
-
-				if (!parsingSuccessful) {
-					cout << "Test Failed: could not deserialize command\n" << endl;
-					send(t -> socket_desc, "Failed to deserialize command.", bufSize, 0);
-				} else {
-					cout << "Client (IP: " << t -> ip << ", Port: " << t -> port << "): Key: " << jobj[0] << ", Value: " << jobj[1] << endl;
-					val = jobj[1].asInt();
-
-					if (val < numFuncs && val >= 0) {
-						// check to make sure roverThread != NULL
-						f = functions[jobj[1].asInt()];
-						f -> func(&(f -> lock), jobj[0].asString(), f -> data, t -> socket_desc, -1); // -1 will be replaced with roverThread -> socket_desc
-					} else {
-						cout << "Test Failed: value out of range\n" << endl;
-						send(t -> socket_desc, "Value out of range.", bufSize, 0);
-					}
-				}
 			}
+
+			istringstream istr(buffer);
+			parsingSuccessful = Json::parseFromStream(reader, istr, &jobj, &errs);
+
+			if (!parsingSuccessful) {
+				cout << "Test Failed: could not deserialize command\n" << endl;
+				send(t -> socket_desc, "Failed to deserialize command.", bufSize, 0);
+				continue;
+			}
+			
+			if (t -> ip == roverIP) {
+				cout << "ROVER: Key: " << jobj[0] << ", Value: " << jobj[1] << endl;
+			} else {
+				cout << "Client (IP: " << t -> ip << ", Port: " << t -> port << "): Key: " << jobj[0] << ", Value: " << jobj[1] << endl;
+			}
+					
+			val = jobj[1].asInt();
+
+			if (val < numFuncs && val >= 0) {
+				if (roverThread == NULL) {
+					cout << "Test Failed: rover is not connected\n" << endl;
+					send(t -> socket_desc, "Rover needs to be connected to run tests.", bufSize, 0);
+				} else {
+					f = functions[jobj[1].asInt()];
+					f -> func(&(f -> lock), jobj[0].asString(), f -> data, t -> socket_desc, roverThread -> socket_desc);
+				}
+			} else {
+				cout << "Test Failed: value out of range\n" << endl;
+				send(t -> socket_desc, "Value out of range.", bufSize, 0);
+			}
+			
 		} else {
 			if (t -> ip == roverIP) {
 				cout << "\nDisconnected with ROVER.\n" << endl;
