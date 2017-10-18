@@ -6,9 +6,9 @@ const int messageSize = 1024;
 void test(pthread_mutex_t* lock, string key, void* data, int clientSocket, int roverSocket) {
 	pthread_mutex_lock(lock);
 
-	cout << "Test complete.\n" << endl;
-	//send(roverSocket, command, size, 0);
+	send(roverSocket, "Message received.", messageSize, 0);
 	send(clientSocket, "Message received.", messageSize, 0);
+	cout << "Test complete.\n" << endl;
 
 	pthread_mutex_unlock(lock);
 }
