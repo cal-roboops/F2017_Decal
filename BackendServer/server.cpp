@@ -8,6 +8,7 @@
 #include <arpa/inet.h>
 #include <sys/types.h>
 #include <netdb.h>
+#include <list>
 
 #include <json/value.cpp>
 #include <json/reader.cpp>
@@ -17,17 +18,11 @@
 
 using namespace std;
 
-struct Thread {
-	int socket_desc;
-	pthread_t* pthread;
-	long ip;
-	int port;
-};
-
 const long roverIP = 167772352;
 const int bufSize = 1024;
 const int numFuncs = 5;
 struct Thread* roverThread;
+list<struct Thread*> clientThreads;
 struct Function* functions[numFuncs];
 
 void terminateThread(struct Thread*);
@@ -98,6 +93,8 @@ void createThread(int socketID, long ipAddr, int p) {
 
 	if (ipAddr == roverIP) {
 		roverThread = t;
+	} else {
+		clientThreads.push_back(t);
 	}
 }
 
@@ -138,13 +135,13 @@ void *handleInput(void* threadStruct) {
 			val = jobj[1].asInt();
 
 			if (val < numFuncs && val >= 0) {
-				if (roverThread == NULL) {
+				/*if (roverThread == NULL) {
 					cout << "Test Failed: rover is not connected\n" << endl;
 					send(t -> socket_desc, "Rover needs to be connected to run tests.", bufSize, 0);
-				} else {
+				} else {*/
 					f = functions[jobj[1].asInt()];
-					f -> func(&(f -> lock), jobj[0].asString(), f -> data, t -> socket_desc, roverThread -> socket_desc);
-				}
+					f -> func(f, clientThreads, jobj[0].asString(), t -> socket_desc, -1);
+				//}
 			} else {
 				cout << "Test Failed: value out of range\n" << endl;
 				send(t -> socket_desc, "Value out of range.", bufSize, 0);
@@ -166,7 +163,27 @@ void *handleInput(void* threadStruct) {
 }
 
 void terminateThread(struct Thread* t) {
+	list<struct Thread*>::const_iterator iterator;
+
+	if (t -> ip != roverIP) {
+		for (iterator = clientThreads.begin(); iterator != clientThreads.end(); iterator++) {
+			struct Thread* thread = *iterator;
+
+			if (thread -> ip == t -> ip) {
+				clientThreads.erase(iterator);
+				break;
+			}
+		}
+	}
+
 	pthread_cancel(*(t -> pthread));
 	free(t -> pthread);
 	free(t);
 }
+
+
+
+
+
+
+

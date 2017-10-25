@@ -3,14 +3,28 @@
 using namespace std;
 const int messageSize = 1024;
 
-void test(pthread_mutex_t* lock, string key, void* data, int clientSocket, int roverSocket) {
-	pthread_mutex_lock(lock);
+void test(struct Function* function, list<struct Thread*> clientThreads, string key, int clientSocket, int roverSocket) {
+	pthread_mutex_lock(&(function -> lock));
 
-	send(roverSocket, "Message received.", messageSize, 0);
-	send(clientSocket, "Message received.", messageSize, 0);
+	list<struct Thread*>::const_iterator iterator;
+	string roverMessage = "Command: " + key;
+	string clientResponse = "Command received.";
+	string updateMessage = "Update: " + key;
+
+	send(clientSocket, "Command received.", messageSize, 0);
+	//send(roverSocket, roverMessage.c_str(), messageSize, 0);
+
+	for (iterator = clientThreads.begin(); iterator != clientThreads.end(); iterator++) {
+		struct Thread* t = *iterator;
+
+		if (t -> socket_desc != clientSocket) {
+			send(t -> socket_desc, updateMessage.c_str(), messageSize, 0);
+		}
+	}
+
 	cout << "Test complete.\n" << endl;
 
-	pthread_mutex_unlock(lock);
+	pthread_mutex_unlock(&(function -> lock));
 }
 
 void initializeFunctions(struct Function** functions, int len) {
