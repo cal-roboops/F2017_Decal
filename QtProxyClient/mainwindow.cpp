@@ -7,10 +7,17 @@
 #include <QTextStream>
 #include <QProcess>
 #include <qglobal.h>
+#include <QJsonObject>
+#include <QProcess>
+#include <QDebug>
+#include <QKeyEvent>
+//#include <windows.h>
+QJsonObject ball;
+QJsonObject key_values
+{
+    {0, "up"},
 
-#include <windows.h>
-
-// change
+};
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // Connect desired SIGNALs and SLOTs
     connect(socket, SIGNAL(readyRead()), this, SLOT(on_recvMSG()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(on_disconnect()));
+
+
 }
 
 MainWindow::~MainWindow()
@@ -122,7 +131,7 @@ void MainWindow::on_openStream_clicked()
         command = "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe";
     }
     #else
-    commad = "/usr/bin/vlc";
+    command = "/usr/bin/vlc";
     #endif
 
     if (!QFile::exists(command))
@@ -201,7 +210,7 @@ void MainWindow::on_runTestSuite_clicked()
 
             ui->testProgress->setValue((100*curLine)/testLines);
             qApp->processEvents();
-            Sleep(100);
+            //Sleep(100);
         }
         testStream.readLine();
 
@@ -264,6 +273,40 @@ void MainWindow::on_disconnect()
     {
         ui->infoLabel->setText("Connection Lost!");
     }
-
     ui->sendMSG->setEnabled(false);
+    
 }
+
+void MainWindow::keyPressEvent(QKeyEvent * event)
+{
+    if(event-> key() == Qt::Key_W){
+        ball["0"] = "up";
+        qDebug() << ball;
+    }
+    else if(event-> key() == Qt::Key_S){
+        ball["0"] = "down";
+        qDebug() << ball;
+    }
+    else if(event-> key() == Qt::Key_A){
+        ball["0"] = "left";
+        qDebug() << ball;
+    }
+    else if(event-> key() == Qt::Key_D){
+        ball["0"] = "right";
+        qDebug() << ball;
+    }
+}
+
+//    switch (event->key())
+//    {
+//    case Qt::Key_W:
+//        QJsonObject ball;
+//        ball[0] = "up";
+//        qDebug() << ball;
+//        return true;
+//    case Qt::Key_Return:
+//        QJsonObject ball2;
+//        ball2[0] = "down";
+//        qDebug() << ball2;
+//        return true;
+//    }

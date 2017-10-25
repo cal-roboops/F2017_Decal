@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QTcpSocket>
-
+#include <QKeyEvent>
 namespace Ui {
 class MainWindow;
 }
@@ -15,6 +15,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+protected:
+    void keyPressEvent(QKeyEvent *event);
 
 private slots:
     void on_connect_clicked();
