@@ -11,25 +11,19 @@ MAPS_BASE_URL = 'https://maps.googleapis.com/maps/api/staticmap?'
 ELEVATION_BASE_URL = 'https://maps.googleapis.com/maps/api/elevation/json?'
 MAPS_KEY = 'AIzaSyACAgW0t93bEbyJn3dWNwSLcjXzY3O8DiY'
 
-# TODO save elevation in array/file
-# TODO create dyamic graph data structure and try A*
-
-IMG_SIZE = 640
 # lat lon of Mars Desert Research Center Hankville, UT
 LAT = 38.406529
 LON = -110.791916
+IMG_SIZE = 640
 ZOOM = 19
 MAPTYPE = 'satellite'
 # KEEP THIS 1 FOR NOW CHANGING CAN BREAK COORDINATE CALCULATIONS
 SCALE = 1
 
-# contains lat, lon, elevation, blocked off
+# contains lat, lon, elevation, isBlocked for each coordinate
 MAP_DATA = np.zeros((IMG_SIZE, IMG_SIZE, 4), dtype=np.float64)
 
 BASE_ELEVATION = 1371.5
-
-# START = (38.40674821, -110.79230174)
-# END = (38.4066639, -110.79198029)
 START = (38.406421, -110.791767)
 END = (38.407016, -110.792077)
 
@@ -53,7 +47,7 @@ def elevation_request(lat, lon):
         'key' : MAPS_KEY
     })
 
-    return json.loads(urllib.request.urlopen(ELEVATION_BASE_URL + params).read())
+    return json.loads(urllib.request.urlopen(ELEVATION_BASE_URL + params).read().decode('utf-8'))
 
 # caclulates scale of map at current lat, lon, and zoom level
 def calc_scale(lat, lon, zoom):
@@ -88,6 +82,7 @@ def calc_cordinates(map_data, size, lat, lon, zoom):
 
 # DON'T CALL THIS REPEATEDLY (USES A LOT OF API CALLS)
 # TODO pass in data as locations array to minimize num of calls
+# calculates the elevation of each pixel
 def calc_elevation(map_data, size):
     # increasing this increases resolution of data but also increases number of api calls
     # at zoom 19, 20 blocks gives enough resolution
@@ -112,13 +107,15 @@ def calc_elevation(map_data, size):
 
     return map_data
 
+# calculates significant changes in elevation and marks those coordinates
 def calc_drops(map_data, size):
     for i in range(size):
         for j in range(size):
-            if abs(BASE_ELEVATION - map_data[i][j][2]) > 3:
+            if abs(BASE_ELEVATION - map_data[i][j][2]) > 2:
                 map_data[i][j][3] = 1
     return map_data
 
+# returns x, y such that map_data[x][y] is closest to val
 def find_nearest(map_data, val, size):
     x_val, y_val = val
     min_val = float('inf')
@@ -130,31 +127,17 @@ def find_nearest(map_data, val, size):
                 x, y = i, j
     return x, y
 
+# finds optimal path using A* and changes in elevation as obstacles
 def find_path(map_data, size, start_gps, end_gps):
     start = find_nearest(map_data, start_gps, size)
-    print(start)
+    # print(start)
     goal = find_nearest(map_data, end_gps, size)
-    print(goal)
+    # print(goal)
 
     obstacle_map = map_data[:,:,3]
 
-    # nmap = np.array([
-    # [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    # [1,1,1,1,1,1,1,1,1,1,1,1,0,1],
-    # [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    # [1,0,1,1,1,1,1,1,1,1,1,1,1,1],
-    # [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    # [1,1,1,1,1,1,1,1,1,1,1,1,0,1],
-    # [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    # [1,0,1,1,1,1,1,1,1,1,1,1,1,1],
-    # [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    # [1,1,1,1,1,1,1,1,1,1,1,1,0,1],
-    # [0,0,0,0,0,0,0,0,0,0,0,0,0,0]])
-    
-    # print(astar(nmap, (0,0), (2,11)))
-
     path = astar(obstacle_map, start, goal)
-    return path if path else None
+    return list(reversed(path)) if path else None
 
 def heuristic(a, b):
     # euclidian distance
@@ -220,11 +203,12 @@ map_bytes = np.fromstring(map_response, np.uint8)
 map_img = cv2.imdecode(map_bytes, cv2.IMREAD_UNCHANGED)
 
 file_name = 'map_data_' + str(LAT) + ',' + str(LON) + '_' + str(IMG_SIZE) + '_' + str(ZOOM) + '.npy'
+# TODO check based on location of map_pathing.py
 if os.path.isfile(file_name ):
     calc_scale(LAT, LON, ZOOM)
     MAP_DATA = np.load(file_name)
-    # MAP_DATA = calc_drops(MAP_DATA, IMG_SIZE)
-    # np.save(file_name, MAP_DATA)
+    MAP_DATA = calc_drops(MAP_DATA, IMG_SIZE)
+    np.save(file_name, MAP_DATA)
 else:
     MAP_DATA = calc_cordinates(MAP_DATA, IMG_SIZE, LAT, LON, ZOOM)
     MAP_DATA = calc_elevation(MAP_DATA, IMG_SIZE)
@@ -235,7 +219,9 @@ PATH = find_path(MAP_DATA, IMG_SIZE, START, END)
 if PATH:
     for i, j in PATH:
         map_img[i][j] = [255,255,255]
-        print((i,j))
+        # print((i,j))
+else:
+    print('NO PATH FOUND')
 
 cv2.namedWindow('map', cv2.WINDOW_NORMAL)
 cv2.resizeWindow('map', IMG_SIZE, IMG_SIZE)
