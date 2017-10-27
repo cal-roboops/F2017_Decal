@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import math
 import json
-import os
+import sys, os
 from heapq import *
 
 MAPS_BASE_URL = 'https://maps.googleapis.com/maps/api/staticmap?'
@@ -85,7 +85,6 @@ def calc_cordinates(map_data, size, lat, lon, zoom):
 # calculates the elevation of each pixel
 def calc_elevation(map_data, size):
     # increasing this increases resolution of data but also increases number of api calls
-    # at zoom 19, 20 blocks gives enough resolution
     # TODO set this dynamically using m_per_pixel
     num_blocks = 25
     block_size = size // num_blocks
@@ -111,6 +110,7 @@ def calc_elevation(map_data, size):
 def calc_drops(map_data, size):
     for i in range(size):
         for j in range(size):
+            # TODO find a better way to determine if this is a drop
             if abs(BASE_ELEVATION - map_data[i][j][2]) > 2:
                 map_data[i][j][3] = 1
     return map_data
@@ -145,7 +145,11 @@ def heuristic(a, b):
 
 # source: http://code.activestate.com/recipes/578919-python-a-pathfinding-with-binary-heap/
 def astar(array, start, goal):
-    # supports quad-directional movement
+    # if start/goal are blocked no path exists
+    if array[start[0]][start[1]] == 1 or array[goal[0]][goal[1]] == 1:
+        return False
+
+    # supports 4-axis movement
     neighbors = [(0,1),(0,-1),(1,0),(-1,0),(1,1),(1,-1),(-1,1),(-1,-1)]
 
     close_set = set()
@@ -203,10 +207,10 @@ map_bytes = np.fromstring(map_response, np.uint8)
 map_img = cv2.imdecode(map_bytes, cv2.IMREAD_UNCHANGED)
 
 file_name = 'map_data_' + str(LAT) + ',' + str(LON) + '_' + str(IMG_SIZE) + '_' + str(ZOOM) + '.npy'
-# TODO check based on location of map_pathing.py
-if os.path.isfile(file_name ):
+file_path = os.path.join(sys.path[0], file_name)
+if os.path.isfile(file_path):
     calc_scale(LAT, LON, ZOOM)
-    MAP_DATA = np.load(file_name)
+    MAP_DATA = np.load(file_path)
     MAP_DATA = calc_drops(MAP_DATA, IMG_SIZE)
     np.save(file_name, MAP_DATA)
 else:
@@ -216,10 +220,11 @@ else:
     np.save(file_name, MAP_DATA)
 
 PATH = find_path(MAP_DATA, IMG_SIZE, START, END)
-if PATH:
-    for i, j in PATH:
-        map_img[i][j] = [255,255,255]
-        # print((i,j))
+if PATH:    
+    # opencv renders points as (x, y) so need to reverse (row, col)
+    pts = np.array(([[x[1], x[0]] for x in PATH]))
+    pts = pts.reshape((-1,1,2))
+    cv2.polylines(map_img, [pts], False, (0,0,225), 2)
 else:
     print('NO PATH FOUND')
 
