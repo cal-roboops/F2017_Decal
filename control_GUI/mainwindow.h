@@ -17,9 +17,18 @@ public:
 
 private slots:
 
-    void on_button_regular_clicked();
 
-    void on_button_tank_clicked();
+    void on_button_set_clicked();
+
+    void on_pushButton_up_pressed();
+
+    void on_pushButton_up_released();
+
+    void on_radioButton_clicked();
+
+    void on_radioButton_tank_clicked();
+
+    void on_radioButton_custom_clicked();
 
 private:
     Ui::MainWindow *ui;
