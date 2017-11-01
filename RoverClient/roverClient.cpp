@@ -17,22 +17,15 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <json/value.cpp>
-#include <json/writer.cpp>
-
 using namespace std;
 
-int main() {
+int main()
+{
 	int client;
 	int iResult;
-	int value;
 	int portNum = 8088;
 	int bufSize = 1024;
 	char buffer[bufSize];
-	string serialized;
-	Json::Value jobj;
-	Json::StreamWriterBuilder writer;
-	writer.settings_["indentation"] = "";
 	const char *ip = "127.0.0.1";
 
 	struct sockaddr_in server_addr;
@@ -79,24 +72,11 @@ int main() {
 	cout << "Connection confirmed." << endl;
 	cout << "Use ctrl + c to end the connection.\n" << endl;
 
-	while (true) {
-		cout << "Key: ";
+	while (true)
+	{
+		cout << "Client: ";
 		cin.getline(buffer, sizeof(buffer));
-
-		jobj[0] = Json::Value(buffer);
-
-		cout << "Value: ";
-		cin.getline(buffer, sizeof(buffer));
-
-		value = buffer[0] - '0';
-		jobj[1] = Json::Value(value);
-
-		serialized = Json::writeString(writer, jobj);
-
-		send(client, serialized.c_str(), bufSize, 0);
-
-		recv(client, buffer, bufSize, 0);
-		cout << "\n" << "SERVER: " << buffer << "\n" << endl;
+		send(client, buffer, bufSize, 0);
 	}
 	
 	close(client);
