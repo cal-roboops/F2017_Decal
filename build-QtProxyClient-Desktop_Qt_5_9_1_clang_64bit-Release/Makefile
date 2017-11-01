@@ -51,12 +51,13 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../QtProxyClient/main.cpp \
-		../QtProxyClient/mainwindow.cpp moc_mainwindow.cpp
+		../QtProxyClient/mainwindow.cpp \
+		../QtProxyClient/controlpanel.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
+		controlpanel.o \
 		moc_mainwindow.o
-DIST          = ../QtProxyClient/keys.json \
-		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
+DIST          = /Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/qdevice.pri \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/device_config.prf \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/common/unix.conf \
@@ -214,6 +215,7 @@ DIST          = ../QtProxyClient/keys.json \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/qt_config.prf \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/macx-clang/qmake.conf \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/spec_post.prf \
+		../QtProxyClient/.qmake.stash \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/exclusive_builds.prf \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/mac/sdk.prf \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/toolchain.prf \
@@ -239,8 +241,10 @@ DIST          = ../QtProxyClient/keys.json \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/exceptions.prf \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/yacc.prf \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/lex.prf \
-		../QtProxyClient/QtProxyClient.pro ../QtProxyClient/mainwindow.h ../QtProxyClient/main.cpp \
-		../QtProxyClient/mainwindow.cpp
+		../QtProxyClient/QtProxyClient.pro ../QtProxyClient/mainwindow.h \
+		../QtProxyClient/controlpanel.h ../QtProxyClient/main.cpp \
+		../QtProxyClient/mainwindow.cpp \
+		../QtProxyClient/controlpanel.cpp
 QMAKE_TARGET  = QtProxyClient
 DESTDIR       = 
 TARGET        = QtProxyClient.app/Contents/MacOS/QtProxyClient
@@ -254,7 +258,7 @@ EXPORT_ARCH_ARGS = $(foreach arch, $(if $(EXPORT_ACTIVE_ARCHS), $(EXPORT_ACTIVE_
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_controlpanel.h $(OBJECTS)  
 	@test -d QtProxyClient.app/Contents/MacOS/ || mkdir -p QtProxyClient.app/Contents/MacOS/
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
@@ -416,6 +420,7 @@ Makefile: ../QtProxyClient/QtProxyClient.pro /Users/Joni/Qt/5.9.1/clang_64/mkspe
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/qt_config.prf \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/macx-clang/qmake.conf \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/exclusive_builds.prf \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/mac/sdk.prf \
 		/Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/toolchain.prf \
@@ -605,6 +610,7 @@ Makefile: ../QtProxyClient/QtProxyClient.pro /Users/Joni/Qt/5.9.1/clang_64/mkspe
 /Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/qt_config.prf:
 /Users/Joni/Qt/5.9.1/clang_64/mkspecs/macx-clang/qmake.conf:
 /Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/exclusive_builds.prf:
 /Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/mac/sdk.prf:
 /Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/toolchain.prf:
@@ -665,9 +671,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /Users/Joni/Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../QtProxyClient/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../QtProxyClient/main.cpp ../QtProxyClient/mainwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../QtProxyClient/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../QtProxyClient/mainwindow.h ../QtProxyClient/controlpanel.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../QtProxyClient/main.cpp ../QtProxyClient/mainwindow.cpp ../QtProxyClient/controlpanel.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../QtProxyClient/mainwindow.ui ../QtProxyClient/controlpanel.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -677,6 +683,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r QtProxyClient.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -705,8 +712,6 @@ moc_mainwindow.cpp: /Users/Joni/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Header
 		/Users/Joni/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		/Users/Joni/Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/QTcpSocket \
 		/Users/Joni/Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
-		/Users/Joni/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QKeyEvent \
-		/Users/Joni/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
 		../QtProxyClient/mainwindow.h \
 		moc_predefs.h \
 		/Users/Joni/Qt/5.9.1/clang_64/bin/moc
@@ -714,12 +719,16 @@ moc_mainwindow.cpp: /Users/Joni/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Header
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_mainwindow.h ui_controlpanel.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_mainwindow.h ui_controlpanel.h
 ui_mainwindow.h: ../QtProxyClient/mainwindow.ui \
 		/Users/Joni/Qt/5.9.1/clang_64/bin/uic
 	/Users/Joni/Qt/5.9.1/clang_64/bin/uic ../QtProxyClient/mainwindow.ui -o ui_mainwindow.h
+
+ui_controlpanel.h: ../QtProxyClient/controlpanel.ui \
+		/Users/Joni/Qt/5.9.1/clang_64/bin/uic
+	/Users/Joni/Qt/5.9.1/clang_64/bin/uic ../QtProxyClient/controlpanel.ui -o ui_controlpanel.h
 
 compiler_rez_source_make_all:
 compiler_rez_source_clean:
@@ -738,8 +747,6 @@ main.o: ../QtProxyClient/main.cpp ../QtProxyClient/mainwindow.h \
 		/Users/Joni/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		/Users/Joni/Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/QTcpSocket \
 		/Users/Joni/Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
-		/Users/Joni/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QKeyEvent \
-		/Users/Joni/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
 		/Users/Joni/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		/Users/Joni/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../QtProxyClient/main.cpp
@@ -749,14 +756,30 @@ mainwindow.o: ../QtProxyClient/mainwindow.cpp ../QtProxyClient/mainwindow.h \
 		/Users/Joni/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		/Users/Joni/Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/QTcpSocket \
 		/Users/Joni/Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
-		/Users/Joni/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QKeyEvent \
-		/Users/Joni/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
 		../QtProxyClient/ui_mainwindow.h \
+		/Users/Joni/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QFile \
+		/Users/Joni/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qfile.h \
+		/Users/Joni/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QFileDialog \
+		/Users/Joni/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qfiledialog.h \
+		/Users/Joni/Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/QHostAddress \
+		/Users/Joni/Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/qhostaddress.h \
+		/Users/Joni/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QTextStream \
+		/Users/Joni/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qtextstream.h \
+		/Users/Joni/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QProcess \
+		/Users/Joni/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qprocess.h \
+		/Users/Joni/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qglobal.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../QtProxyClient/mainwindow.cpp
+
+controlpanel.o: ../QtProxyClient/controlpanel.cpp ../QtProxyClient/controlpanel.h \
+		ui_controlpanel.h \
+		../QtProxyClient/tank_json.cpp \
 		/Users/Joni/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonObject \
 		/Users/Joni/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
 		/Users/Joni/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
-		/Users/Joni/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../QtProxyClient/mainwindow.cpp
+		/Users/Joni/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		/Users/Joni/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QKeyEvent \
+		/Users/Joni/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qevent.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o controlpanel.o ../QtProxyClient/controlpanel.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

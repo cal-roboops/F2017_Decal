@@ -18,9 +18,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-
-
+//regular page
 void MainWindow::on_button_set_clicked()
 {
     int slider_value = ui->lineEdit_input->text().toInt();

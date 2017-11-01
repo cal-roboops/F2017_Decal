@@ -1,61 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QJsonObject>
-#include <QDebug>
-#include <QKeyEvent>
+#include <QFile>
+#include <QFileDialog>
+#include <QHostAddress>
+#include <QTextStream>
+#include <QProcess>
+#include <qglobal.h>
+
 //#include <windows.h>
-
-// change
-
-QJsonObject startJ
-{ 
-    {"DT_M_RD", 0},
-    {"DT_M_LD", 0},
-    {"DT_S_FL", 0},
-    {"DT_S_FR", 0},
-    {"DT_S_ML", 0},
-    {"DT_S_MR", 0},
-    {"DT_S_BL", 0},
-    {"DT_S_BR", 0},
-};
-QJsonObject zeroJ
-{
-    {"DT_S_FL", 0},
-    {"DT_S_FR", 0},
-    {"DT_S_ML", 0},
-    {"DT_S_MR", 0},
-    {"DT_S_BL", 0},
-    {"DT_S_BR", 0},
-};
-QJsonObject fortyfiveJ
-{
-    {"DT_S_FL", 45},
-    {"DT_S_FR", -45},
-    {"DT_S_ML", 0},
-    {"DT_S_MR", 0},
-    {"DT_S_BL", 45},
-    {"DT_S_BR", -45},
-};
-QJsonObject ninetyJ
-{
-    {"DT_S_FL", 90},
-    {"DT_S_FR", 90},
-    {"DT_S_ML", 90},
-    {"DT_S_MR", 90},
-    {"DT_S_BL", 90},
-    {"DT_S_BR", 90},
-};
-QJsonObject upJ
-{
-    {"DT_M_RD", 1},
-    {"DT_M_LD", 1},
-};
-QJsonObject downJ
-{
-    {"DT_M_RD", 0},
-    {"DT_M_LD", 0},
-};
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -63,48 +16,254 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     // Setup & create basics
     ui->setupUi(this);
-    qDebug() << startJ;
+    socket = new QTcpSocket(this);
+    disconnectPressed = false;
+    ui->sendMSG->setEnabled(false);
+
+    // Connect desired SIGNALs and SLOTs
+    connect(socket, SIGNAL(readyRead()), this, SLOT(on_recvMSG()));
+    connect(socket, SIGNAL(disconnected()), this, SLOT(on_disconnect()));
 }
 
 MainWindow::~MainWindow()
 {
+    delete socket;
     delete ui;
 }
 
-void MainWindow::on_radio0_clicked()
+void MainWindow::on_connect_clicked()
 {
-    qDebug() << zeroJ;
-}
-void MainWindow::on_radio45_clicked()
-{
-    qDebug() << fortyfiveJ;
-}
-void MainWindow::on_radio90_clicked()
-{
-    qDebug() << ninetyJ;
-}
-
-void MainWindow::keyPressEvent(QKeyEvent * event)
-{
-    if(event-> key() == Qt::Key_W){
-        qDebug() << upJ;
-    }
-    else if(event-> key() == Qt::Key_S){
-        qDebug() << downJ;
+    // Disconnect from existing socket
+    on_disconnect_clicked();
+    if (ui->infoLabel->text().contains("Failed"))
+    {
+        return;
     }
 
+    // Setup & connect to socket
+    QString ipAddr = ui->serv_ipEdit->toPlainText();
+    int port = (ui->serv_portEdit->toPlainText()).toInt();
+    socket->connectToHost(ipAddr, port);
+
+    // Need to wait for connection
+    QString msg = ui->infoLabel->text();
+    QString newPeer = ipAddr + ":" + QString::number(port) + "! ";
+    if (!socket->waitForConnected(5000))
+    {
+        msg += "Failed to connect to " + newPeer;
+    } else
+    {
+        msg += "Connected to " + newPeer;
+        ui->sendMSG->setEnabled(true);
+    }
+
+    // Update info label
+    ui->infoLabel->setText(msg);
 }
 
-//    switch (event->key())
-//    {
-//    case Qt::Key_W:
-//        QJsonObject ball;
-//        ball[0] = "up";
-//        qDebug() << ball;
-//        return true;
-//    case Qt::Key_Return:
-//        QJsonObject ball2;
-//        ball2[0] = "down";
-//        qDebug() << ball2;
-//        return true;
-//    }
+void MainWindow::on_disconnect_clicked()
+{
+    disconnectPressed = true;
+    QString disMsg = "";
+
+    // Get current connection info
+    QString conPeer = (socket->peerAddress()).toString() + ":";
+    conPeer += QString::number(socket->peerPort()) + "! ";
+
+    // Disconnect if connected
+    if (socket->state() == QTcpSocket::ConnectedState)
+    {
+        socket->disconnectFromHost();
+    }
+
+    // Need to wait for disconnection
+    if (socket->state() != QTcpSocket::UnconnectedState
+            && !socket->waitForDisconnected(5000))
+    {
+        disMsg = "Failed to disconnect from " + conPeer;
+    } else
+    {
+        disMsg = "Disconnected from " + conPeer;
+    }
+
+    ui->infoLabel->setText(disMsg);
+    disconnectPressed = false;
+}
+
+void MainWindow::on_sendMSG_clicked()
+{
+    socket->write(ui->msgEdit->toPlainText().toLocal8Bit());
+}
+
+void MainWindow::on_recvMSG()
+{
+    QByteArray data;
+    while (!socket->atEnd())
+    {
+        data = socket->readAll();
+        ui->recvData->append(data.data());
+    }
+}
+
+void MainWindow::on_clearRECV_clicked()
+{
+    ui->recvData->clear();
+}
+
+void MainWindow::on_openStream_clicked()
+{
+    QString command;
+    #ifdef Q_OS_WIN32
+    command = "C:\\Program Files\\VideoLAN\\VLC\\vlc.exe";
+    if (!QFile::exists(command))
+    {
+        command = "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe";
+    }
+    #else
+    command = "/usr/bin/vlc";
+    #endif
+
+    if (!QFile::exists(command))
+    {
+        ui->infoLabel->setText("ERROR: VLC not found!");
+        return;
+    }
+
+    #ifdef Q_OS_WIN32
+    command = "\"" + command + "\"";
+    #endif
+
+    command += " rtp://@";
+    command += ui->st_ipEdit->toPlainText();
+    command += ":" + ui->st_portEdit->toPlainText();
+
+    QProcess *process = new QProcess(this);
+    process->start(command);
+}
+
+void MainWindow::on_selectTestSuite_clicked()
+{
+    QStringList filePaths;
+    QFileDialog newTestFS(this);
+    newTestFS.setFileMode(QFileDialog::AnyFile);
+    newTestFS.setViewMode(QFileDialog::Detail);
+    if (newTestFS.exec())
+    {
+        filePaths = newTestFS.selectedFiles();
+    }
+
+    ui->testPathEdit->setText(filePaths[0]);
+}
+
+void MainWindow::on_runTestSuite_clicked()
+{
+    QString filePath = ui->testPathEdit->toPlainText();
+    if (filePath.isEmpty())
+    {
+        ui->testOut->setText("Must select a suite before running!");
+        return;
+    } else if (socket->state() != QTcpSocket::ConnectedState)
+    {
+        ui->testOut->setText("Must connect to server before running!");
+        return;
+    }
+
+    on_clearRECV_clicked();
+    ui->testOut->clear();
+
+    int progress = 0;
+    ui->testProgress->setValue(progress);
+
+    QFile testFile(filePath);
+    if (testFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QTextStream testStream(&testFile);
+
+        int testLines = 0;
+        QString testMSG = testStream.readLine();;
+        while (!testStream.atEnd() && (!testMSG.isEmpty()))
+        {
+            testLines += 1;
+            testMSG = testStream.readLine();
+        }
+        testStream.seek(0);
+
+        int curLine = 0;
+        while (curLine < testLines)
+        {
+            curLine += 1;
+            testMSG = testStream.readLine();
+
+            socket->write(testMSG.toLocal8Bit());
+            socket->waitForReadyRead(5000);
+
+            ui->testProgress->setValue((100*curLine)/testLines);
+            qApp->processEvents();
+            //Sleep(100);
+        }
+        testStream.readLine();
+
+        QStringList testRECV = ui->recvData->toPlainText().split('\n');
+        QStringList testRESP;
+        while (!testStream.atEnd())
+        {
+            testRESP << testStream.readLine();
+        }
+
+        int i, tRSP, tRCV, mRSL;
+        QString msg;
+        tRSP = testRESP.length();
+        tRCV = testRECV.length();
+        mRSL = qMin(tRSP, tRCV);
+        for (i = 0; i < mRSL; i++)
+        {
+            if (testRESP[i] != testRECV[i])
+            {
+                msg = "Test " + QString::number(i) + ": received ";
+                msg += testRECV[i] + " expected " + testRESP[i];
+                ui->testOut->append(msg);
+            }
+        }
+
+        if (mRSL < tRSP)
+        {
+            for (i = mRSL; i < tRSP; i++)
+            {
+                msg = QString::number(i) + " received [NOTHING]";
+                msg += " expected " + testRESP[i];
+                ui->testOut->append(msg);
+            }
+        } else if (mRSL < tRCV)
+        {
+            for (i = mRSL; i < tRCV; i++)
+            {
+                msg = QString::number(i) + " Received " + testRECV[i];
+                msg += " expected [NOTHING]";
+                ui->testOut->append(msg);
+            }
+        }
+
+        if (ui->testOut->toPlainText().isEmpty())
+        {
+            ui->testOut->setText("Test Suite Passed!");
+        }
+
+        testFile.close();
+    } else
+    {
+        ui->infoLabel->setText("Error opening test file!");
+        return;
+    }
+}
+
+void MainWindow::on_disconnect()
+{
+    if (!disconnectPressed)
+    {
+        ui->infoLabel->setText("Connection Lost!");
+    }
+
+    ui->sendMSG->setEnabled(false);
+}
+
+

@@ -1,19 +1,19 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
+#ifndef CONTROLPANEL_H
+#define CONTROLPANEL_H
 #include <QMainWindow>
 
 namespace Ui {
-class MainWindow;
+class ControlPanel;
 }
 
-class MainWindow : public QMainWindow
+class ControlPanel : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit ControlPanel(QWidget *parent = 0);
+    ~ControlPanel();
+
 
 private slots:
 
@@ -40,7 +40,7 @@ private slots:
     void keyPressEvent(QKeyEvent * event);
 
 private:
-    Ui::MainWindow *ui;
+    Ui::ControlPanel *ui;
 };
 
-#endif // MAINWINDOW_H
+#endif // CONTROLPANEL_H
