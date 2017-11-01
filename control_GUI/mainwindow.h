@@ -30,6 +30,16 @@ private slots:
 
     void on_radioButton_custom_clicked();
 
+    void on_radio0_clicked();
+    void on_radio45_clicked();
+    void on_radio90_clicked();
+
+    void on_tank_up_clicked();
+
+    void on_tank_down_clicked();
+
+    void keyPressEvent(QKeyEvent * event);
+
 private:
     Ui::MainWindow *ui;
 };
