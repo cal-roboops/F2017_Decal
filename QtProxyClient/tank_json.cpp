@@ -45,6 +45,11 @@ QJsonObject upJ
 };
 QJsonObject downJ
 {
+    {"DT_M_RD", -1},
+    {"DT_M_LD", -1},
+};
+QJsonObject stopJ
+{
     {"DT_M_RD", 0},
     {"DT_M_LD", 0},
 };

@@ -24,9 +24,6 @@ ControlPanel::~ControlPanel()
 void ControlPanel::on_button_set_clicked()
 {
     int slider_value = ui->lineEdit_input->text().toInt();
-//    if (slider_value > 45 || slider_value < -45){
-
-//    }
     ui->horizontalSlider->setValue(slider_value);
 
 }
@@ -71,14 +68,7 @@ void ControlPanel::on_radio90_clicked()
 {
     qDebug() << ninetyJ;
 }
-void ControlPanel::on_tank_up_clicked()
-{
-    qDebug() << upJ;
-}
-void ControlPanel::on_tank_down_clicked()
-{
-    qDebug() << downJ;
-}
+
 void ControlPanel::keyPressEvent(QKeyEvent * event)
 {
     if(event-> key() == Qt::Key_W){
@@ -88,4 +78,31 @@ void ControlPanel::keyPressEvent(QKeyEvent * event)
         qDebug() << downJ;
     }
 
+}
+void ControlPanel::keyReleaseEvent(QKeyEvent * event)
+{
+    if(event-> key() == Qt::Key_W || event-> key() == Qt::Key_S){
+        qDebug() << stopJ;
+    }
+
+}
+
+void ControlPanel::on_tank_up_pressed()
+{
+    qDebug() << upJ;
+}
+
+void ControlPanel::on_tank_up_released()
+{
+    qDebug() << stopJ;
+}
+
+void ControlPanel::on_tank_down_pressed()
+{
+    qDebug() << downJ;
+}
+
+void ControlPanel::on_tank_down_released()
+{
+    qDebug() << stopJ;
 }

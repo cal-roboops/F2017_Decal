@@ -33,11 +33,17 @@ private slots:
     void on_radio45_clicked();
     void on_radio90_clicked();
 
-    void on_tank_up_clicked();
-
-    void on_tank_down_clicked();
-
     void keyPressEvent(QKeyEvent * event);
+
+    void keyReleaseEvent(QKeyEvent * event);
+
+    void on_tank_up_pressed();
+
+    void on_tank_up_released();
+
+    void on_tank_down_pressed();
+
+    void on_tank_down_released();
 
 private:
     Ui::ControlPanel *ui;
