@@ -1,8 +1,10 @@
 #include "controlpanel.h"
 #include "ui_controlpanel.h"
+#include "controlpanel.h"
 #include "tank_json.cpp"
 #include "mainwindow.h"
 #include "mainwindow.cpp"
+#include <QMainWindow>
 #include <QJsonObject>
 #include <QDebug>
 #include <QKeyEvent>

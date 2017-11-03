@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'mainwindow.ui'
+** Form generated from reading UI file 'controlpanel.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.9.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_MAINWINDOW_H
-#define UI_MAINWINDOW_H
+#ifndef UI_CONTROLPANEL_H
+#define UI_CONTROLPANEL_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
@@ -29,7 +29,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_MainWindow
+class Ui_ControlPanel
 {
 public:
     QWidget *centralWidget;
@@ -60,12 +60,12 @@ public:
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
-    void setupUi(QMainWindow *MainWindow)
+    void setupUi(QMainWindow *ControlPanel)
     {
-        if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(617, 427);
-        centralWidget = new QWidget(MainWindow);
+        if (ControlPanel->objectName().isEmpty())
+            ControlPanel->setObjectName(QStringLiteral("ControlPanel"));
+        ControlPanel->resize(617, 427);
+        centralWidget = new QWidget(ControlPanel);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         stackedWidget = new QStackedWidget(centralWidget);
         stackedWidget->setObjectName(QStringLiteral("stackedWidget"));
@@ -144,62 +144,62 @@ public:
         radioButton_custom = new QRadioButton(centralWidget);
         radioButton_custom->setObjectName(QStringLiteral("radioButton_custom"));
         radioButton_custom->setGeometry(QRect(40, 260, 100, 22));
-        MainWindow->setCentralWidget(centralWidget);
+        ControlPanel->setCentralWidget(centralWidget);
         radioButton_custom->raise();
         stackedWidget->raise();
         radioButton->raise();
         radioButton_tank->raise();
-        menuBar = new QMenuBar(MainWindow);
+        menuBar = new QMenuBar(ControlPanel);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 617, 22));
         menuControls = new QMenu(menuBar);
         menuControls->setObjectName(QStringLiteral("menuControls"));
-        MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
+        ControlPanel->setMenuBar(menuBar);
+        mainToolBar = new QToolBar(ControlPanel);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        statusBar = new QStatusBar(MainWindow);
+        ControlPanel->addToolBar(Qt::TopToolBarArea, mainToolBar);
+        statusBar = new QStatusBar(ControlPanel);
         statusBar->setObjectName(QStringLiteral("statusBar"));
-        MainWindow->setStatusBar(statusBar);
+        ControlPanel->setStatusBar(statusBar);
 
         menuBar->addAction(menuControls->menuAction());
 
-        retranslateUi(MainWindow);
+        retranslateUi(ControlPanel);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
 
 
-        QMetaObject::connectSlotsByName(MainWindow);
+        QMetaObject::connectSlotsByName(ControlPanel);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MainWindow)
+    void retranslateUi(QMainWindow *ControlPanel)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
-        pushButton_up->setText(QApplication::translate("MainWindow", "Up", Q_NULLPTR));
-        button_set->setText(QApplication::translate("MainWindow", "Set", Q_NULLPTR));
-        pushButton_right->setText(QApplication::translate("MainWindow", "Right", Q_NULLPTR));
-        pushButton_down->setText(QApplication::translate("MainWindow", "Down", Q_NULLPTR));
-        pushButton_left->setText(QApplication::translate("MainWindow", "Left", Q_NULLPTR));
-        label->setText(QApplication::translate("MainWindow", "Regular Mode", Q_NULLPTR));
-        label_2->setText(QApplication::translate("MainWindow", "Tank Mode", Q_NULLPTR));
-        radio45->setText(QApplication::translate("MainWindow", "45", Q_NULLPTR));
-        radio90->setText(QApplication::translate("MainWindow", "90", Q_NULLPTR));
-        radio0->setText(QApplication::translate("MainWindow", "0", Q_NULLPTR));
-        tank_down->setText(QApplication::translate("MainWindow", "Down", Q_NULLPTR));
-        tank_up->setText(QApplication::translate("MainWindow", "Up", Q_NULLPTR));
-        label_3->setText(QApplication::translate("MainWindow", "Custom Mode", Q_NULLPTR));
-        radioButton->setText(QApplication::translate("MainWindow", "Regular", Q_NULLPTR));
-        radioButton_tank->setText(QApplication::translate("MainWindow", "Tank", Q_NULLPTR));
-        radioButton_custom->setText(QApplication::translate("MainWindow", "Custom", Q_NULLPTR));
-        menuControls->setTitle(QApplication::translate("MainWindow", "Controls", Q_NULLPTR));
+        ControlPanel->setWindowTitle(QApplication::translate("ControlPanel", "MainWindow", Q_NULLPTR));
+        pushButton_up->setText(QApplication::translate("ControlPanel", "Up", Q_NULLPTR));
+        button_set->setText(QApplication::translate("ControlPanel", "Set", Q_NULLPTR));
+        pushButton_right->setText(QApplication::translate("ControlPanel", "Right", Q_NULLPTR));
+        pushButton_down->setText(QApplication::translate("ControlPanel", "Down", Q_NULLPTR));
+        pushButton_left->setText(QApplication::translate("ControlPanel", "Left", Q_NULLPTR));
+        label->setText(QApplication::translate("ControlPanel", "Regular Mode", Q_NULLPTR));
+        label_2->setText(QApplication::translate("ControlPanel", "Tank Mode", Q_NULLPTR));
+        radio45->setText(QApplication::translate("ControlPanel", "45", Q_NULLPTR));
+        radio90->setText(QApplication::translate("ControlPanel", "90", Q_NULLPTR));
+        radio0->setText(QApplication::translate("ControlPanel", "0", Q_NULLPTR));
+        tank_down->setText(QApplication::translate("ControlPanel", "Down", Q_NULLPTR));
+        tank_up->setText(QApplication::translate("ControlPanel", "Up", Q_NULLPTR));
+        label_3->setText(QApplication::translate("ControlPanel", "Custom Mode", Q_NULLPTR));
+        radioButton->setText(QApplication::translate("ControlPanel", "Regular", Q_NULLPTR));
+        radioButton_tank->setText(QApplication::translate("ControlPanel", "Tank", Q_NULLPTR));
+        radioButton_custom->setText(QApplication::translate("ControlPanel", "Custom", Q_NULLPTR));
+        menuControls->setTitle(QApplication::translate("ControlPanel", "Controls", Q_NULLPTR));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+    class ControlPanel: public Ui_ControlPanel {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // UI_MAINWINDOW_H
+#endif // UI_CONTROLPANEL_H

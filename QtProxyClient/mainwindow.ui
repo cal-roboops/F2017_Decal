@@ -45,7 +45,7 @@
      <rect>
       <x>330</x>
       <y>10</y>
-      <width>80</width>
+      <width>101</width>
       <height>21</height>
      </rect>
     </property>
@@ -183,9 +183,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="serv_port_Label">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>19</x>
       <y>60</y>
-      <width>60</width>
+      <width>71</width>
       <height>25</height>
      </rect>
     </property>
@@ -214,7 +214,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>720</x>
       <y>330</y>
-      <width>93</width>
+      <width>131</width>
       <height>25</height>
      </rect>
     </property>
@@ -225,7 +225,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QTextEdit" name="testPathEdit">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>90</x>
       <y>290</y>
       <width>621</width>
       <height>51</height>
@@ -237,7 +237,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>720</x>
       <y>300</y>
-      <width>93</width>
+      <width>131</width>
       <height>25</height>
      </rect>
     </property>
@@ -264,7 +264,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QProgressBar" name="testProgress">
     <property name="geometry">
      <rect>
-      <x>720</x>
+      <x>730</x>
       <y>370</y>
       <width>118</width>
       <height>23</height>
@@ -277,7 +277,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QTextEdit" name="testOut">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>90</x>
       <y>350</y>
       <width>621</width>
       <height>51</height>
@@ -291,8 +291,8 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>350</y>
-      <width>60</width>
+      <y>360</y>
+      <width>71</width>
       <height>25</height>
      </rect>
     </property>
@@ -324,7 +324,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>710</x>
       <y>130</y>
-      <width>93</width>
+      <width>111</width>
       <height>25</height>
      </rect>
     </property>
@@ -369,9 +369,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="st_port_Label">
     <property name="geometry">
      <rect>
-      <x>680</x>
+      <x>669</x>
       <y>90</y>
-      <width>60</width>
+      <width>71</width>
       <height>25</height>
      </rect>
     </property>

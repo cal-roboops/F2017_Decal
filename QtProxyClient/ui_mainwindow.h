@@ -59,7 +59,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->setEnabled(true);
-        MainWindow->resize(847, 420);
+        MainWindow->resize(1626, 534);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         msgEdit = new QTextEdit(centralWidget);
@@ -70,7 +70,7 @@ public:
         sendMSG->setGeometry(QRect(140, 210, 93, 28));
         recvLabel = new QLabel(centralWidget);
         recvLabel->setObjectName(QStringLiteral("recvLabel"));
-        recvLabel->setGeometry(QRect(330, 10, 80, 21));
+        recvLabel->setGeometry(QRect(330, 10, 101, 21));
         recvLabel->setAlignment(Qt::AlignCenter);
         msgLabel = new QLabel(centralWidget);
         msgLabel->setObjectName(QStringLiteral("msgLabel"));
@@ -103,35 +103,35 @@ public:
         serv_portEdit->setGeometry(QRect(100, 60, 91, 25));
         serv_port_Label = new QLabel(centralWidget);
         serv_port_Label->setObjectName(QStringLiteral("serv_port_Label"));
-        serv_port_Label->setGeometry(QRect(30, 60, 60, 25));
+        serv_port_Label->setGeometry(QRect(19, 60, 71, 25));
         serv_port_Label->setAlignment(Qt::AlignCenter);
         disconnect = new QPushButton(centralWidget);
         disconnect->setObjectName(QStringLiteral("disconnect"));
         disconnect->setGeometry(QRect(210, 60, 93, 25));
         runTestSuite = new QPushButton(centralWidget);
         runTestSuite->setObjectName(QStringLiteral("runTestSuite"));
-        runTestSuite->setGeometry(QRect(720, 330, 93, 25));
+        runTestSuite->setGeometry(QRect(720, 330, 131, 25));
         testPathEdit = new QTextEdit(centralWidget);
         testPathEdit->setObjectName(QStringLiteral("testPathEdit"));
-        testPathEdit->setGeometry(QRect(80, 290, 621, 51));
+        testPathEdit->setGeometry(QRect(90, 290, 621, 51));
         selectTestSuite = new QPushButton(centralWidget);
         selectTestSuite->setObjectName(QStringLiteral("selectTestSuite"));
-        selectTestSuite->setGeometry(QRect(720, 300, 93, 25));
+        selectTestSuite->setGeometry(QRect(720, 300, 131, 25));
         test_Label = new QLabel(centralWidget);
         test_Label->setObjectName(QStringLiteral("test_Label"));
         test_Label->setGeometry(QRect(10, 290, 60, 25));
         test_Label->setAlignment(Qt::AlignCenter);
         testProgress = new QProgressBar(centralWidget);
         testProgress->setObjectName(QStringLiteral("testProgress"));
-        testProgress->setGeometry(QRect(720, 370, 118, 23));
+        testProgress->setGeometry(QRect(730, 370, 118, 23));
         testProgress->setValue(0);
         testOut = new QTextEdit(centralWidget);
         testOut->setObjectName(QStringLiteral("testOut"));
-        testOut->setGeometry(QRect(80, 350, 621, 51));
+        testOut->setGeometry(QRect(90, 350, 621, 51));
         testOut->setReadOnly(true);
         test_Label_2 = new QLabel(centralWidget);
         test_Label_2->setObjectName(QStringLiteral("test_Label_2"));
-        test_Label_2->setGeometry(QRect(10, 350, 60, 25));
+        test_Label_2->setGeometry(QRect(10, 360, 71, 25));
         test_Label_2->setAlignment(Qt::AlignCenter);
         st_ip_Label = new QLabel(centralWidget);
         st_ip_Label->setObjectName(QStringLiteral("st_ip_Label"));
@@ -139,7 +139,7 @@ public:
         st_ip_Label->setAlignment(Qt::AlignCenter);
         openStream = new QPushButton(centralWidget);
         openStream->setObjectName(QStringLiteral("openStream"));
-        openStream->setGeometry(QRect(710, 130, 93, 25));
+        openStream->setGeometry(QRect(710, 130, 111, 25));
         st_portEdit = new QTextEdit(centralWidget);
         st_portEdit->setObjectName(QStringLiteral("st_portEdit"));
         st_portEdit->setGeometry(QRect(750, 90, 91, 25));
@@ -148,7 +148,7 @@ public:
         st_ipEdit->setGeometry(QRect(750, 50, 91, 25));
         st_port_Label = new QLabel(centralWidget);
         st_port_Label->setObjectName(QStringLiteral("st_port_Label"));
-        st_port_Label->setGeometry(QRect(680, 90, 60, 25));
+        st_port_Label->setGeometry(QRect(669, 90, 71, 25));
         st_port_Label->setAlignment(Qt::AlignCenter);
         streamLabel = new QLabel(centralWidget);
         streamLabel->setObjectName(QStringLiteral("streamLabel"));
@@ -170,8 +170,8 @@ public:
         serv_ipEdit->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">127.0.0.1</p></body></html>", Q_NULLPTR));
+"</style></head><body style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt;\">127.0.0.1</span></p></body></html>", Q_NULLPTR));
         serv_ip_Label->setText(QApplication::translate("MainWindow", "Server IP", Q_NULLPTR));
         clearRECV->setText(QApplication::translate("MainWindow", "Clear", Q_NULLPTR));
         connect->setText(QApplication::translate("MainWindow", "Connect", Q_NULLPTR));
@@ -179,8 +179,8 @@ public:
         serv_portEdit->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">8088</p></body></html>", Q_NULLPTR));
+"</style></head><body style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt;\">8088</span></p></body></html>", Q_NULLPTR));
         serv_port_Label->setText(QApplication::translate("MainWindow", "Server Port", Q_NULLPTR));
         disconnect->setText(QApplication::translate("MainWindow", "Disconnect", Q_NULLPTR));
         runTestSuite->setText(QApplication::translate("MainWindow", "Run Test Suite", Q_NULLPTR));
@@ -192,13 +192,13 @@ public:
         st_portEdit->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">9001</p></body></html>", Q_NULLPTR));
+"</style></head><body style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt;\">9001</span></p></body></html>", Q_NULLPTR));
         st_ipEdit->setHtml(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">239.255.0.1</p></body></html>", Q_NULLPTR));
+"</style></head><body style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt;\">239.0.0.1</span></p></body></html>", Q_NULLPTR));
         st_port_Label->setText(QApplication::translate("MainWindow", "Stream Port", Q_NULLPTR));
         streamLabel->setText(QApplication::translate("MainWindow", "RTP Stream", Q_NULLPTR));
     } // retranslateUi
