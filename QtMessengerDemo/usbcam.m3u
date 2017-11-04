@@ -1,0 +1,4 @@
+#EXTM3U
+#EXTVLCOPT:qtcapture-width=160
+#EXTVLCOPT:qtcapture-height=120
+qtcapture://0x14200000046d0825
