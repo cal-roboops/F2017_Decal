@@ -1,4 +1,3 @@
-
 int dirPinIN = 2;
 int dirPinOUT = 3;
 int PWMPinOUT = 6;
@@ -13,7 +12,7 @@ void setup() {
   pinMode(dirPinOUT, OUTPUT);
   pinMode(PWMPinOUT, OUTPUT);
 
-  analogWrite(PWMPinOUT, 0);
+  analogWrite(PWMPinOUT, 255);
   delay(100);
   
   dirNEW = digitalRead(dirPinIN);
@@ -29,7 +28,7 @@ void loop() {
   {
     Serial.println("Switching Direction!");
 
-    analogWrite(PWMPinOUT, 0);
+    analogWrite(PWMPinOUT, 255);
     delay(100);
 
     digitalWrite(dirPinOUT, dirNEW);
