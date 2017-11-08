@@ -145,6 +145,8 @@ void *handle_input(void* threadStruct) {
 				continue;
 			}
 
+			cout << buffer << endl;
+
 			jobj = (json*) malloc(sizeof(json));
 
 			if (jobj == NULL) {
@@ -178,6 +180,7 @@ void *handle_input(void* threadStruct) {
 			cmd -> j = jobj;
 
 			pthread_create(pt, NULL, execute_command, (void*) cmd);
+			memset(buffer, 0, sizeof(buffer));
 
 		} else {
 			if (t -> ip == roverIP) {
