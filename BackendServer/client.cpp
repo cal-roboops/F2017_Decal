@@ -17,22 +17,18 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <json/value.cpp>
-#include <json/writer.cpp>
+#include "json.hpp"
 
 using namespace std;
+using json = nlohmann::json;
 
 int main() {
 	int client;
 	int iResult;
-	int value;
 	int portNum = 8088;
 	int bufSize = 1024;
 	char buffer[bufSize];
-	string serialized;
-	Json::Value jobj;
-	Json::StreamWriterBuilder writer;
-	writer.settings_["indentation"] = "";
+	json jobj;
 	const char *ip = "127.0.0.1";
 
 	struct sockaddr_in server_addr;
@@ -80,23 +76,11 @@ int main() {
 	cout << "Use ctrl + c to end the connection.\n" << endl;
 
 	while (true) {
-		cout << "Key: ";
-		cin.getline(buffer, sizeof(buffer));
+		cout << "Input: ";
+		cin.getline(buffer, bufSize);
 
-		jobj[0] = Json::Value(buffer);
+		send(client, buffer, bufSize, 0);
 
-		cout << "Value: ";
-		cin.getline(buffer, sizeof(buffer));
-
-		value = buffer[0] - '0';
-		jobj[1] = Json::Value(value);
-
-		serialized = Json::writeString(writer, jobj);
-
-		send(client, serialized.c_str(), bufSize, 0);
-
-		recv(client, buffer, bufSize, 0);
-		cout << "\n" << "SERVER: " << buffer << "\n" << endl;
 	}
 	
 	close(client);

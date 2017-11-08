@@ -1,115 +1,144 @@
-#include <iostream>
-#include <sstream>
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
-#include <sys/socket.h>
 #include <netinet/in.h>
-#include <arpa/inet.h>
-#include <sys/types.h>
-#include <netdb.h>
 #include <list>
-
-#include <json/value.cpp>
-#include <json/reader.cpp>
-#include <json/writer.cpp>
-
-#include "functions.h"
+#include <json/json.hpp>
 
 using namespace std;
+using json = nlohmann::json;
 
-const long roverIP = 167772352;
+const long roverIP = 167772352; //actual rover IP
+//const long roverIP = 16777343; //for testing purposes
 const int bufSize = 1024;
-const int numFuncs = 5;
-struct Thread* roverThread;
+const int EMERGENCY = -1;
+const int SERVER_COMMAND = -2;
+
+int roverCommandSocket;
+int roverEmergencySocket;
+pthread_mutex_t roverCommandLock;
+pthread_mutex_t roverEmergencyLock;
 list<struct Thread*> clientThreads;
-struct Function* functions[numFuncs];
 
-void terminateThread(struct Thread*);
+struct Thread {
+	int socket_desc;
+	pthread_t* pthread;
+	long ip;
+	int port;
+};
 
-void *handleInput(void*);
+struct Command {
+	int client_socket;
+	json* j;
+};
 
-void createThread(int, long, int);
+void terminate_thread(struct Thread*);
+
+void *handle_input(void*);
+
+void *execute_command(void*);
+
+void create_thread(int, long, int);
 
 int main() {
 	const int MAX_SIZE_BACKLOG_QUEUE = 5;
-	int serverListener;
 	int client;
-	int portNum = 8088;
-	int size = sizeof(struct sockaddr_in);
+	int clientListener;
+	int clientPort = 8088;
 	struct sockaddr_in server_addr, client_addr;
+	int size = sizeof(struct sockaddr_in);
 
-	serverListener = socket(AF_INET, SOCK_STREAM, 0);
+	pthread_mutex_init(&roverCommandLock, NULL);
+	pthread_mutex_init(&roverEmergencyLock, NULL);
 
-	if (serverListener < 0) {
-		cout << "Error establishing connection." << endl;
-	} else {
-		cout << "Server socket connection established." << endl;
-	}
+	clientListener = socket(AF_INET, SOCK_STREAM, 0);
+
+	if (clientListener < 0) {
+		cout << "ERROR: failed to create socket for client communication" << endl;
+		exit(1);
+	} 
 
 	server_addr.sin_family = AF_INET;
-	server_addr.sin_port = htons(portNum);
+	server_addr.sin_port = htons(clientPort);
 	server_addr.sin_addr.s_addr = INADDR_ANY; // will be replaced by IP of communication receiver on rover
 
-	if (bind(serverListener, (struct sockaddr*) &server_addr, sizeof(server_addr)) < 0) {
-		  cout << "Error binding socket." << endl;
+	if (bind(clientListener, (struct sockaddr*) &server_addr, sizeof(server_addr)) < 0) {
+		cout << "ERROR: failed to bind socket for client communication" << endl;
 		exit(1);
-	} else {
-		cout << "Ready to receive clients..." << endl;
-	}
+	} 
 
-	listen(serverListener, MAX_SIZE_BACKLOG_QUEUE);
-	initializeFunctions(functions, numFuncs);
+	listen(clientListener, MAX_SIZE_BACKLOG_QUEUE);
+	cout << "Ready to receive client connecions...\n" << endl;
 
 	while (true) {
-		client = accept(serverListener, (struct sockaddr*) &client_addr, (socklen_t*) &size);
+		client = accept(clientListener, (struct sockaddr*) &client_addr, (socklen_t*) &size);
 
 		if (client < 0) {
-			cout << "Error on accepting client." << endl;
-		} else {
-			if (client_addr.sin_addr.s_addr == roverIP) {
-				cout << "\nSuccessfully connected to ROVER.\n" << endl;
-			} else {
-				cout << "\nSuccessfully connected to new client." << endl;
-				cout << "Client IP: " << client_addr.sin_addr.s_addr << endl;
-				cout << "Client port: " << ntohs(client_addr.sin_port) << "\n" << endl;
-			}
+			cout << "ERROR: failed to connect to client" << endl;
+		} else if (client_addr.sin_addr.s_addr == roverIP) {
+			roverCommandSocket = client;
 
-			createThread(client, client_addr.sin_addr.s_addr, ntohs(client_addr.sin_port));
+			cout << "Successfully established command/response connection to ROVER." << endl;
+			cout << "Waiting to establish emergency connection to ROVER..." << endl;
+
+			client = accept(clientListener, (struct sockaddr*) &client_addr, (socklen_t*) &size);
+
+			if (client < 0) {
+				cout << "ERROR: failed to establish emergency connection to ROVER" << endl;
+				close(roverCommandSocket);
+				roverCommandSocket = -1;
+			} else {
+				roverEmergencySocket = client;
+				create_thread(roverEmergencySocket, client_addr.sin_addr.s_addr, ntohs(client_addr.sin_port));
+				cout << "Successfully established emergency connection to ROVER." << endl;
+			}
+		} else {
+			cout << "\nSuccessfully connected to new client." << endl;
+			cout << "Client IP: " << client_addr.sin_addr.s_addr << endl;
+			cout << "Client port: " << ntohs(client_addr.sin_port) << "\n" << endl;
+
+			create_thread(client, client_addr.sin_addr.s_addr, ntohs(client_addr.sin_port));
 		}
 	} 
 }
 
-void createThread(int socketID, long ipAddr, int p) {
-	pthread_t* pt = (pthread_t*) malloc(sizeof(pthread_t));
-	struct Thread* t = (struct Thread*) malloc(sizeof(struct Thread));
+void create_thread(int socketID, long ipAddr, int p) {
+	struct Thread* t;
+	pthread_t* pt; 
+
+	t = (struct Thread*) malloc(sizeof(struct Thread));
+
+	if (t == NULL) {
+		cout << "ERROR: failed to allocate memory" << endl;
+		close(socketID);
+		return;
+	}
+
+	pt = (pthread_t*) malloc(sizeof(pthread_t));
+
+	if (pt == NULL) {
+		cout << "ERROR: failed to allocate memory" << endl;
+		close(socketID);
+		return;
+	}
 
 	t -> socket_desc = socketID;
 	t -> pthread = pt;
 	t -> ip = ipAddr;
 	t -> port = p;
 
-	pthread_create(pt, NULL, handleInput, (void*) t);
+	pthread_create(pt, NULL, handle_input, (void*) t);
 
-	if (ipAddr == roverIP) {
-		roverThread = t;
-	} else {
+	if (ipAddr != roverIP) {
 		clientThreads.push_back(t);
 	}
 }
 
-void *handleInput(void* threadStruct) {
+void *handle_input(void* threadStruct) {
 	struct Thread* t = (struct Thread*) threadStruct;
-	struct Function* f;
 	int socketID = t -> socket_desc;
 	char buffer[bufSize];
-	bool parsingSuccessful;
-	int val;
-	string jsonString;
-	Json::Value jobj;
-	Json::CharReaderBuilder reader;
-	reader["collectComments"] = false;
-	JSONCPP_STRING errs;
+	struct Command* cmd;
+	pthread_t* pt;
+	json* jobj;
 
 	while (true) {
 		if (recv(socketID, buffer, bufSize, 0) > 0) {
@@ -117,68 +146,96 @@ void *handleInput(void* threadStruct) {
 				continue;
 			}
 
-			istringstream istr(buffer);
-			parsingSuccessful = Json::parseFromStream(reader, istr, &jobj, &errs);
+			jobj = (json*) malloc(sizeof(json));
 
-			if (!parsingSuccessful) {
-				cout << "Test Failed: could not deserialize command\n" << endl;
-				send(t -> socket_desc, "Failed to deserialize command.", bufSize, 0);
+			if (jobj == NULL) {
+				cout << "ERROR: failed to allocate memory" << endl;
+				continue;
+			} 
+
+			try {
+				*jobj = json::parse(buffer);
+			} catch (invalid_argument ex) {
+				cout << "ERROR: failed to parse command" << endl;
+				free(jobj);
 				continue;
 			}
-			
-			if (t -> ip == roverIP) {
-				cout << "ROVER: Key: " << jobj[0] << ", Value: " << jobj[1] << endl;
-			} else {
-				cout << "Client (IP: " << t -> ip << ", Port: " << t -> port << "): Key: " << jobj[0] << ", Value: " << jobj[1] << endl;
-			}
-					
-			val = jobj[1].asInt();
 
-			if (val < numFuncs && val >= 0) {
-				/*if (roverThread == NULL) {
-					cout << "Test Failed: rover is not connected\n" << endl;
-					send(t -> socket_desc, "Rover needs to be connected to run tests.", bufSize, 0);
-				} else {*/
-					f = functions[jobj[1].asInt()];
-					f -> func(f, clientThreads, jobj[0].asString(), t -> socket_desc, -1);
-				//}
-			} else {
-				cout << "Test Failed: value out of range\n" << endl;
-				send(t -> socket_desc, "Value out of range.", bufSize, 0);
+			cmd = (struct Command*) malloc(sizeof(struct Command));
+
+			if (cmd == NULL) {
+				cout << "ERROR: failed to allocate memory" << endl;
+				continue;
 			}
-			
+
+			pt = (pthread_t*) malloc(sizeof(pthread_t));
+
+			if (pt == NULL) {
+				cout << "ERROR: failed to allocate memory" << endl;
+				continue;
+			}
+
+			cmd -> client_socket = t -> socket_desc;
+			cmd -> j = jobj;
+
+			pthread_create(pt, NULL, execute_command, (void*) cmd);
+
 		} else {
 			if (t -> ip == roverIP) {
 				cout << "\nDisconnected with ROVER.\n" << endl;
-				roverThread = NULL;
+				close(roverCommandSocket);
+				close(roverEmergencySocket);
 			} else {
 				cout << "\nDisconnected with Client (IP: " << t -> ip << ", Port: " << t -> port << ").\n" << endl;
+				close(socketID);
 			}
 
-			terminateThread(t);
-			close(socketID);
+			terminate_thread(t);
 			return NULL;
 		}
 	}
 }
 
-void terminateThread(struct Thread* t) {
+void *execute_command(void* command) {
+	struct Command* cmd = (struct Command*) command;
+	int client = cmd -> client_socket;
+	json jobj = *(cmd -> j);
+
+	if (jobj.begin().value() == EMERGENCY) {
+		//perform emergency action
+	} else if (jobj.begin().value() == SERVER_COMMAND) {
+		//perform server command
+	} else {
+		try {
+			jobj.begin().key();
+			cout << "Key: " << jobj.begin().key() << ", Value: " << jobj.begin().value() << endl;
+		} catch (domain_error ex) {
+			cout << "ERROR: received JSON object not in expected format" << endl;
+		}
+	}
+
+	free(cmd -> j);
+	free(cmd);
+	pthread_exit(NULL);
+}
+
+void terminate_thread(struct Thread* t) {
 	list<struct Thread*>::const_iterator iterator;
 
 	if (t -> ip != roverIP) {
 		for (iterator = clientThreads.begin(); iterator != clientThreads.end(); iterator++) {
 			struct Thread* thread = *iterator;
 
-			if (thread -> ip == t -> ip) {
+			if (thread -> ip == t -> ip && thread -> port == t -> port) {
 				clientThreads.erase(iterator);
 				break;
 			}
 		}
 	}
 
-	pthread_cancel(*(t -> pthread));
 	free(t -> pthread);
 	free(t);
+	pthread_exit(NULL);
 }
 
 
