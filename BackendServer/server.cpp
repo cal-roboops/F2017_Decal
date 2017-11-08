@@ -84,7 +84,6 @@ int main() {
 			if (client < 0) {
 				cout << "ERROR: failed to establish emergency connection to ROVER" << endl;
 				close(roverCommandSocket);
-				roverCommandSocket = -1;
 			} else {
 				roverEmergencySocket = client;
 				create_thread(roverEmergencySocket, client_addr.sin_addr.s_addr, ntohs(client_addr.sin_port));
