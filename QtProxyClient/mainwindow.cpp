@@ -8,7 +8,7 @@
 #include <QProcess>
 #include <qglobal.h>
 
-#include <windows.h>
+//#include <windows.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -110,6 +110,11 @@ void MainWindow::on_clearRECV_clicked()
     ui->recvData->clear();
 }
 
+
+void MainWindow::send_data(QString data) {
+    socket->write(data.toLocal8Bit());
+}
+
 void MainWindow::on_openStream_clicked()
 {
     QString command;
@@ -120,7 +125,7 @@ void MainWindow::on_openStream_clicked()
         command = "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe";
     }
     #else
-    commad = "/usr/bin/vlc";
+    command = "/usr/bin/vlc";
     #endif
 
     if (!QFile::exists(command))
@@ -199,7 +204,7 @@ void MainWindow::on_runTestSuite_clicked()
 
             ui->testProgress->setValue((100*curLine)/testLines);
             qApp->processEvents();
-            Sleep(100);
+            //Sleep(100);
         }
         testStream.readLine();
 
@@ -265,3 +270,5 @@ void MainWindow::on_disconnect()
 
     ui->sendMSG->setEnabled(false);
 }
+
+

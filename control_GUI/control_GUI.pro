@@ -1,14 +1,14 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-08-22T13:43:22
+# Project created by QtCreator 2017-10-26T19:40:58
 #
 #-------------------------------------------------
 
-QT       += core gui network
+QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = QtProxyClient
+TARGET = control_GUI
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -26,14 +26,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    tank_json.cpp \
-    controlpanel.cpp \
-    regular_json.cpp
+    tank_json.cpp
 
 HEADERS += \
-        mainwindow.h \
-    controlpanel.h
+        mainwindow.h
 
 FORMS += \
-        mainwindow.ui \
-    controlpanel.ui
+        mainwindow.ui
