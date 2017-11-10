@@ -22,10 +22,14 @@ MAPTYPE = 'satellite'
 # KEEP THIS 1 FOR NOW CHANGING CAN BREAK COORDINATE CALCULATIONS
 SCALE = 1
 
+
 # contains lat, lon, elevation, isBlocked for each coordinate
 MAP_DATA = np.zeros((IMG_SIZE, IMG_SIZE, 4), dtype=np.float64)
 
 BASE_ELEVATION = 1371.5
+# controls resolution of elevation data
+NUM_BLOCKS = 30
+
 START = (38.406421, -110.791767)
 END = (38.407016, -110.792077)
 
@@ -89,7 +93,7 @@ def calc_elevation(map_data, size):
     # increasing this increases resolution of data but also increases number of api calls
     # TODO set this dynamically using m_per_pixel
     # num_blocks = 25
-    num_blocks = 30
+    num_blocks = NUM_BLOCKS
     block_size = size // num_blocks
     elev_data = np.zeros((num_blocks, num_blocks), dtype=np.float64)
     
@@ -110,16 +114,26 @@ def calc_elevation(map_data, size):
     return map_data
 
 # calculates significant changes in elevation and marks those coordinates
-def calc_drops(map_data, size):    
-    BASE_ELEVATION = np.median(map_data[:,:,2])
+def calc_drops(map_data, size):
+    elev_data = map_data[:,:,2]
+    BASE_ELEVATION = np.median(elev_data)
     print('base elevation: ' + str(BASE_ELEVATION))
     for i in range(size):
+        # print(np.var(elev_data[i:i+NUM_BLOCKS,i:i+NUM_BLOCKS]))
         for j in range(size):
-            # TODO find a better way to determine if this is a drop
-            if abs(BASE_ELEVATION - map_data[i][j][2]) > 1:
-                map_data[i][j][3] = 1
+            # TODO too slow to calculate variance for each pixel
+            # Use variance to detrmine how rocky a region is?
+            var = np.var(elev_data[i:i+NUM_BLOCKS, j:j+NUM_BLOCKS])
+            # print(var)
+            if var > 0.05:
+                map_data[i][j][3] = var
             else:
                 map_data[i][j][3] = 0
+            # Compares elevation to base elevation
+            # if abs(BASE_ELEVATION - map_data[i][j][2]) > 1:
+            #     map_data[i][j][3] = 1
+            # else:
+            #     map_data[i][j][3] = 0
     return map_data
 
 # returns x, y such that map_data[x][y] is closest to val
@@ -183,7 +197,7 @@ def astar(array, start, goal):
             tentative_g_score = gscore[current] + heuristic(current, neighbor)
             if 0 <= neighbor[0] < array.shape[0]:
                 if 0 <= neighbor[1] < array.shape[1]:                
-                    if array[neighbor[0]][neighbor[1]] == 1:
+                    if array[neighbor[0]][neighbor[1]] != 0:
                         continue
                 else:
                     # array bound y walls
