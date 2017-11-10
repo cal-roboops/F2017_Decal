@@ -27,7 +27,8 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     tank_json.cpp \
-    controlpanel.cpp
+    controlpanel.cpp \
+    regular_json.cpp
 
 HEADERS += \
         mainwindow.h \

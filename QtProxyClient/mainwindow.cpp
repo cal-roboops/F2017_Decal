@@ -110,6 +110,11 @@ void MainWindow::on_clearRECV_clicked()
     ui->recvData->clear();
 }
 
+
+void MainWindow::send_data(QString data) {
+    socket->write(data.toLocal8Bit());
+}
+
 void MainWindow::on_openStream_clicked()
 {
     QString command;
