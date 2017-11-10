@@ -309,7 +309,7 @@ key-value pairs should be created and passed into the client:
     int tb5 = ui->middle_right_servo_box->toPlainText().toInt();
     int tb6 = ui->back_right_servo_box->toPlainText().toInt();
 
-    if (tb1 > 90 || tb1 < 90 || tb2 > 90 || tb2 < 90 || tb3 > 90 || tb3 < 90 || tb4 > 90 || tb4 < 90 || tb5 > 90 || tb5 < 90 || tb6 > 90 || tb6 < 90){
+    if (tb1 > 90 || tb1 < -90 || tb2 > 90 || tb2 < -90 || tb3 > 90 || tb3 < -90 || tb4 > 90 || tb4 < -90 || tb5 > 90 || tb5 <- 90 || tb6 > 90 || tb6 < -90){
         qDebug() << "Values need to be within the range: [-90, 90]";
     }
     else{
