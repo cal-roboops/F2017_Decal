@@ -513,6 +513,19 @@
      <string>Speed</string>
     </property>
    </widget>
+   <widget class="QLabel" name="speed_label">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>250</y>
+      <width>60</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
    <zorder>radioButton_custom</zorder>
    <zorder>stackedWidget</zorder>
    <zorder>radioButton</zorder>
@@ -520,6 +533,7 @@
    <zorder>horizontalSlider_speed</zorder>
    <zorder>pushButton_submit</zorder>
    <zorder>label_4</zorder>
+   <zorder>speed_label</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

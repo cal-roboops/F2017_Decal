@@ -451,3 +451,17 @@ void ControlPanel::on_button_middle_down_down_released() //button 8 released
     input["DT_M_R"] = 0;
     format_JSON(input);
 }
+
+void ControlPanel::on_horizontalSlider_speed_sliderPressed() //updates speed slider label
+{
+    int x = ui->horizontalSlider_speed->value();
+    QString s = QString::number(x);
+    ui->speed_label->setText(s);
+}
+
+void ControlPanel::on_horizontalSlider_speed_sliderReleased()
+{
+    int x = ui->horizontalSlider_speed->value();
+    QString s = QString::number(x);
+    ui->speed_label->setText(s);
+}

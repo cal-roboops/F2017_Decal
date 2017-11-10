@@ -90,6 +90,10 @@ private slots:
 
     void on_button_middle_down_down_released();
 
+    void on_horizontalSlider_speed_sliderPressed();
+
+    void on_horizontalSlider_speed_sliderReleased();
+
 private:
     Ui::ControlPanel *ui;
 };

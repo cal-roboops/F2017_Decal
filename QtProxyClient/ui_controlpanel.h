@@ -74,6 +74,7 @@ public:
     QSlider *horizontalSlider_speed;
     QPushButton *pushButton_submit;
     QLabel *label_4;
+    QLabel *speed_label;
     QMenuBar *menuBar;
     QMenu *menuControls;
     QToolBar *mainToolBar;
@@ -219,6 +220,9 @@ public:
         label_4 = new QLabel(centralWidget);
         label_4->setObjectName(QStringLiteral("label_4"));
         label_4->setGeometry(QRect(20, 250, 60, 16));
+        speed_label = new QLabel(centralWidget);
+        speed_label->setObjectName(QStringLiteral("speed_label"));
+        speed_label->setGeometry(QRect(80, 250, 60, 16));
         ControlPanel->setCentralWidget(centralWidget);
         radioButton_custom->raise();
         stackedWidget->raise();
@@ -227,6 +231,7 @@ public:
         horizontalSlider_speed->raise();
         pushButton_submit->raise();
         label_4->raise();
+        speed_label->raise();
         menuBar = new QMenuBar(ControlPanel);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 617, 22));
@@ -280,6 +285,7 @@ public:
         radioButton_custom->setText(QApplication::translate("ControlPanel", "Custom", Q_NULLPTR));
         pushButton_submit->setText(QApplication::translate("ControlPanel", "Submit", Q_NULLPTR));
         label_4->setText(QApplication::translate("ControlPanel", "Speed", Q_NULLPTR));
+        speed_label->setText(QApplication::translate("ControlPanel", "0", Q_NULLPTR));
         menuControls->setTitle(QApplication::translate("ControlPanel", "Controls", Q_NULLPTR));
     } // retranslateUi
 
