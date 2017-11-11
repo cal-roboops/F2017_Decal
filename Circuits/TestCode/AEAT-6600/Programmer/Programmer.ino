@@ -47,7 +47,7 @@ void setup()
   Zero_Lo = 0b00000000; // Programmable Zero Position
   Zero_Hi = 0b00000000; // Programmable Zero Position
   progVal = (Zero_Hi << 24) | (Zero_Lo << 16) | (Mode_Hi << 8) | (Mode_Lo);
-  progBits = 32 - 1;
+  progBits = 32;
 
   notProg = true;
   Serial.print("Ready to Program: ");
@@ -73,21 +73,20 @@ void loop()
     Serial.println(progVal, HEX);
   }
 
-  if (!notProg)
-  {
-    progError = digitalRead(ProgStatus);
-    progComplete = digitalRead(ProgSuccess);
-    Serial.println((progError << 1) | progComplete, HEX);
-  }
+  progError = digitalRead(ProgStatus);
+  progComplete = digitalRead(ProgSuccess);
+  Serial.print(progError);
+  Serial.print(progComplete);
+  Serial.println("");
   
-  delay(50);
+  delay(1000);
 }
 
 void WriteSSI(void)
 {
   // Setup variables
-  evenPar = progVal % 2;  
-  mask = 0x8000;
+  evenPar = progVal % 2;
+  mask = 0x80000000;
 
   // Setup clocking
   digitalWrite(NCS, LOW);
@@ -102,7 +101,7 @@ void WriteSSI(void)
   delay(1);
 
   // Write the 32 bits of data
-  for (i = progBits; 0 <= i; i--)
+  for (i = (progBits - 1); 0 <= i; i--)
   {
     digitalWrite(SSI_CLK, HIGH);
     delayMicroseconds(1);
