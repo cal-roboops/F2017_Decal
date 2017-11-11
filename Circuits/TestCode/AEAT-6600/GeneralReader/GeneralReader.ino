@@ -52,17 +52,56 @@ void loop()
   //Serial.print(val);
 
   // New line
-  Serial.println("");
+  //Serial.println("");
 
   // Print A & B
   Serial.print(incA);
   Serial.print(" ");
   Serial.print(incB);
-  
   Serial.println("");
+
+  ReadSSI();
+  Serial.println(reading, DEC);
+  Serial.println("");
+  
   Serial.println("");
 
   // Wait short period
   delay(50);
+}
+
+void ReadSSI(void)
+{
+  int i;
+  char Res = 16;
+  unsigned int mask;
+  
+  reading = 0;
+  mask = 0x0200;
+  digitalWrite(NCS, LOW);
+  delayMicroseconds(1);
+  digitalWrite(SSI_CLK, LOW);
+ 
+  for (i = (Res-1); i > 0; i--)
+  {
+    digitalWrite(SSI_CLK, HIGH);
+    delayMicroseconds(1);
+    
+    if (digitalRead(DataIN))
+    {
+      reading |= mask;
+    }
+    
+    digitalWrite(SSI_CLK, LOW);
+    mask = mask >> 1;
+  }
+  
+  digitalWrite(SSI_CLK, HIGH);
+  if (digitalRead(DataIN))
+  {
+    reading |= mask; 
+  }
+  
+  digitalWrite(NCS, HIGH);
 }
 

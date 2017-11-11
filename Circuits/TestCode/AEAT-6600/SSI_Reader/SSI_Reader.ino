@@ -9,12 +9,9 @@ int valHIGH, valLOW;
  
 // Definitions for variables
 unsigned int reading;
- 
-// program starts here
-// **************************
- 
-void setup() {                
- 
+
+void setup()
+{
   Serial.begin(9600);
  
   // initialize the digital pin as an output.
@@ -25,37 +22,30 @@ void setup() {
   pinMode(pinHIGH, INPUT);
   pinMode(pinLOW, INPUT);
  
-  digitalWrite(SSI_CLK, HIGH);  
+  digitalWrite(SSI_CLK, HIGH);
 }
- 
-//***********************************************************************
-// Main program loop
-//***********************************************************************
-void loop() {
+
+void loop()
+{
   valHIGH = digitalRead(pinHIGH);
   valLOW = digitalRead(pinLOW);
   Serial.print(valHIGH);
   Serial.print(valLOW);
   Serial.println("");
-   
+  
   ReadSSI();
   Serial.println(reading, DEC);
   Serial.println("");
   
   delay(100);
 }
- 
-//***********************************************************************
-// Main Loop ends here
-// Start of subroutines
-//***********************************************************************
- 
+
 void ReadSSI(void)
 {
   int i;
-  char Res = 10;
+  char Res = 16;
   unsigned int mask;
-   
+  
   reading = 0;
   mask = 0x0200;
   digitalWrite(NCS, LOW);
@@ -69,21 +59,18 @@ void ReadSSI(void)
     
     if (digitalRead(DataIN))
     {
-      reading |= mask; 
+      reading |= mask;
     }
     
     digitalWrite(SSI_CLK, LOW);
     mask = mask >> 1;
-   
-    if (i == 1) 
-    {
-      digitalWrite(SSI_CLK, HIGH);
-      if (digitalRead(DataIN))
-      {
-        reading |= mask; 
-      }
-    }
   }
-   
+  
+  digitalWrite(SSI_CLK, HIGH);
+  if (digitalRead(DataIN))
+  {
+    reading |= mask; 
+  }
+  
   digitalWrite(NCS, HIGH);
 }
