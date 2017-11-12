@@ -22,12 +22,16 @@
 using namespace std;
 using json = nlohmann::json;
 
+int client;
+int bufSize = 1024;
+
+void *handle_response(void*);
+
 int main() {
-	int client;
 	int iResult;
 	int portNum = 8088;
-	int bufSize = 1024;
 	char buffer[bufSize];
+	pthread_t pt;
 	json jobj;
 	const char *ip = "127.0.0.1";
 
@@ -75,6 +79,8 @@ int main() {
 	cout << "Connection confirmed." << endl;
 	cout << "Use ctrl + c to end the connection.\n" << endl;
 
+	pthread_create(&pt, NULL, handle_response, NULL);
+
 	while (true) {
 		cout << "Input: ";
 		cin.getline(buffer, bufSize);
@@ -86,3 +92,21 @@ int main() {
 	close(client);
 	return 0;
 }
+
+
+void *handle_response(void* none) {
+	char buffer[bufSize];
+
+	while (true) {
+		recv(client, buffer, bufSize, 0);
+
+		cout << buffer << endl;
+	}
+}
+
+
+
+
+
+
+
