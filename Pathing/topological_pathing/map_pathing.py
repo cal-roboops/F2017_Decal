@@ -12,16 +12,20 @@ ELEVATION_BASE_URL = 'https://maps.googleapis.com/maps/api/elevation/json?'
 MAPS_KEY = 'AIzaSyACAgW0t93bEbyJn3dWNwSLcjXzY3O8DiY'
 
 # lat lon of Mars Desert Research Center Hankville, UT
-LAT = 38.406529
-LON = -110.791916
+# LAT, LON = 38.406529, -110.791916
+LAT, LON = 37.870921, -122.259079
 IMG_SIZE = 640
 # 16 = 1152 m image
 # 19 = 150 m image
-ZOOM = 19
+
+#  UTAH
+# ZOOM = 19
+# FOR BERKELEY
+ZOOM = 18
+
 MAPTYPE = 'satellite'
 # KEEP THIS 1 FOR NOW CHANGING CAN BREAK COORDINATE CALCULATIONS
 SCALE = 1
-
 
 # contains lat, lon, elevation, isBlocked for each coordinate
 MAP_DATA = np.zeros((IMG_SIZE, IMG_SIZE, 4), dtype=np.float64)
@@ -30,8 +34,13 @@ BASE_ELEVATION = 1371.5
 # controls resolution of elevation data
 NUM_BLOCKS = 30
 
-START = (38.406421, -110.791767)
-END = (38.407016, -110.792077)
+# UTAH
+# START = (38.406421, -110.791767)
+# END = (38.407016, -110.792077)
+
+# BERKELEY
+START = (37.870921, -122.259079)
+END = (37.871707, -122.259997)
 
 # makes request to google maps api
 def map_request(size, lat, lon, zoom, maptype, scale):
@@ -118,17 +127,25 @@ def calc_drops(map_data, size):
     elev_data = map_data[:,:,2]
     BASE_ELEVATION = np.median(elev_data)
     print('base elevation: ' + str(BASE_ELEVATION))
+    # TODO tune denominator
+    offset = NUM_BLOCKS // 2
     for i in range(size):
-        # print(np.var(elev_data[i:i+NUM_BLOCKS,i:i+NUM_BLOCKS]))
         for j in range(size):
+            # TODO find a way to tune cutoff point
+            # Uses variance to detrmine how rocky a region is
             # TODO too slow to calculate variance for each pixel
-            # Use variance to detrmine how rocky a region is?
-            var = np.var(elev_data[i:i+NUM_BLOCKS, j:j+NUM_BLOCKS])
-            # print(var)
-            if var > 0.05:
+
+            # UTAH
+            # var_threshold = 0.04
+            # BERKELEY
+            var_threshold = 0.3
+            var = np.var(elev_data[max(0, i-offset):i+offset, max(0, j-offset):j+offset])
+            # if var > 0.04
+            if var > 0.3:
                 map_data[i][j][3] = var
             else:
                 map_data[i][j][3] = 0
+            
             # Compares elevation to base elevation
             # if abs(BASE_ELEVATION - map_data[i][j][2]) > 1:
             #     map_data[i][j][3] = 1
