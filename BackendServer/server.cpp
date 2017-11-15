@@ -9,8 +9,8 @@ using json = nlohmann::json;
 const long roverIP = 167772352; //actual rover IP
 //const long roverIP = 16777343; //for testing purposes
 const int bufSize = 1024;
-const int EMERGENCY = -1;
-const int SERVER_COMMAND = -2;
+const int EMERGENCY = -2;
+const int SERVER_COMMAND = -3;
 
 int roverCommandSocket;
 int roverEmergencySocket;
@@ -27,6 +27,7 @@ struct Thread {
 
 struct Command {
 	int client_socket;
+	bool finished;
 	json* j;
 };
 
@@ -34,7 +35,7 @@ void terminate_thread(struct Thread*);
 
 void *handle_input(void*);
 
-void *execute_command(void*);
+void *execute_rover_command(void*);
 
 void create_thread(int, long, int);
 
@@ -135,9 +136,13 @@ void *handle_input(void* threadStruct) {
 	struct Thread* t = (struct Thread*) threadStruct;
 	int socketID = t -> socket_desc;
 	char buffer[bufSize];
-	struct Command* cmd;
-	pthread_t* pt;
-	json* jobj;
+	struct Command cmd;
+	pthread_t pt;
+	string serialized;
+	json jobj;
+	json copy;
+
+	cmd.finished = true;
 
 	while (true) {
 		if (recv(socketID, buffer, bufSize, 0) > 0) {
@@ -145,43 +150,36 @@ void *handle_input(void* threadStruct) {
 				continue;
 			}
 
-			cout << buffer << endl;
-
-			jobj = (json*) malloc(sizeof(json));
-
-			if (jobj == NULL) {
-				cout << "ERROR: failed to allocate memory" << endl;
-				continue;
-			} 
-
 			try {
-				*jobj = json::parse(buffer);
+				jobj = json::parse(buffer);
 			} catch (invalid_argument ex) {
-				cout << "ERROR: failed to parse command" << endl;
-				free(jobj);
+				send(t -> socket_desc, "ERROR: failed to parse command", bufSize, 0);
 				continue;
 			}
 
-			cmd = (struct Command*) malloc(sizeof(struct Command));
+			if (jobj.begin().value() == EMERGENCY) {
+				pthread_mutex_lock(&roverEmergencyLock);
 
-			if (cmd == NULL) {
-				cout << "ERROR: failed to allocate memory" << endl;
-				continue;
+				serialized = jobj.dump();
+				send(roverEmergencySocket, serialized.c_str(), bufSize, 0);
+
+				pthread_mutex_unlock(&roverEmergencyLock);
+
+			} else if (jobj.begin().value() == SERVER_COMMAND) {
+				//perform server command
+			} else if (!cmd.finished) {
+				send(t -> socket_desc, "ERROR: previous command not yet finished", bufSize, 0);
+			} else {
+				copy = json::parse(jobj.dump());
+
+				cmd.client_socket = t -> socket_desc;
+				cmd.finished = false;
+				cmd.j = &copy;
+
+				pthread_create(&pt, NULL, execute_rover_command, (void*) &cmd);
 			}
-
-			pt = (pthread_t*) malloc(sizeof(pthread_t));
-
-			if (pt == NULL) {
-				cout << "ERROR: failed to allocate memory" << endl;
-				continue;
-			}
-
-			cmd -> client_socket = t -> socket_desc;
-			cmd -> j = jobj;
-
-			pthread_create(pt, NULL, execute_command, (void*) cmd);
+			
 			memset(buffer, 0, sizeof(buffer));
-
 		} else {
 			if (t -> ip == roverIP) {
 				cout << "\nDisconnected with ROVER.\n" << endl;
@@ -198,26 +196,42 @@ void *handle_input(void* threadStruct) {
 	}
 }
 
-void *execute_command(void* command) {
+void *execute_rover_command(void* command) {
 	struct Command* cmd = (struct Command*) command;
-	int client = cmd -> client_socket;
-	json jobj = *(cmd -> j);
+	struct Thread* thread;
+	char buffer[bufSize];
+	list<struct Thread*>::const_iterator iterator;
+	string serialized;
+	json jobj;
 
-	if (jobj.begin().value() == EMERGENCY) {
-		//perform emergency action
-	} else if (jobj.begin().value() == SERVER_COMMAND) {
-		//perform server command
-	} else {
+	if (pthread_mutex_trylock(&roverCommandLock) == 0) {
+		serialized = cmd -> j -> dump();
+
+		send(roverCommandSocket, serialized.c_str(), bufSize, 0);
+		recv(roverCommandSocket, buffer, bufSize, 0);
+		
 		try {
-			jobj.begin().key();
-			cout << "Key: " << jobj.begin().key() << ", Value: " << jobj.begin().value() << endl;
-		} catch (domain_error ex) {
-			cout << "ERROR: received JSON object not in expected format" << endl;
-		}
-	}
+			jobj = json::parse(buffer);
 
-	free(cmd -> j);
-	free(cmd);
+			//analyze response...
+
+			for (iterator = clientThreads.begin(); iterator != clientThreads.end(); iterator++) {
+				thread = *iterator;
+				serialized = jobj.dump();
+
+				send(thread -> socket_desc, serialized.c_str(), bufSize, 0);
+			}
+		} catch (invalid_argument ex) {
+			cout << "ERROR: failed to parse command from ROVER" << endl;
+			send(cmd -> client_socket, "ERROR: failed to parse response from ROVER", bufSize, 0);
+		}
+		
+		pthread_mutex_unlock(&roverCommandLock);
+	} else {
+		send(cmd -> client_socket, "ERROR: ROVER busy executing another command", bufSize, 0);
+	}
+	
+	cmd -> finished = true;
 	pthread_exit(NULL);
 }
 
