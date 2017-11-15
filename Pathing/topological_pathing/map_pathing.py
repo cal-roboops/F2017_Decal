@@ -131,7 +131,7 @@ def calc_drops(map_data, size):
     offset = NUM_BLOCKS // 2
     for i in range(size):
         for j in range(size):
-            # TODO find a way to tune cutoff point
+            # TODO find a way to tune threshold point
             # Uses variance to detrmine how rocky a region is
             # TODO too slow to calculate variance for each pixel
 
@@ -140,8 +140,7 @@ def calc_drops(map_data, size):
             # BERKELEY
             var_threshold = 0.3
             var = np.var(elev_data[max(0, i-offset):i+offset, max(0, j-offset):j+offset])
-            # if var > 0.04
-            if var > 0.3:
+            if var > var_threshold:
                 map_data[i][j][3] = var
             else:
                 map_data[i][j][3] = 0
@@ -178,6 +177,7 @@ def find_path(map_data, size, start_gps, end_gps):
     return list(reversed(path)) if path else None
 
 def heuristic(a, b):
+    # TODO maybe incorporate elevation data in heuristic (could cause heuristic to become inconsistent...)
     # euclidian distance
     return (b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2
 
