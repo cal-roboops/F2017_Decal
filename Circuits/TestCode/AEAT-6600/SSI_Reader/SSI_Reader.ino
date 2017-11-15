@@ -8,7 +8,7 @@ int pinLOW = 2;
 int valHIGH, valLOW;
  
 // Definitions for variables
-unsigned int reading;
+unsigned long reading;
 
 void setup()
 {
@@ -37,14 +37,14 @@ void loop()
   Serial.println(reading, DEC);
   Serial.println("");
   
-  delay(100);
+  delay(250);
 }
 
 void ReadSSI(void)
 {
   int i;
-  char Res = 16;
-  unsigned int mask;
+  int Res = 10;
+  unsigned long mask;
   
   reading = 0;
   mask = 0x0200;

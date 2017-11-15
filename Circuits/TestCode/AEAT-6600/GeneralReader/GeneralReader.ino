@@ -1,88 +1,76 @@
-int pin, val;
-int PWM_IN = 6;
-int incA, incB, prevA, prevB;
+int pinLOW = 2;
+int pinHIGH = 3;
+int  NCS = 4;
+int SSI_CLK = 5;
+int DataIN = 6;
+int progPin = 7;
+int pinA = 10;
+int pinB = 11;
+int pinI = 12;
+int vA, vB, vI, vHi, vLo;
+
+unsigned int reading;
 
 void setup()
 {
-  // Setup Quad and mag Pins
-  for (pin = 1; pin < 6; pin++)
-  {
-    pinMode(pin, INPUT);
-  }
-
-  // Setup PWM Input pin
-  pinMode(PWM_IN, INPUT);
-
-  // Zero values
-  incA = incB = 0;
-  prevA = digitalRead(1);
-  prevB = digitalRead(2);
+  Serial.begin(115200);
   
-  Serial.begin(9600);
+  // Setup Pins
+  pinMode(NCS, OUTPUT);
+  pinMode(SSI_CLK, OUTPUT);
+  pinMode(DataIN, INPUT);
+  pinMode(pinHIGH, INPUT);
+  pinMode(pinLOW, INPUT);
+  pinMode(pinA, INPUT);
+  pinMode(pinB, INPUT);
+  pinMode(pinI, INPUT);
+  pinMode(progPin, OUTPUT);
+
+  digitalWrite(progPin, LOW);
+  digitalWrite(SSI_CLK, HIGH);
 }
 
 void loop()
-{
-  // Loop through the pins reading
-  for (pin = 1; pin < 6; pin++)
-  {
-    val = digitalRead(pin);
+{  
+  // Read pins
+  vA = digitalRead(pinA);
+  vB = digitalRead(pinB);
+  vI = digitalRead(pinI);
+  vHi = digitalRead(pinHIGH);
+  vLo = digitalRead(pinLOW);
 
-    if (pin == 1)
-    {
-      if (val != prevA)
-      {
-        incA += 1;
-        prevA = val;
-      }
-    } else if (pin == 2)
-    {
-      if (val != prevB)
-      {
-        incB += 1;
-        prevB = val;
-      }
-    }
-    
-    Serial.print(val);
-  }
-
-  // Read the PWM Pin
-  //val = pulseIn(PWM_IN, HIGH, 20000);
-  //Serial.print(val);
-
-  // New line
-  //Serial.println("");
-
-  // Print A & B
-  Serial.print(incA);
-  Serial.print(" ");
-  Serial.print(incB);
+  // Print Values
+  // A B I H L
+  Serial.print(vA);
+  Serial.print(vB);
+  Serial.print(vI);
+  Serial.print(vHi);
+  Serial.print(vLo);
   Serial.println("");
 
+  // Read Absolute
   ReadSSI();
   Serial.println(reading, DEC);
   Serial.println("");
-  
-  Serial.println("");
 
   // Wait short period
-  delay(50);
+  delay(250);
 }
 
 void ReadSSI(void)
 {
   int i;
-  char Res = 16;
-  unsigned int mask;
+  int res = 10;
+  unsigned long mask;
   
   reading = 0;
   mask = 0x0200;
+  
   digitalWrite(NCS, LOW);
   delayMicroseconds(1);
   digitalWrite(SSI_CLK, LOW);
  
-  for (i = (Res-1); i > 0; i--)
+  for (i = (res-1); i > 0; i--)
   {
     digitalWrite(SSI_CLK, HIGH);
     delayMicroseconds(1);

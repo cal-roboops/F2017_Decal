@@ -3,8 +3,8 @@ int NCS = 4;
 int SSI_CLK = 5;
 int DataOUT = 6;
 int ProgPin = 7;
-int ProgStatus = 3;
-int ProgSuccess = 2;
+int ProgStatus = 2;
+int ProgSuccess = 3;
 
 int progError, progComplete;
 
@@ -14,10 +14,10 @@ int resetPIN = 9;
 int writeVAL, resetVAL;
 
 // Global storage variables
-unsigned long progVal, mask;
+unsigned long progVal;
 unsigned long Mode_Lo, Mode_Hi;
 unsigned long Zero_Lo, Zero_Hi;
-unsigned int progBits, RW, evenPar;
+unsigned int progBits, RW;
 int i;
 bool notProg;
  
@@ -37,7 +37,7 @@ void setup()
   pinMode(writePIN, INPUT); // Start Programming Button
   pinMode(resetPIN, INPUT); // Reset Programmibng Button
 
-  digitalWrite(ProgPin, LOW);
+  digitalWrite(ProgPin, HIGH);
   digitalWrite(SSI_CLK, HIGH);
 
   // Program settings
@@ -50,7 +50,7 @@ void setup()
   progBits = 32;
 
   notProg = true;
-  Serial.print("Ready to Program: ");
+  Serial.print("Ready to Program: 0x");
   Serial.println(progVal, HEX);
 }
 
@@ -61,8 +61,8 @@ void loop()
 
   if (writeVAL & notProg)
   {
-    Serial.print("Programming: ");
-    Serial.println(progVal);
+    Serial.print("Programming: 0x");
+    Serial.println(progVal, HEX);
     WriteSSI();
     delay(1);
     notProg = false;
@@ -84,29 +84,33 @@ void loop()
 
 void WriteSSI(void)
 {
+  unsigned long mask;
+  unsigned long evenPar;
+  unsigned long progVal;
+  
   // Setup variables
-  evenPar = progVal % 2;
+  progVal = 0x6B1E;
+  evenPar = 1;
   mask = 0x80000000;
 
   // Setup clocking
   digitalWrite(NCS, LOW);
   delayMicroseconds(1);
   digitalWrite(SSI_CLK, LOW);
+  delayMicroseconds(1);
 
   // Write the read/write signal
   digitalWrite(SSI_CLK, HIGH);
+  digitalWrite(DataOUT, 1);
   delayMicroseconds(1);
-  digitalWrite(DataOUT, RW);
   digitalWrite(SSI_CLK, LOW);
-  delay(1);
 
   // Write the 32 bits of data
-  for (i = (progBits - 1); 0 <= i; i--)
+  for (i = progBits; 0 < i; i--)
   {
-    digitalWrite(SSI_CLK, HIGH);
-    delayMicroseconds(1);
-    
+    digitalWrite(SSI_CLK, HIGH);    
     digitalWrite(DataOUT, mask & progVal);
+    delayMicroseconds(1);
     
     digitalWrite(SSI_CLK, LOW);
     mask = mask >> 1;
@@ -114,8 +118,8 @@ void WriteSSI(void)
 
   // Write Parity Bit
   digitalWrite(SSI_CLK, HIGH);
-  delayMicroseconds(1);
   digitalWrite(DataOUT, evenPar);
+  delayMicroseconds(1);
   digitalWrite(SSI_CLK, LOW);
 
   // End communication
