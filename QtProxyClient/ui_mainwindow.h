@@ -13,11 +13,13 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
@@ -53,6 +55,9 @@ public:
     QTextEdit *st_ipEdit;
     QLabel *st_port_Label;
     QLabel *streamLabel;
+    QRadioButton *radioButton_c_mode;
+    QRadioButton *radioButton_nc_mode;
+    QCheckBox *checkBox_show_cp;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -154,6 +159,15 @@ public:
         streamLabel->setObjectName(QStringLiteral("streamLabel"));
         streamLabel->setGeometry(QRect(720, 20, 70, 21));
         streamLabel->setAlignment(Qt::AlignCenter);
+        radioButton_c_mode = new QRadioButton(centralWidget);
+        radioButton_c_mode->setObjectName(QStringLiteral("radioButton_c_mode"));
+        radioButton_c_mode->setGeometry(QRect(690, 180, 121, 22));
+        radioButton_nc_mode = new QRadioButton(centralWidget);
+        radioButton_nc_mode->setObjectName(QStringLiteral("radioButton_nc_mode"));
+        radioButton_nc_mode->setGeometry(QRect(690, 210, 141, 22));
+        checkBox_show_cp = new QCheckBox(centralWidget);
+        checkBox_show_cp->setObjectName(QStringLiteral("checkBox_show_cp"));
+        checkBox_show_cp->setGeometry(QRect(690, 240, 151, 22));
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -201,6 +215,9 @@ public:
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt;\">239.0.0.1</span></p></body></html>", Q_NULLPTR));
         st_port_Label->setText(QApplication::translate("MainWindow", "Stream Port", Q_NULLPTR));
         streamLabel->setText(QApplication::translate("MainWindow", "RTP Stream", Q_NULLPTR));
+        radioButton_c_mode->setText(QApplication::translate("MainWindow", "Control Mode", Q_NULLPTR));
+        radioButton_nc_mode->setText(QApplication::translate("MainWindow", "Non-control Mode", Q_NULLPTR));
+        checkBox_show_cp->setText(QApplication::translate("MainWindow", "Show Control Panel", Q_NULLPTR));
     } // retranslateUi
 
 };

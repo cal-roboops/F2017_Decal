@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QTcpSocket>
-
+#include "controlpanel.h"
 namespace Ui {
 class MainWindow;
 }
@@ -16,6 +16,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void send_data(QString data);
+    void format_JSON(QJsonObject input);
 private slots:
     void on_connect_clicked();
     void on_disconnect_clicked();
@@ -31,9 +32,16 @@ private slots:
 
     void on_disconnect();
 
+    void on_checkBox_show_cp_clicked();
+
+    void on_radioButton_nc_mode_clicked();
+
+    void on_radioButton_c_mode_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTcpSocket *socket;
+    ControlPanel *c;
     bool disconnectPressed;
 };
 

@@ -398,6 +398,45 @@ p, li { white-space: pre-wrap; }
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QRadioButton" name="radioButton_c_mode">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>180</y>
+      <width>121</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Control Mode</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButton_nc_mode">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>210</y>
+      <width>141</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Non-control Mode</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_show_cp">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>240</y>
+      <width>151</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Show Control Panel</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
