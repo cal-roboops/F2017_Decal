@@ -314,6 +314,7 @@ void MainWindow::on_radioButton_nc_mode_clicked() //radio button disables contro
 
 void MainWindow::on_radioButton_c_mode_clicked() //radio button enables control panel
 {
+    c = new ControlPanel();
     c->setEnabled(true);
     c->show();
     ui->checkBox_show_cp->setChecked(true);
