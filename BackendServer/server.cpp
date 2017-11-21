@@ -8,6 +8,7 @@ using json = nlohmann::json;
 
 const long roverIP = 167772352; //actual rover IP
 //const long roverIP = 16777343; //for testing purposes
+const int MAX_SIZE_BACKLOG_QUEUE = 5;
 const int bufSize = 1024;
 const int EMERGENCY = -2;
 const int SERVER_COMMAND = -3;
@@ -40,9 +41,9 @@ void *execute_rover_command(void*);
 void create_thread(int, long, int);
 
 int main() {
-	const int MAX_SIZE_BACKLOG_QUEUE = 5;
 	int client;
 	int clientListener;
+	int connectAttempts;
 	int clientPort = 8088;
 	struct sockaddr_in server_addr, client_addr;
 	int size = sizeof(struct sockaddr_in);
@@ -75,20 +76,33 @@ int main() {
 		if (client < 0) {
 			cout << "ERROR: failed to connect to client" << endl;
 		} else if (client_addr.sin_addr.s_addr == roverIP) {
+			connectAttempts = 3;
 			roverCommandSocket = client;
 
 			cout << "Successfully established command/response connection to ROVER." << endl;
 			cout << "Waiting to establish emergency connection to ROVER..." << endl;
 
-			client = accept(clientListener, (struct sockaddr*) &client_addr, (socklen_t*) &size);
+			while (connectAttempts > 0) {
+				client = accept(clientListener, (struct sockaddr*) &client_addr, (socklen_t*) &size);
 
-			if (client < 0) {
-				cout << "ERROR: failed to establish emergency connection to ROVER" << endl;
+				if (client < 0) {
+					cout << "ERROR: failed to establish emergency connection to ROVER" << endl;
+					cout << "Waiting for re-attempt to establish emergency connection to ROVER..." << endl;
+					connectAttempts -= 1;
+				} else if (client_addr.sin_addr.s_addr != roverIP) {
+					cout << "ERROR: only ROVER may attempt to connect at this time" << endl;
+					close(client);
+				} else {
+					cout << "Successfully established emergency connection to ROVER." << endl;
+					roverEmergencySocket = client;
+					create_thread(roverEmergencySocket, client_addr.sin_addr.s_addr, ntohs(client_addr.sin_port));
+					break;
+				}
+			}
+
+			if (connectAttempts == 0) {
+				cout << "ERROR: failed to connect to ROVER" << endl;
 				close(roverCommandSocket);
-			} else {
-				roverEmergencySocket = client;
-				create_thread(roverEmergencySocket, client_addr.sin_addr.s_addr, ntohs(client_addr.sin_port));
-				cout << "Successfully established emergency connection to ROVER." << endl;
 			}
 		} else {
 			cout << "\nSuccessfully connected to new client." << endl;
@@ -116,6 +130,7 @@ void create_thread(int socketID, long ipAddr, int p) {
 
 	if (pt == NULL) {
 		cout << "ERROR: failed to allocate memory" << endl;
+		free(t);
 		close(socketID);
 		return;
 	}
