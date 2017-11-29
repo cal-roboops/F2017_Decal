@@ -132,7 +132,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>131</width>
+        <width>151</width>
         <height>21</height>
        </rect>
       </property>
@@ -541,7 +541,7 @@
      <x>0</x>
      <y>0</y>
      <width>617</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuControls">

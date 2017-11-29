@@ -2,6 +2,8 @@
 #define CONTROLPANEL_H
 #include <QMainWindow>
 #include <QTcpSocket>
+#include "mainwindow.h"
+
 namespace Ui {
 class ControlPanel;
 }
@@ -11,7 +13,7 @@ class ControlPanel : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ControlPanel(QWidget *parent = 0);
+    explicit ControlPanel(MainWindow *mw, QWidget *parent = 0);
     ~ControlPanel();
     void send_data(QString data);
     void format_JSON(QJsonObject input);
@@ -96,6 +98,7 @@ private slots:
 
 private:
     Ui::ControlPanel *ui;
+    MainWindow *w;
 };
 
 #endif // CONTROLPANEL_H

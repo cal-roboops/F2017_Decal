@@ -16,6 +16,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void send_data(QString data);
+
 private slots:
     void on_connect_clicked();
     void on_disconnect_clicked();

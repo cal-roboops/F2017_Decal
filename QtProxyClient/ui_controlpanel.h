@@ -120,7 +120,7 @@ public:
         pushButton_left->setGeometry(QRect(110, 190, 71, 51));
         label = new QLabel(regular);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(10, 10, 131, 21));
+        label->setGeometry(QRect(10, 10, 151, 21));
         QFont font;
         font.setPointSize(14);
         label->setFont(font);
@@ -234,7 +234,7 @@ public:
         speed_label->raise();
         menuBar = new QMenuBar(ControlPanel);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 617, 22));
+        menuBar->setGeometry(QRect(0, 0, 617, 26));
         menuControls = new QMenu(menuBar);
         menuControls->setObjectName(QStringLiteral("menuControls"));
         ControlPanel->setMenuBar(menuBar);

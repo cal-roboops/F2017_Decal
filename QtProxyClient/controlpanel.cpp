@@ -1,21 +1,21 @@
 #include "controlpanel.h"
 #include "ui_controlpanel.h"
-#include "controlpanel.h"
-#include "tank_json.cpp"
-#include "mainwindow.h"
-#include "mainwindow.cpp"
+
+#include "tank_json.h"
 #include "regular_json.cpp"
-#include <QMainWindow>
 #include <QJsonObject>
 #include <QDebug>
 #include <QKeyEvent>
 #include <QJsonDocument>
 #include <QMessageBox>
-ControlPanel::ControlPanel(QWidget *parent):
+
+
+ControlPanel::ControlPanel(MainWindow *mw, QWidget *parent):
     QMainWindow(parent),
     ui(new Ui::ControlPanel)
 {
     ui->setupUi(this);
+    w = mw;
 }
 
 ControlPanel::~ControlPanel()
@@ -27,6 +27,8 @@ void ControlPanel::format_JSON(QJsonObject input) //formates JSON Object
 {
     QJsonDocument doc(input);
     QString strJson(doc.toJson(QJsonDocument::Compact));
+    w->send_data(strJson);
+
     qDebug() << strJson;
 }
 
@@ -440,7 +442,7 @@ void ControlPanel::on_button_middle_down_down_pressed() //button 8 pressed
 {
     QJsonObject input;
     input["DT_M_L"] = -1;
-    input["DT_M_R"] = 1;
+    input["DT_M_R"] = -1;
     format_JSON(input);
 }
 

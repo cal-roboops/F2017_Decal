@@ -26,13 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    tank_json.cpp \
     controlpanel.cpp \
     regular_json.cpp
 
 HEADERS += \
         mainwindow.h \
-    controlpanel.h
+    controlpanel.h \
+    tank_json.h
 
 FORMS += \
         mainwindow.ui \
