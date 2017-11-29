@@ -5,23 +5,25 @@ import numpy as np
 import math
 import json
 import sys, os
+import time
 from heapq import *
 
 MAPS_BASE_URL = 'https://maps.googleapis.com/maps/api/staticmap?'
 ELEVATION_BASE_URL = 'https://maps.googleapis.com/maps/api/elevation/json?'
 MAPS_KEY = 'AIzaSyACAgW0t93bEbyJn3dWNwSLcjXzY3O8DiY'
+# B for Berkeley, U for Utah
+LOC = 'U'
 
 # lat lon of Mars Desert Research Center Hankville, UT
 # LAT, LON = 38.406529, -110.791916
-LAT, LON = 37.870921, -122.259079
+
+LAT, LON = (37.870921, -122.259079) if LOC == 'B' else (38.406529, -110.791916)
+
 IMG_SIZE = 640
 # 16 = 1152 m image
 # 19 = 150 m image
 
-#  UTAH
-# ZOOM = 19
-# FOR BERKELEY
-ZOOM = 18
+ZOOM = 18 if LOC == 'B' else 19
 
 MAPTYPE = 'satellite'
 # KEEP THIS 1 FOR NOW CHANGING CAN BREAK COORDINATE CALCULATIONS
@@ -34,13 +36,8 @@ BASE_ELEVATION = 1371.5
 # controls resolution of elevation data
 NUM_BLOCKS = 30
 
-# UTAH
-# START = (38.406421, -110.791767)
-# END = (38.407016, -110.792077)
-
-# BERKELEY
-START = (37.870921, -122.259079)
-END = (37.871707, -122.259997)
+START = (37.870921, -122.259079) if LOC == 'B' else (38.406421, -110.791767)
+END = (37.871707, -122.259997) if LOC == 'B' else (38.407016, -110.792077)
 
 # makes request to google maps api
 def map_request(size, lat, lon, zoom, maptype, scale):
@@ -126,7 +123,7 @@ def calc_elevation(map_data, size):
 def calc_drops(map_data, size):
     elev_data = map_data[:,:,2]
     BASE_ELEVATION = np.median(elev_data)
-    print('base elevation: ' + str(BASE_ELEVATION))
+    
     # TODO tune denominator
     offset = NUM_BLOCKS // 2
     for i in range(size):
@@ -135,10 +132,7 @@ def calc_drops(map_data, size):
             # Uses variance to detrmine how rocky a region is
             # TODO too slow to calculate variance for each pixel
 
-            # UTAH
-            # var_threshold = 0.04
-            # BERKELEY
-            var_threshold = 0.3
+            var_threshold = 0.3 if LOC == 'B' else 0.04
             var = np.var(elev_data[max(0, i-offset):i+offset, max(0, j-offset):j+offset])
             if var > var_threshold:
                 map_data[i][j][3] = var
@@ -173,7 +167,11 @@ def find_path(map_data, size, start_gps, end_gps):
 
     obstacle_map = map_data[:,:,3]
 
+    print('astar start')
+    start_time = time.time()
     path = astar(obstacle_map, start, goal)
+    done_time = time.time()
+    print('astar time: ' + str(done_time-start_time))
     return list(reversed(path)) if path else None
 
 def heuristic(a, b):
@@ -187,8 +185,8 @@ def astar(array, start, goal):
     if array[start[0]][start[1]] == 1 or array[goal[0]][goal[1]] == 1:
         return False
 
-    # supports 4-axis movement
-    neighbors = [(0,1),(0,-1),(1,0),(-1,0),(1,1),(1,-1),(-1,1),(-1,-1)]
+    # supports 2-axis movement (makes astar faster)
+    neighbors = [(0,1),(0,-1),(1,0),(-1,0)]
 
     close_set = set()
     came_from = {}
@@ -240,6 +238,17 @@ def mouse_callback(event, x, y, flags, params):
         print(elevation_request(MAP_DATA[y][x][0], MAP_DATA[y][x][1])['results'][0]['elevation'])
 
 
+# returns if there is an obstruction given a point cloud
+def is_obstruction(pcl):
+    offset = 20
+    threshold = 10
+    for i in range(offset, len(pcl), offset//2):
+        for j in range(offset, len(pcl[0]), offset//2):
+            vert_sum = sum(pcl[max(0, i-offset):i+offset, max(0, j-offset):j+offset])
+            if vert_sum > threshold:
+                return True
+    return False
+
 map_response = map_request(IMG_SIZE, LAT, LON, ZOOM, MAPTYPE, SCALE)
 map_bytes = np.fromstring(map_response, np.uint8)
 map_img = cv2.imdecode(map_bytes, cv2.IMREAD_UNCHANGED)
@@ -249,7 +258,14 @@ file_path = os.path.join(sys.path[0], file_name)
 if os.path.isfile(file_path):
     calc_scale(LAT, LON, ZOOM)
     MAP_DATA = np.load(file_path)
+    
+    # TODO calc_drops is unnecessary for already cached map_data
+    print('calc_drops start')
+    start_time = time.time()
     MAP_DATA = calc_drops(MAP_DATA, IMG_SIZE)
+    done_time = time.time()
+    print('calc_drops time: ' + str(done_time-start_time))
+    
     np.save(file_name, MAP_DATA)
 else:
     MAP_DATA = calc_cordinates(MAP_DATA, IMG_SIZE, LAT, LON, ZOOM)
