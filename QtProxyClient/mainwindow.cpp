@@ -321,6 +321,6 @@ void MainWindow::on_radioButton_c_mode_clicked() //radio button enables control 
     c->show();
     ui->checkBox_show_cp->setChecked(true);
     QJsonObject input;
-    input["Controller"] = 0;
+    input["Controller"] = 1;
     format_JSON(input);
 }
