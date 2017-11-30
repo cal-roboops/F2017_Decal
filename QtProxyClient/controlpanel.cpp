@@ -240,7 +240,7 @@ void ControlPanel::on_pushButton_submit_clicked()
 
 
 /*
- * Key Handelers
+ * Key Handlers
  * */
 
 void ControlPanel::keyPressEvent(QKeyEvent * event)
@@ -261,17 +261,22 @@ void ControlPanel::keyPressEvent(QKeyEvent * event)
 }
 void ControlPanel::keyReleaseEvent(QKeyEvent * event)
 {
-    if(event-> key() == Qt::Key_W ){
-        ControlPanel::on_pushButton_up_released();
+    if (event->isAutoRepeat()) {
+        ControlPanel::keyPressEvent(event);
     }
-    else if(event-> key() == Qt::Key_S){
-        ControlPanel::on_pushButton_down_released();
-    }
-    else if(event-> key() == Qt::Key_D && ui->stackedWidget->currentIndex() == 0){
-        ControlPanel::on_pushButton_right_clicked();
-    }
-    else if(event-> key() == Qt::Key_A && ui->stackedWidget->currentIndex() == 0){
-        ControlPanel::on_pushButton_left_clicked();
+    else {
+        if(event-> key() == Qt::Key_W){
+            ControlPanel::on_pushButton_up_released();
+        }
+        else if(event-> key() == Qt::Key_S){
+            ControlPanel::on_pushButton_down_released();
+        }
+        else if(event-> key() == Qt::Key_D && ui->stackedWidget->currentIndex() == 0){
+            ControlPanel::on_pushButton_right_clicked();
+        }
+        else if(event-> key() == Qt::Key_A && ui->stackedWidget->currentIndex() == 0){
+            ControlPanel::on_pushButton_left_clicked();
+        }
     }
 
 }

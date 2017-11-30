@@ -308,6 +308,10 @@ void MainWindow::on_checkBox_show_cp_clicked() //Show Control Panel Checkbox cli
 void MainWindow::on_radioButton_nc_mode_clicked() //radio button disables control panel
 {
     c.setEnabled(false);
+    if (ui->checkBox_show_cp->isChecked()) {
+        qDebug() << "HERE";
+        c.show();
+    }
     QJsonObject input;
     input["Controller"] = 0;
     format_JSON(input);
@@ -320,10 +324,12 @@ void MainWindow::on_radioButton_c_mode_clicked() //radio button enables control 
 //        c = new ControlPanel();
 //    } else {
 //        qDebug() << "HERE";
-    c.hide();
+//    c.hide();
 //    }
     c.setEnabled(true);
+//    if (ui->checkBox_show_cp->isChecked()) {
     c.show();
+//    }
     ui->checkBox_show_cp->setChecked(true);
     QJsonObject input;
     input["Controller"] = 1;
