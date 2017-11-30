@@ -41,7 +41,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QTcpSocket *socket;
-    ControlPanel *c;
+    ControlPanel c;
     bool disconnectPressed;
 };
 

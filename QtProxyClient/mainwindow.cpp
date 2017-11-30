@@ -285,28 +285,29 @@ void MainWindow::format_JSON(QJsonObject input) //formates JSON Object
     qDebug() << strJson;
 }
 
-ControlPanel *c; //control panel
+//ControlPanel *c; //control panel
 
 
 void MainWindow::on_checkBox_show_cp_clicked() //Show Control Panel Checkbox clicked
 {
     if(ui->checkBox_show_cp->isChecked() == true){
-        if(!c){
-            c = new ControlPanel();
-        }
-        if(c){
+//        if(!c){
+//            c = new ControlPanel();
+//        }
+//        if(c){
 
-          c->show();
-        }
+//          c->show();
+//        }
+        c.show();
     }
    else{
-       c->hide();
+       c.hide();
     }
 }
 
 void MainWindow::on_radioButton_nc_mode_clicked() //radio button disables control panel
 {
-    c->setEnabled(false);
+    c.setEnabled(false);
     QJsonObject input;
     input["Controller"] = 0;
     format_JSON(input);
@@ -315,10 +316,14 @@ void MainWindow::on_radioButton_nc_mode_clicked() //radio button disables contro
 void MainWindow::on_radioButton_c_mode_clicked() //radio button enables control panel
 {
     //test
-    c->hide();
-    c = new ControlPanel();
-    c->setEnabled(true);
-    c->show();
+//    if (c == NULL) {
+//        c = new ControlPanel();
+//    } else {
+//        qDebug() << "HERE";
+    c.hide();
+//    }
+    c.setEnabled(true);
+    c.show();
     ui->checkBox_show_cp->setChecked(true);
     QJsonObject input;
     input["Controller"] = 1;
