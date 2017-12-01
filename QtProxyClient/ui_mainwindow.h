@@ -60,10 +60,10 @@ public:
     QRadioButton *radioButton_nc_mode;
     QCheckBox *checkBox_show_cp;
     QFrame *line;
-    QFrame *line_3;
     QFrame *line_5;
     QFrame *line_6;
     QLabel *rover_controls_label;
+    QFrame *line_2;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -176,14 +176,9 @@ public:
         checkBox_show_cp->setGeometry(QRect(750, 280, 151, 22));
         line = new QFrame(centralWidget);
         line->setObjectName(QStringLiteral("line"));
-        line->setGeometry(QRect(720, 180, 20, 131));
+        line->setGeometry(QRect(720, 179, 20, 131));
         line->setFrameShape(QFrame::VLine);
         line->setFrameShadow(QFrame::Sunken);
-        line_3 = new QFrame(centralWidget);
-        line_3->setObjectName(QStringLiteral("line_3"));
-        line_3->setGeometry(QRect(860, 180, 20, 131));
-        line_3->setFrameShape(QFrame::VLine);
-        line_3->setFrameShadow(QFrame::Sunken);
         line_5 = new QFrame(centralWidget);
         line_5->setObjectName(QStringLiteral("line_5"));
         line_5->setGeometry(QRect(730, 300, 141, 20));
@@ -191,7 +186,7 @@ public:
         line_5->setFrameShadow(QFrame::Sunken);
         line_6 = new QFrame(centralWidget);
         line_6->setObjectName(QStringLiteral("line_6"));
-        line_6->setGeometry(QRect(730, 170, 141, 20));
+        line_6->setGeometry(QRect(730, 170, 139, 20));
         line_6->setFrameShape(QFrame::HLine);
         line_6->setFrameShadow(QFrame::Sunken);
         rover_controls_label = new QLabel(centralWidget);
@@ -203,6 +198,11 @@ public:
         rover_controls_label->setFont(font);
         rover_controls_label->setAcceptDrops(false);
         rover_controls_label->setAutoFillBackground(false);
+        line_2 = new QFrame(centralWidget);
+        line_2->setObjectName(QStringLiteral("line_2"));
+        line_2->setGeometry(QRect(861, 179, 20, 131));
+        line_2->setFrameShape(QFrame::VLine);
+        line_2->setFrameShadow(QFrame::Sunken);
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);

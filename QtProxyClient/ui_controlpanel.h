@@ -222,10 +222,12 @@ public:
         pushButton_submit->setGeometry(QRect(60, 300, 80, 24));
         label_4 = new QLabel(centralWidget);
         label_4->setObjectName(QStringLiteral("label_4"));
-        label_4->setGeometry(QRect(20, 250, 60, 16));
+        label_4->setGeometry(QRect(20, 230, 60, 31));
+        label_4->setFont(font);
         speed_label = new QLabel(centralWidget);
         speed_label->setObjectName(QStringLiteral("speed_label"));
-        speed_label->setGeometry(QRect(80, 250, 60, 16));
+        speed_label->setGeometry(QRect(90, 238, 31, 16));
+        speed_label->setFont(font);
         line = new QFrame(centralWidget);
         line->setObjectName(QStringLiteral("line"));
         line->setGeometry(QRect(190, 0, 20, 381));
@@ -299,7 +301,7 @@ public:
         radioButton_tank->setText(QApplication::translate("ControlPanel", "Tank", Q_NULLPTR));
         radioButton_custom->setText(QApplication::translate("ControlPanel", "Custom", Q_NULLPTR));
         pushButton_submit->setText(QApplication::translate("ControlPanel", "Submit", Q_NULLPTR));
-        label_4->setText(QApplication::translate("ControlPanel", "Speed", Q_NULLPTR));
+        label_4->setText(QApplication::translate("ControlPanel", "Speed:", Q_NULLPTR));
         speed_label->setText(QApplication::translate("ControlPanel", "0", Q_NULLPTR));
         menuControls->setTitle(QApplication::translate("ControlPanel", "Controls", Q_NULLPTR));
     } // retranslateUi
