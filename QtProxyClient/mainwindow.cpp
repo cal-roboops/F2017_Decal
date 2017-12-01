@@ -25,7 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     socket = new QTcpSocket(this);
     disconnectPressed = false;
     ui->sendMSG->setEnabled(false);
-
+    ui->radioButton_nc_mode->setChecked(true);
+    on_radioButton_nc_mode_clicked();
     // Connect desired SIGNALs and SLOTs
     connect(socket, SIGNAL(readyRead()), this, SLOT(on_recvMSG()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(on_disconnect()));
@@ -285,19 +286,10 @@ void MainWindow::format_JSON(QJsonObject input) //formates JSON Object
     qDebug() << strJson;
 }
 
-//ControlPanel *c; //control panel
-
 
 void MainWindow::on_checkBox_show_cp_clicked() //Show Control Panel Checkbox clicked
 {
     if(ui->checkBox_show_cp->isChecked() == true){
-//        if(!c){
-//            c = new ControlPanel();
-//        }
-//        if(c){
-
-//          c->show();
-//        }
         c.show();
     }
    else{
@@ -309,7 +301,6 @@ void MainWindow::on_radioButton_nc_mode_clicked() //radio button disables contro
 {
     c.setEnabled(false);
     if (ui->checkBox_show_cp->isChecked()) {
-        qDebug() << "HERE";
         c.show();
     }
     QJsonObject input;
@@ -319,18 +310,7 @@ void MainWindow::on_radioButton_nc_mode_clicked() //radio button disables contro
 
 void MainWindow::on_radioButton_c_mode_clicked() //radio button enables control panel
 {
-    //test
-//    if (c == NULL) {
-//        c = new ControlPanel();
-//    } else {
-//        qDebug() << "HERE";
-//    c.hide();
-//    }
     c.setEnabled(true);
-//    if (ui->checkBox_show_cp->isChecked()) {
-    c.show();
-//    }
-    ui->checkBox_show_cp->setChecked(true);
     QJsonObject input;
     input["Controller"] = 1;
     format_JSON(input);

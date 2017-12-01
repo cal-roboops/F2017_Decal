@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>886</width>
-    <height>441</height>
+    <width>914</width>
+    <height>472</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -113,7 +113,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>330</x>
       <y>30</y>
-      <width>331</width>
+      <width>321</width>
       <height>171</height>
      </rect>
     </property>
@@ -124,7 +124,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="clearRECV">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>440</x>
       <y>210</y>
       <width>93</width>
       <height>28</height>
@@ -212,8 +212,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="runTestSuite">
     <property name="geometry">
      <rect>
-      <x>720</x>
-      <y>330</y>
+      <x>730</x>
+      <y>380</y>
       <width>131</width>
       <height>25</height>
      </rect>
@@ -226,7 +226,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>290</y>
+      <y>340</y>
       <width>621</width>
       <height>51</height>
      </rect>
@@ -235,8 +235,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="selectTestSuite">
     <property name="geometry">
      <rect>
-      <x>720</x>
-      <y>300</y>
+      <x>730</x>
+      <y>350</y>
       <width>131</width>
       <height>25</height>
      </rect>
@@ -249,7 +249,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>290</y>
+      <y>340</y>
       <width>60</width>
       <height>25</height>
      </rect>
@@ -265,7 +265,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>730</x>
-      <y>370</y>
+      <y>420</y>
       <width>118</width>
       <height>23</height>
      </rect>
@@ -278,7 +278,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>350</y>
+      <y>400</y>
       <width>621</width>
       <height>51</height>
      </rect>
@@ -291,7 +291,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>360</y>
+      <y>410</y>
       <width>71</width>
       <height>25</height>
      </rect>
@@ -306,7 +306,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="st_ip_Label">
     <property name="geometry">
      <rect>
-      <x>680</x>
+      <x>670</x>
       <y>50</y>
       <width>60</width>
       <height>25</height>
@@ -322,7 +322,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="openStream">
     <property name="geometry">
      <rect>
-      <x>710</x>
+      <x>730</x>
       <y>130</y>
       <width>111</width>
       <height>25</height>
@@ -335,7 +335,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QTextEdit" name="st_portEdit">
     <property name="geometry">
      <rect>
-      <x>750</x>
+      <x>730</x>
       <y>90</y>
       <width>91</width>
       <height>25</height>
@@ -352,7 +352,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QTextEdit" name="st_ipEdit">
     <property name="geometry">
      <rect>
-      <x>750</x>
+      <x>730</x>
       <y>50</y>
       <width>91</width>
       <height>25</height>
@@ -369,7 +369,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="st_port_Label">
     <property name="geometry">
      <rect>
-      <x>669</x>
+      <x>660</x>
       <y>90</y>
       <width>71</width>
       <height>25</height>
@@ -401,8 +401,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QRadioButton" name="radioButton_c_mode">
     <property name="geometry">
      <rect>
-      <x>690</x>
-      <y>180</y>
+      <x>750</x>
+      <y>220</y>
       <width>121</width>
       <height>22</height>
      </rect>
@@ -414,8 +414,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QRadioButton" name="radioButton_nc_mode">
     <property name="geometry">
      <rect>
-      <x>690</x>
-      <y>210</y>
+      <x>750</x>
+      <y>250</y>
       <width>141</width>
       <height>22</height>
      </rect>
@@ -427,14 +427,91 @@ p, li { white-space: pre-wrap; }
    <widget class="QCheckBox" name="checkBox_show_cp">
     <property name="geometry">
      <rect>
-      <x>690</x>
-      <y>240</y>
+      <x>750</x>
+      <y>280</y>
       <width>151</width>
       <height>22</height>
      </rect>
     </property>
     <property name="text">
      <string>Show Control Panel</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>180</y>
+      <width>20</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_3">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>180</y>
+      <width>20</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_5">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>300</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_6">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>170</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="rover_controls_label">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>190</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>ROVER CONTROLS</string>
     </property>
    </widget>
   </widget>

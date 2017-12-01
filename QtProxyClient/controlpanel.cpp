@@ -36,6 +36,8 @@ void ControlPanel::format_JSON(QJsonObject input) //formates JSON Object
 
 void ControlPanel::on_radioButton_clicked() //set controls to regular
 {
+    ui->radioButton_tank->setChecked(false);
+    ui->radioButton_custom->setChecked(false);
     ui->stackedWidget->setCurrentIndex(0);
     ui->horizontalSlider->setValue(0); //set slider value to 0
     QJsonObject input;
@@ -53,6 +55,8 @@ void ControlPanel::on_radioButton_clicked() //set controls to regular
 
 void ControlPanel::on_radioButton_tank_clicked() //set controls to tank
 {
+    ui->radioButton->setChecked(false);
+    ui->radioButton_custom->setChecked(false);
     ui->stackedWidget->setCurrentIndex(1);
     QJsonObject input;
     input["DT_M_RD"] = 0;
@@ -69,8 +73,9 @@ void ControlPanel::on_radioButton_tank_clicked() //set controls to tank
 
 void ControlPanel::on_radioButton_custom_clicked() //set controls to custom
 {
+    ui->radioButton->setChecked(false);
+    ui->radioButton_tank->setChecked(false);
     ui->stackedWidget->setCurrentIndex(2);
-
     ui->front_left_servo_box->setText("0"); //set default values to 0
     ui->middle_left_servo_box->setText("0");
     ui->back_left_servo_box->setText("0");
@@ -245,39 +250,57 @@ void ControlPanel::on_pushButton_submit_clicked()
 
 void ControlPanel::keyPressEvent(QKeyEvent * event)
 {
-    if(event-> key() == Qt::Key_W){
-        ControlPanel::on_pushButton_up_pressed();
-    }
-    else if(event-> key() == Qt::Key_S){
-        ControlPanel::on_pushButton_down_pressed();
-    }
-    else if(event-> key() == Qt::Key_D && ui->stackedWidget->currentIndex() == 0){ //enables D and A key only on regular page
-        ControlPanel::on_pushButton_right_clicked();
-    }
-    else if(event-> key() == Qt::Key_A && ui->stackedWidget->currentIndex() == 0){
-        ControlPanel::on_pushButton_left_clicked();
-    }
-
-}
-void ControlPanel::keyReleaseEvent(QKeyEvent * event)
-{
-    if (event->isAutoRepeat()) {
-        ControlPanel::keyPressEvent(event);
-    }
-    else {
+    if (!event->isAutoRepeat()) {
         if(event-> key() == Qt::Key_W){
-            ControlPanel::on_pushButton_up_released();
+            ControlPanel::on_pushButton_up_pressed();
         }
         else if(event-> key() == Qt::Key_S){
-            ControlPanel::on_pushButton_down_released();
+            ControlPanel::on_pushButton_down_pressed();
         }
-        else if(event-> key() == Qt::Key_D && ui->stackedWidget->currentIndex() == 0){
+        else if(event-> key() == Qt::Key_D && ui->stackedWidget->currentIndex() == 0){ //enables D and A key only on regular page
             ControlPanel::on_pushButton_right_clicked();
         }
         else if(event-> key() == Qt::Key_A && ui->stackedWidget->currentIndex() == 0){
             ControlPanel::on_pushButton_left_clicked();
         }
     }
+
+}
+void ControlPanel::keyReleaseEvent(QKeyEvent * event)
+{
+        if (event->isAutoRepeat()) {
+//            ControlPanel::keyPressEvent(event);
+            return;
+        }
+        else {
+            if(event-> key() == Qt::Key_W){
+                ControlPanel::on_pushButton_up_released();
+            }
+            else if(event-> key() == Qt::Key_S){
+                ControlPanel::on_pushButton_down_released();
+            }
+//            else if(event-> key() == Qt::Key_D && ui->stackedWidget->currentIndex() == 0){
+//                ControlPanel::on_pushButton_right_clicked();
+//            }
+//            else if(event-> key() == Qt::Key_A && ui->stackedWidget->currentIndex() == 0){
+//                ControlPanel::on_pushButton_left_clicked();
+//            }
+        }
+
+//    if (!event->isAutoRepeat()) {
+//        if(event-> key() == Qt::Key_W){
+//            ControlPanel::on_pushButton_up_released();
+//        }
+//        else if(event-> key() == Qt::Key_S){
+//            ControlPanel::on_pushButton_down_released();
+//        }
+//        else if(event-> key() == Qt::Key_D && ui->stackedWidget->currentIndex() == 0){
+//            ControlPanel::on_pushButton_right_clicked();
+//        }
+//        else if(event-> key() == Qt::Key_A && ui->stackedWidget->currentIndex() == 0){
+//            ControlPanel::on_pushButton_left_clicked();
+//        }
+//    }
 
 }
 

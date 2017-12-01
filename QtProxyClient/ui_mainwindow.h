@@ -14,6 +14,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
@@ -58,13 +59,18 @@ public:
     QRadioButton *radioButton_c_mode;
     QRadioButton *radioButton_nc_mode;
     QCheckBox *checkBox_show_cp;
+    QFrame *line;
+    QFrame *line_3;
+    QFrame *line_5;
+    QFrame *line_6;
+    QLabel *rover_controls_label;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->setEnabled(true);
-        MainWindow->resize(886, 441);
+        MainWindow->resize(914, 472);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         msgEdit = new QTextEdit(centralWidget);
@@ -91,11 +97,11 @@ public:
         recvData = new QTextEdit(centralWidget);
         recvData->setObjectName(QStringLiteral("recvData"));
         recvData->setEnabled(true);
-        recvData->setGeometry(QRect(330, 30, 331, 171));
+        recvData->setGeometry(QRect(330, 30, 321, 171));
         recvData->setReadOnly(true);
         clearRECV = new QPushButton(centralWidget);
         clearRECV->setObjectName(QStringLiteral("clearRECV"));
-        clearRECV->setGeometry(QRect(450, 210, 93, 28));
+        clearRECV->setGeometry(QRect(440, 210, 93, 28));
         connect = new QPushButton(centralWidget);
         connect->setObjectName(QStringLiteral("connect"));
         connect->setGeometry(QRect(210, 30, 93, 25));
@@ -115,45 +121,45 @@ public:
         disconnect->setGeometry(QRect(210, 60, 93, 25));
         runTestSuite = new QPushButton(centralWidget);
         runTestSuite->setObjectName(QStringLiteral("runTestSuite"));
-        runTestSuite->setGeometry(QRect(720, 330, 131, 25));
+        runTestSuite->setGeometry(QRect(730, 380, 131, 25));
         testPathEdit = new QTextEdit(centralWidget);
         testPathEdit->setObjectName(QStringLiteral("testPathEdit"));
-        testPathEdit->setGeometry(QRect(90, 290, 621, 51));
+        testPathEdit->setGeometry(QRect(90, 340, 621, 51));
         selectTestSuite = new QPushButton(centralWidget);
         selectTestSuite->setObjectName(QStringLiteral("selectTestSuite"));
-        selectTestSuite->setGeometry(QRect(720, 300, 131, 25));
+        selectTestSuite->setGeometry(QRect(730, 350, 131, 25));
         test_Label = new QLabel(centralWidget);
         test_Label->setObjectName(QStringLiteral("test_Label"));
-        test_Label->setGeometry(QRect(10, 290, 60, 25));
+        test_Label->setGeometry(QRect(10, 340, 60, 25));
         test_Label->setAlignment(Qt::AlignCenter);
         testProgress = new QProgressBar(centralWidget);
         testProgress->setObjectName(QStringLiteral("testProgress"));
-        testProgress->setGeometry(QRect(730, 370, 118, 23));
+        testProgress->setGeometry(QRect(730, 420, 118, 23));
         testProgress->setValue(0);
         testOut = new QTextEdit(centralWidget);
         testOut->setObjectName(QStringLiteral("testOut"));
-        testOut->setGeometry(QRect(90, 350, 621, 51));
+        testOut->setGeometry(QRect(90, 400, 621, 51));
         testOut->setReadOnly(true);
         test_Label_2 = new QLabel(centralWidget);
         test_Label_2->setObjectName(QStringLiteral("test_Label_2"));
-        test_Label_2->setGeometry(QRect(10, 360, 71, 25));
+        test_Label_2->setGeometry(QRect(10, 410, 71, 25));
         test_Label_2->setAlignment(Qt::AlignCenter);
         st_ip_Label = new QLabel(centralWidget);
         st_ip_Label->setObjectName(QStringLiteral("st_ip_Label"));
-        st_ip_Label->setGeometry(QRect(680, 50, 60, 25));
+        st_ip_Label->setGeometry(QRect(670, 50, 60, 25));
         st_ip_Label->setAlignment(Qt::AlignCenter);
         openStream = new QPushButton(centralWidget);
         openStream->setObjectName(QStringLiteral("openStream"));
-        openStream->setGeometry(QRect(710, 130, 111, 25));
+        openStream->setGeometry(QRect(730, 130, 111, 25));
         st_portEdit = new QTextEdit(centralWidget);
         st_portEdit->setObjectName(QStringLiteral("st_portEdit"));
-        st_portEdit->setGeometry(QRect(750, 90, 91, 25));
+        st_portEdit->setGeometry(QRect(730, 90, 91, 25));
         st_ipEdit = new QTextEdit(centralWidget);
         st_ipEdit->setObjectName(QStringLiteral("st_ipEdit"));
-        st_ipEdit->setGeometry(QRect(750, 50, 91, 25));
+        st_ipEdit->setGeometry(QRect(730, 50, 91, 25));
         st_port_Label = new QLabel(centralWidget);
         st_port_Label->setObjectName(QStringLiteral("st_port_Label"));
-        st_port_Label->setGeometry(QRect(669, 90, 71, 25));
+        st_port_Label->setGeometry(QRect(660, 90, 71, 25));
         st_port_Label->setAlignment(Qt::AlignCenter);
         streamLabel = new QLabel(centralWidget);
         streamLabel->setObjectName(QStringLiteral("streamLabel"));
@@ -161,13 +167,42 @@ public:
         streamLabel->setAlignment(Qt::AlignCenter);
         radioButton_c_mode = new QRadioButton(centralWidget);
         radioButton_c_mode->setObjectName(QStringLiteral("radioButton_c_mode"));
-        radioButton_c_mode->setGeometry(QRect(690, 180, 121, 22));
+        radioButton_c_mode->setGeometry(QRect(750, 220, 121, 22));
         radioButton_nc_mode = new QRadioButton(centralWidget);
         radioButton_nc_mode->setObjectName(QStringLiteral("radioButton_nc_mode"));
-        radioButton_nc_mode->setGeometry(QRect(690, 210, 141, 22));
+        radioButton_nc_mode->setGeometry(QRect(750, 250, 141, 22));
         checkBox_show_cp = new QCheckBox(centralWidget);
         checkBox_show_cp->setObjectName(QStringLiteral("checkBox_show_cp"));
-        checkBox_show_cp->setGeometry(QRect(690, 240, 151, 22));
+        checkBox_show_cp->setGeometry(QRect(750, 280, 151, 22));
+        line = new QFrame(centralWidget);
+        line->setObjectName(QStringLiteral("line"));
+        line->setGeometry(QRect(720, 180, 20, 131));
+        line->setFrameShape(QFrame::VLine);
+        line->setFrameShadow(QFrame::Sunken);
+        line_3 = new QFrame(centralWidget);
+        line_3->setObjectName(QStringLiteral("line_3"));
+        line_3->setGeometry(QRect(860, 180, 20, 131));
+        line_3->setFrameShape(QFrame::VLine);
+        line_3->setFrameShadow(QFrame::Sunken);
+        line_5 = new QFrame(centralWidget);
+        line_5->setObjectName(QStringLiteral("line_5"));
+        line_5->setGeometry(QRect(730, 300, 141, 20));
+        line_5->setFrameShape(QFrame::HLine);
+        line_5->setFrameShadow(QFrame::Sunken);
+        line_6 = new QFrame(centralWidget);
+        line_6->setObjectName(QStringLiteral("line_6"));
+        line_6->setGeometry(QRect(730, 170, 141, 20));
+        line_6->setFrameShape(QFrame::HLine);
+        line_6->setFrameShadow(QFrame::Sunken);
+        rover_controls_label = new QLabel(centralWidget);
+        rover_controls_label->setObjectName(QStringLiteral("rover_controls_label"));
+        rover_controls_label->setGeometry(QRect(750, 190, 101, 16));
+        QFont font;
+        font.setBold(true);
+        font.setWeight(75);
+        rover_controls_label->setFont(font);
+        rover_controls_label->setAcceptDrops(false);
+        rover_controls_label->setAutoFillBackground(false);
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -218,6 +253,7 @@ public:
         radioButton_c_mode->setText(QApplication::translate("MainWindow", "Control Mode", Q_NULLPTR));
         radioButton_nc_mode->setText(QApplication::translate("MainWindow", "Non-control Mode", Q_NULLPTR));
         checkBox_show_cp->setText(QApplication::translate("MainWindow", "Show Control Panel", Q_NULLPTR));
+        rover_controls_label->setText(QApplication::translate("MainWindow", "ROVER CONTROLS", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -75,6 +76,8 @@ public:
     QPushButton *pushButton_submit;
     QLabel *label_4;
     QLabel *speed_label;
+    QFrame *line;
+    QFrame *line_2;
     QMenuBar *menuBar;
     QMenu *menuControls;
     QToolBar *mainToolBar;
@@ -84,20 +87,20 @@ public:
     {
         if (ControlPanel->objectName().isEmpty())
             ControlPanel->setObjectName(QStringLiteral("ControlPanel"));
-        ControlPanel->resize(617, 427);
+        ControlPanel->resize(615, 434);
         centralWidget = new QWidget(ControlPanel);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         stackedWidget = new QStackedWidget(centralWidget);
         stackedWidget->setObjectName(QStringLiteral("stackedWidget"));
-        stackedWidget->setGeometry(QRect(180, 0, 441, 371));
+        stackedWidget->setGeometry(QRect(210, 0, 441, 371));
         regular = new QWidget();
         regular->setObjectName(QStringLiteral("regular"));
         pushButton_up = new QPushButton(regular);
         pushButton_up->setObjectName(QStringLiteral("pushButton_up"));
-        pushButton_up->setGeometry(QRect(180, 140, 71, 51));
+        pushButton_up->setGeometry(QRect(160, 190, 71, 51));
         horizontalSlider = new QSlider(regular);
         horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
-        horizontalSlider->setGeometry(QRect(70, 50, 301, 20));
+        horizontalSlider->setGeometry(QRect(60, 60, 301, 20));
         horizontalSlider->setMinimum(-45);
         horizontalSlider->setMaximum(45);
         horizontalSlider->setOrientation(Qt::Horizontal);
@@ -105,22 +108,22 @@ public:
         horizontalSlider->setTickInterval(10);
         lineEdit_input = new QLineEdit(regular);
         lineEdit_input->setObjectName(QStringLiteral("lineEdit_input"));
-        lineEdit_input->setGeometry(QRect(130, 80, 91, 31));
+        lineEdit_input->setGeometry(QRect(60, 100, 91, 31));
         button_set = new QPushButton(regular);
         button_set->setObjectName(QStringLiteral("button_set"));
-        button_set->setGeometry(QRect(230, 80, 80, 24));
+        button_set->setGeometry(QRect(160, 100, 80, 24));
         pushButton_right = new QPushButton(regular);
         pushButton_right->setObjectName(QStringLiteral("pushButton_right"));
-        pushButton_right->setGeometry(QRect(250, 190, 71, 51));
+        pushButton_right->setGeometry(QRect(230, 240, 71, 51));
         pushButton_down = new QPushButton(regular);
         pushButton_down->setObjectName(QStringLiteral("pushButton_down"));
-        pushButton_down->setGeometry(QRect(180, 240, 71, 51));
+        pushButton_down->setGeometry(QRect(160, 290, 71, 51));
         pushButton_left = new QPushButton(regular);
         pushButton_left->setObjectName(QStringLiteral("pushButton_left"));
-        pushButton_left->setGeometry(QRect(110, 190, 71, 51));
+        pushButton_left->setGeometry(QRect(90, 240, 71, 51));
         label = new QLabel(regular);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(10, 10, 131, 21));
+        label->setGeometry(QRect(140, 10, 131, 21));
         QFont font;
         font.setPointSize(14);
         label->setFont(font);
@@ -129,7 +132,7 @@ public:
         tank->setObjectName(QStringLiteral("tank"));
         label_2 = new QLabel(tank);
         label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(10, 10, 131, 21));
+        label_2->setGeometry(QRect(150, 20, 101, 21));
         label_2->setFont(font);
         radio45 = new QRadioButton(tank);
         radio45->setObjectName(QStringLiteral("radio45"));
@@ -142,16 +145,16 @@ public:
         radio0->setGeometry(QRect(90, 70, 41, 20));
         tank_down = new QPushButton(tank);
         tank_down->setObjectName(QStringLiteral("tank_down"));
-        tank_down->setGeometry(QRect(170, 230, 71, 51));
+        tank_down->setGeometry(QRect(160, 200, 71, 51));
         tank_up = new QPushButton(tank);
         tank_up->setObjectName(QStringLiteral("tank_up"));
-        tank_up->setGeometry(QRect(170, 160, 71, 51));
+        tank_up->setGeometry(QRect(160, 130, 71, 51));
         stackedWidget->addWidget(tank);
         custom = new QWidget();
         custom->setObjectName(QStringLiteral("custom"));
         label_3 = new QLabel(custom);
         label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setGeometry(QRect(10, 10, 131, 21));
+        label_3->setGeometry(QRect(140, 10, 121, 21));
         label_3->setFont(font);
         front_left_servo_box = new QTextEdit(custom);
         front_left_servo_box->setObjectName(QStringLiteral("front_left_servo_box"));
@@ -173,31 +176,31 @@ public:
         middle_right_servo_box->setGeometry(QRect(260, 90, 81, 31));
         button_submit_servo = new QPushButton(custom);
         button_submit_servo->setObjectName(QStringLiteral("button_submit_servo"));
-        button_submit_servo->setGeometry(QRect(120, 300, 171, 61));
+        button_submit_servo->setGeometry(QRect(110, 310, 171, 61));
         button_left_up = new QPushButton(custom);
         button_left_up->setObjectName(QStringLiteral("button_left_up"));
-        button_left_up->setGeometry(QRect(120, 180, 41, 31));
+        button_left_up->setGeometry(QRect(110, 190, 41, 31));
         button_left_up_down = new QPushButton(custom);
         button_left_up_down->setObjectName(QStringLiteral("button_left_up_down"));
-        button_left_up_down->setGeometry(QRect(120, 220, 41, 31));
+        button_left_up_down->setGeometry(QRect(110, 230, 41, 31));
         button_left_down = new QPushButton(custom);
         button_left_down->setObjectName(QStringLiteral("button_left_down"));
-        button_left_down->setGeometry(QRect(120, 260, 41, 31));
+        button_left_down->setGeometry(QRect(110, 270, 41, 31));
         button_middle_down_down = new QPushButton(custom);
         button_middle_down_down->setObjectName(QStringLiteral("button_middle_down_down"));
-        button_middle_down_down->setGeometry(QRect(190, 260, 41, 31));
+        button_middle_down_down->setGeometry(QRect(180, 270, 41, 31));
         button_right_down = new QPushButton(custom);
         button_right_down->setObjectName(QStringLiteral("button_right_down"));
-        button_right_down->setGeometry(QRect(260, 260, 41, 31));
+        button_right_down->setGeometry(QRect(250, 270, 41, 31));
         button_right_down_up = new QPushButton(custom);
         button_right_down_up->setObjectName(QStringLiteral("button_right_down_up"));
-        button_right_down_up->setGeometry(QRect(260, 220, 41, 31));
+        button_right_down_up->setGeometry(QRect(250, 230, 41, 31));
         button_right_up = new QPushButton(custom);
         button_right_up->setObjectName(QStringLiteral("button_right_up"));
-        button_right_up->setGeometry(QRect(260, 180, 41, 31));
+        button_right_up->setGeometry(QRect(250, 190, 41, 31));
         button_middle_up_up = new QPushButton(custom);
         button_middle_up_up->setObjectName(QStringLiteral("button_middle_up_up"));
-        button_middle_up_up->setGeometry(QRect(190, 180, 41, 31));
+        button_middle_up_up->setGeometry(QRect(180, 190, 41, 31));
         stackedWidget->addWidget(custom);
         radioButton = new QRadioButton(centralWidget);
         radioButton->setObjectName(QStringLiteral("radioButton"));
@@ -208,7 +211,7 @@ public:
         radioButton_tank->setGeometry(QRect(40, 110, 100, 22));
         radioButton_custom = new QRadioButton(centralWidget);
         radioButton_custom->setObjectName(QStringLiteral("radioButton_custom"));
-        radioButton_custom->setGeometry(QRect(40, 170, 100, 22));
+        radioButton_custom->setGeometry(QRect(40, 160, 100, 22));
         horizontalSlider_speed = new QSlider(centralWidget);
         horizontalSlider_speed->setObjectName(QStringLiteral("horizontalSlider_speed"));
         horizontalSlider_speed->setGeometry(QRect(20, 270, 160, 16));
@@ -223,6 +226,16 @@ public:
         speed_label = new QLabel(centralWidget);
         speed_label->setObjectName(QStringLiteral("speed_label"));
         speed_label->setGeometry(QRect(80, 250, 60, 16));
+        line = new QFrame(centralWidget);
+        line->setObjectName(QStringLiteral("line"));
+        line->setGeometry(QRect(190, 0, 20, 381));
+        line->setFrameShape(QFrame::VLine);
+        line->setFrameShadow(QFrame::Sunken);
+        line_2 = new QFrame(centralWidget);
+        line_2->setObjectName(QStringLiteral("line_2"));
+        line_2->setGeometry(QRect(0, 370, 631, 16));
+        line_2->setFrameShape(QFrame::HLine);
+        line_2->setFrameShadow(QFrame::Sunken);
         ControlPanel->setCentralWidget(centralWidget);
         radioButton_custom->raise();
         stackedWidget->raise();
@@ -232,9 +245,11 @@ public:
         pushButton_submit->raise();
         label_4->raise();
         speed_label->raise();
+        line->raise();
+        line_2->raise();
         menuBar = new QMenuBar(ControlPanel);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 617, 22));
+        menuBar->setGeometry(QRect(0, 0, 615, 21));
         menuControls = new QMenu(menuBar);
         menuControls->setObjectName(QStringLiteral("menuControls"));
         ControlPanel->setMenuBar(menuBar);
