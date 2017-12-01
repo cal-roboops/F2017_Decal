@@ -1,5 +1,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
 #include <list>
 #include <json/json.hpp>
 
@@ -22,7 +24,7 @@ list<struct Thread*> clientThreads;
 struct Thread {
 	int socket_desc;
 	pthread_t* pthread;
-	long ip;
+	struct in_addr ip;
 	int port;
 };
 
@@ -40,10 +42,15 @@ void *execute_rover_command(void*);
 
 void create_thread(int, long, int);
 
+/*
+ Creates and binds socket for the server. Establishes infinite loop which constantly listens for a 
+ client attempting to connect. Conditional statements in place to differentiate from the rover 
+ trying to connect and a normal client. Threads are spawned for each successful connection which 
+ are always waiting to receive traffic sent by the client.         
+*/
 int main() {
 	int client;
 	int clientListener;
-	int connectAttempts;
 	int clientPort = 8088;
 	struct sockaddr_in server_addr, client_addr;
 	int size = sizeof(struct sockaddr_in);
@@ -76,37 +83,34 @@ int main() {
 		if (client < 0) {
 			cout << "ERROR: failed to connect to client" << endl;
 		} else if (client_addr.sin_addr.s_addr == roverIP) {
-			connectAttempts = 3;
 			roverCommandSocket = client;
 
 			cout << "Successfully established command/response connection to ROVER." << endl;
 			cout << "Waiting to establish emergency connection to ROVER..." << endl;
+			send(roverCommandSocket, "Command/response connection established.", bufSize, 0);
 
-			while (connectAttempts > 0) {
+			while (true) {
 				client = accept(clientListener, (struct sockaddr*) &client_addr, (socklen_t*) &size);
 
 				if (client < 0) {
 					cout << "ERROR: failed to establish emergency connection to ROVER" << endl;
-					cout << "Waiting for re-attempt to establish emergency connection to ROVER..." << endl;
-					connectAttempts -= 1;
+					send(roverCommandSocket, "Failed to establish emergency connection.", bufSize, 0);
+					close(roverCommandSocket);
+					break;
 				} else if (client_addr.sin_addr.s_addr != roverIP) {
-					cout << "ERROR: only ROVER may attempt to connect at this time" << endl;
+					send(client, "ERROR: only ROVER may attempt to connect at this time", bufSize, 0);
 					close(client);
 				} else {
 					cout << "Successfully established emergency connection to ROVER." << endl;
 					roverEmergencySocket = client;
+					send(roverEmergencySocket, "Emergency connection established.", bufSize, 0);
 					create_thread(roverEmergencySocket, client_addr.sin_addr.s_addr, ntohs(client_addr.sin_port));
 					break;
 				}
 			}
-
-			if (connectAttempts == 0) {
-				cout << "ERROR: failed to connect to ROVER" << endl;
-				close(roverCommandSocket);
-			}
 		} else {
 			cout << "\nSuccessfully connected to new client." << endl;
-			cout << "Client IP: " << client_addr.sin_addr.s_addr << endl;
+			cout << "Client IP: " << inet_ntoa(client_addr.sin_addr) << endl;
 			cout << "Client port: " << ntohs(client_addr.sin_port) << "\n" << endl;
 
 			create_thread(client, client_addr.sin_addr.s_addr, ntohs(client_addr.sin_port));
@@ -114,6 +118,12 @@ int main() {
 	} 
 }
 
+/*
+ Allocates memory for the thread identifier (pthread_t* pt) and the Thread struct. Error checking in place
+ in case memory cannot be allocated for some reason. Thread struct is then filled with the necessary info
+ to identify and control the thread and to communicate with the client that is paired with the new thread. 
+ This struct is then added to a global linked list, and then the new thread is spawned. 
+*/
 void create_thread(int socketID, long ipAddr, int p) {
 	struct Thread* t;
 	pthread_t* pt; 
@@ -137,7 +147,7 @@ void create_thread(int socketID, long ipAddr, int p) {
 
 	t -> socket_desc = socketID;
 	t -> pthread = pt;
-	t -> ip = ipAddr;
+	(t -> ip).s_addr = ipAddr;
 	t -> port = p;
 
 	pthread_create(pt, NULL, handle_input, (void*) t);
@@ -147,6 +157,15 @@ void create_thread(int socketID, long ipAddr, int p) {
 	}
 }
 
+/*
+ The function being run by each client thread. Constantly waits to receive traffic from the client with 
+ which the thread is paired. Once data has been received, it is parsed into a JSON object so its contents
+ can be analyzed. The client thread manages any commands directed to the server or if an emergency command
+ needs to be sent to the rover. Otherwise, a temporary thread is spawned which is tasked with relaying the
+ command to the rover and wait for its response. Only one rover command may be sent to the rover at a time.
+ The client is assumed to respect this protocol, but precautions are implemented here to ensure this remains
+ true on the server side as well. 
+*/
 void *handle_input(void* threadStruct) {
 	struct Thread* t = (struct Thread*) threadStruct;
 	int socketID = t -> socket_desc;
@@ -196,12 +215,12 @@ void *handle_input(void* threadStruct) {
 			
 			memset(buffer, 0, sizeof(buffer));
 		} else {
-			if (t -> ip == roverIP) {
+			if ((t -> ip).s_addr == roverIP) {
 				cout << "\nDisconnected with ROVER.\n" << endl;
 				close(roverCommandSocket);
 				close(roverEmergencySocket);
 			} else {
-				cout << "\nDisconnected with Client (IP: " << t -> ip << ", Port: " << t -> port << ").\n" << endl;
+				cout << "\nDisconnected with Client (IP: " << inet_ntoa(t -> ip) << ", Port: " << t -> port << ").\n" << endl;
 				close(socketID);
 			}
 
@@ -211,6 +230,14 @@ void *handle_input(void* threadStruct) {
 	}
 }
 
+/*
+ This is the function executed by the temporary thread spawned by a client thread. Sends a command to the rover
+ and waits for it to respond. Must acquire a mutex first, however. If the mutex cannot be acquired, an error 
+ message is sent back to the client which made the command. Temporary thread then terminates. Otherwise, once rover 
+ responds, this feedback is sent back to all clients as updates on the rover's state. Once all has been completed, 
+ the "finished" field of the Command struct which this function receives is marked true so the client thread knows 
+ when the rover command has been executed. 
+*/
 void *execute_rover_command(void* command) {
 	struct Command* cmd = (struct Command*) command;
 	struct Thread* thread;
@@ -250,14 +277,19 @@ void *execute_rover_command(void* command) {
 	pthread_exit(NULL);
 }
 
+/*
+ Terminates a client thread. Iterates through the global linked list containing the Thread structs to find the 
+ corresponding struct for the thread. Frees all associated memory, removes struct from the list, and terminates
+ the thread. This action is always executed when a client disconnects from the server. 
+*/
 void terminate_thread(struct Thread* t) {
 	list<struct Thread*>::const_iterator iterator;
 
-	if (t -> ip != roverIP) {
+	if ((t -> ip).s_addr != roverIP) {
 		for (iterator = clientThreads.begin(); iterator != clientThreads.end(); iterator++) {
 			struct Thread* thread = *iterator;
 
-			if (thread -> ip == t -> ip && thread -> port == t -> port) {
+			if ((thread -> ip).s_addr == (t -> ip).s_addr && thread -> port == t -> port) {
 				clientThreads.erase(iterator);
 				break;
 			}
@@ -268,10 +300,4 @@ void terminate_thread(struct Thread* t) {
 	free(t);
 	pthread_exit(NULL);
 }
-
-
-
-
-
-
 
