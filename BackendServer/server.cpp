@@ -113,6 +113,7 @@ int main() {
 			cout << "Client IP: " << inet_ntoa(client_addr.sin_addr) << endl;
 			cout << "Client port: " << ntohs(client_addr.sin_port) << "\n" << endl;
 
+			send(client, "Connection established.", bufSize, 0);
 			create_thread(client, client_addr.sin_addr.s_addr, ntohs(client_addr.sin_port));
 		}
 	} 
