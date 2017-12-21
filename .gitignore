@@ -7,3 +7,7 @@ Qt*/Makefile*
 */release/*
 *.user
 Circuits/*/*.raw
+Circuits/Boards/*/*.b#*
+Circuits/Boards/*/*.bs*
+Circuits/Boards/*/eagle.epf
+Circuits/Boards/*/*.pro*
