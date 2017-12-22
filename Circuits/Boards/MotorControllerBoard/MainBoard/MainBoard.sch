@@ -14476,18 +14476,20 @@ Siemens, Philips, Valvo&lt;p&gt;
 <part name="C3" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="CPOL-US" device="E2.5-7" package3d_urn="urn:adsk.eagle:package:23345/1"/>
 <part name="C4" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="CPOL-US" device="E2.5-7" package3d_urn="urn:adsk.eagle:package:23345/1"/>
 <part name="C5" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="CPOL-US" device="E2.5-7" package3d_urn="urn:adsk.eagle:package:23345/1"/>
-<part name="PAD2" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="WIREPAD" device="4,16O1,6" package3d_urn="urn:adsk.eagle:package:30843/1" value="WIREPAD4,16O1,6"/>
 <part name="PAD3" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="WIREPAD" device="4,16O1,6" package3d_urn="urn:adsk.eagle:package:30843/1" value="WIREPAD4,16O1,6"/>
-<part name="PAD4" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="2,54/1,0" device="" package3d_urn="urn:adsk.eagle:package:30828/1"/>
-<part name="PAD5" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="3,81/1,4" device="" package3d_urn="urn:adsk.eagle:package:30835/1"/>
-<part name="PAD6" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="3,81/1,4" device="" package3d_urn="urn:adsk.eagle:package:30835/1"/>
+<part name="PAD4" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="WIREPAD" device="4,16O1,6" package3d_urn="urn:adsk.eagle:package:30843/1" value="WIREPAD4,16O1,6"/>
+<part name="PAD6" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="2,54/1,0" device="" package3d_urn="urn:adsk.eagle:package:30828/1"/>
+<part name="PAD1" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="3,81/1,4" device="" package3d_urn="urn:adsk.eagle:package:30835/1"/>
+<part name="PAD2" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="3,81/1,4" device="" package3d_urn="urn:adsk.eagle:package:30835/1"/>
 <part name="PAD7" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="2,54/1,0" device="" package3d_urn="urn:adsk.eagle:package:30828/1"/>
 <part name="R19" library="ptc-ntc" library_urn="urn:adsk.eagle:library:332" deviceset="PTC660A" device="" package3d_urn="urn:adsk.eagle:package:22777/1"/>
 <part name="R20" library="ptc-ntc" library_urn="urn:adsk.eagle:library:332" deviceset="PTC660A" device="" package3d_urn="urn:adsk.eagle:package:22777/1"/>
 <part name="R21" library="ptc-ntc" library_urn="urn:adsk.eagle:library:332" deviceset="PTC660A" device="" package3d_urn="urn:adsk.eagle:package:22777/1"/>
 <part name="R22" library="ptc-ntc" library_urn="urn:adsk.eagle:library:332" deviceset="PTC660A" device="" package3d_urn="urn:adsk.eagle:package:22777/1"/>
 <part name="R23" library="ptc-ntc" library_urn="urn:adsk.eagle:library:332" deviceset="PTC660A" device="" package3d_urn="urn:adsk.eagle:package:22777/1"/>
-<part name="PAD1" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="3,81/1,4" device="" package3d_urn="urn:adsk.eagle:package:30835/1"/>
+<part name="PAD5" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="3,81/1,4" device="" package3d_urn="urn:adsk.eagle:package:30835/1"/>
+<part name="PAD8" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="WIREPAD" device="2,54/1,1" package3d_urn="urn:adsk.eagle:package:30836/1"/>
+<part name="PAD9" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="WIREPAD" device="2,54/1,1" package3d_urn="urn:adsk.eagle:package:30836/1"/>
 </parts>
 <sheets>
 <sheet>
@@ -14544,18 +14546,20 @@ Siemens, Philips, Valvo&lt;p&gt;
 <instance part="C3" gate="G$1" x="-109.22" y="104.14" rot="R90"/>
 <instance part="C4" gate="G$1" x="-88.9" y="30.48"/>
 <instance part="C5" gate="G$1" x="-127" y="30.48"/>
-<instance part="PAD2" gate="G$1" x="101.6" y="109.22" rot="R180"/>
-<instance part="PAD3" gate="G$1" x="114.3" y="109.22"/>
-<instance part="PAD4" gate="P" x="109.22" y="5.08" rot="R90"/>
-<instance part="PAD5" gate="1" x="175.26" y="50.8" rot="R180"/>
-<instance part="PAD6" gate="1" x="109.22" y="160.02" rot="R270"/>
+<instance part="PAD3" gate="G$1" x="101.6" y="109.22" rot="R180"/>
+<instance part="PAD4" gate="G$1" x="114.3" y="109.22"/>
+<instance part="PAD6" gate="P" x="109.22" y="5.08" rot="R90"/>
+<instance part="PAD1" gate="1" x="175.26" y="50.8" rot="R180"/>
+<instance part="PAD2" gate="1" x="109.22" y="160.02" rot="R270"/>
 <instance part="PAD7" gate="P" x="-50.8" y="142.24" rot="R270"/>
 <instance part="R19" gate="1" x="88.9" y="149.86" rot="R180"/>
 <instance part="R20" gate="1" x="99.06" y="149.86" rot="R180"/>
 <instance part="R21" gate="1" x="109.22" y="149.86" rot="R180"/>
 <instance part="R22" gate="1" x="119.38" y="149.86" rot="R180"/>
 <instance part="R23" gate="1" x="129.54" y="149.86" rot="R180"/>
-<instance part="PAD1" gate="1" x="53.34" y="43.18" rot="R90"/>
+<instance part="PAD5" gate="1" x="167.64" y="43.18" rot="R90"/>
+<instance part="PAD8" gate="G$1" x="-17.78" y="129.54"/>
+<instance part="PAD9" gate="G$1" x="177.8" y="68.58" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -14660,7 +14664,7 @@ Siemens, Philips, Valvo&lt;p&gt;
 <wire x1="93.98" y1="109.22" x2="93.98" y2="119.38" width="0.1524" layer="91"/>
 <junction x="93.98" y="109.22"/>
 <wire x1="99.06" y1="109.22" x2="93.98" y2="109.22" width="0.1524" layer="91"/>
-<pinref part="PAD2" gate="G$1" pin="P"/>
+<pinref part="PAD3" gate="G$1" pin="P"/>
 </segment>
 </net>
 <net name="N$20" class="0">
@@ -14738,7 +14742,7 @@ Siemens, Philips, Valvo&lt;p&gt;
 <pinref part="M4" gate="G$1" pin="D"/>
 <wire x1="134.62" y1="109.22" x2="134.62" y2="101.6" width="0.1524" layer="91"/>
 <junction x="134.62" y="109.22"/>
-<pinref part="PAD3" gate="G$1" pin="P"/>
+<pinref part="PAD4" gate="G$1" pin="P"/>
 </segment>
 </net>
 <net name="N$23" class="0">
@@ -14767,7 +14771,7 @@ Siemens, Philips, Valvo&lt;p&gt;
 <segment>
 <wire x1="109.22" y1="12.7" x2="109.22" y2="7.62" width="0.1524" layer="91"/>
 <pinref part="R18" gate="G$1" pin="1"/>
-<pinref part="PAD4" gate="P" pin="P"/>
+<pinref part="PAD6" gate="P" pin="P"/>
 </segment>
 </net>
 <net name="FB" class="0">
@@ -14779,10 +14783,7 @@ Siemens, Philips, Valvo&lt;p&gt;
 <wire x1="-15.24" y1="127" x2="-15.24" y2="129.54" width="0.1524" layer="91"/>
 <pinref part="R3" gate="G$1" pin="1"/>
 <pinref part="R2" gate="G$1" pin="1"/>
-</segment>
-<segment>
-<pinref part="Q7" gate="G1" pin="B"/>
-<wire x1="170.18" y1="68.58" x2="175.26" y2="68.58" width="0.1524" layer="91"/>
+<pinref part="PAD8" gate="G$1" pin="P"/>
 </segment>
 </net>
 <net name="VG" class="0">
@@ -14907,12 +14908,13 @@ Siemens, Philips, Valvo&lt;p&gt;
 <wire x1="160.02" y1="50.8" x2="160.02" y2="63.5" width="0.1524" layer="91"/>
 <wire x1="114.3" y1="35.56" x2="160.02" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="109.22" y1="50.8" x2="160.02" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="160.02" y1="50.8" x2="172.72" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="50.8" x2="167.64" y2="50.8" width="0.1524" layer="91"/>
 <junction x="160.02" y="50.8"/>
-<pinref part="PAD5" gate="1" pin="P"/>
 <pinref part="PAD1" gate="1" pin="P"/>
-<wire x1="53.34" y1="45.72" x2="53.34" y2="50.8" width="0.1524" layer="91"/>
-<junction x="53.34" y="50.8"/>
+<pinref part="PAD5" gate="1" pin="P"/>
+<wire x1="167.64" y1="50.8" x2="172.72" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="167.64" y1="45.72" x2="167.64" y2="50.8" width="0.1524" layer="91"/>
+<junction x="167.64" y="50.8"/>
 </segment>
 </net>
 <net name="VDD" class="0">
@@ -15037,8 +15039,15 @@ Siemens, Philips, Valvo&lt;p&gt;
 <pinref part="R23" gate="1" pin="1"/>
 <wire x1="129.54" y1="154.94" x2="119.38" y2="154.94" width="0.1524" layer="91"/>
 <junction x="119.38" y="154.94"/>
-<pinref part="PAD6" gate="1" pin="P"/>
+<pinref part="PAD2" gate="1" pin="P"/>
 <wire x1="109.22" y1="154.94" x2="109.22" y2="157.48" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="FBJ" class="0">
+<segment>
+<pinref part="Q7" gate="G1" pin="B"/>
+<wire x1="170.18" y1="68.58" x2="175.26" y2="68.58" width="0.1524" layer="91"/>
+<pinref part="PAD9" gate="G$1" pin="P"/>
 </segment>
 </net>
 </nets>
