@@ -18490,6 +18490,7 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <part name="PAD5" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="3,81/1,4" device="" package3d_urn="urn:adsk.eagle:package:30835/1"/>
 <part name="PAD8" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="WIREPAD" device="2,54/1,1" package3d_urn="urn:adsk.eagle:package:30836/1"/>
 <part name="PAD9" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="WIREPAD" device="2,54/1,1" package3d_urn="urn:adsk.eagle:package:30836/1"/>
+<part name="D7" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="1N4148" device="DO35-10" package3d_urn="urn:adsk.eagle:package:43344/2"/>
 </parts>
 <sheets>
 <sheet>
@@ -18548,7 +18549,7 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <instance part="C5" gate="G$1" x="-127" y="30.48"/>
 <instance part="PAD3" gate="G$1" x="101.6" y="109.22" rot="R180"/>
 <instance part="PAD4" gate="G$1" x="114.3" y="109.22"/>
-<instance part="PAD6" gate="P" x="109.22" y="5.08" rot="R90"/>
+<instance part="PAD6" gate="P" x="109.22" y="-5.08" rot="R90"/>
 <instance part="PAD1" gate="1" x="175.26" y="50.8" rot="R180"/>
 <instance part="PAD2" gate="1" x="109.22" y="160.02" rot="R270"/>
 <instance part="PAD7" gate="P" x="-50.8" y="142.24" rot="R270"/>
@@ -18560,6 +18561,7 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <instance part="PAD5" gate="1" x="167.64" y="43.18" rot="R90"/>
 <instance part="PAD8" gate="G$1" x="-17.78" y="129.54"/>
 <instance part="PAD9" gate="G$1" x="177.8" y="68.58" rot="R180"/>
+<instance part="D7" gate="G$1" x="109.22" y="5.08" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -18765,13 +18767,6 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <wire x1="-45.72" y1="121.92" x2="-50.8" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="-50.8" y1="121.92" x2="-50.8" y2="139.7" width="0.1524" layer="91"/>
 <pinref part="PAD7" gate="P" pin="P"/>
-</segment>
-</net>
-<net name="PWM" class="0">
-<segment>
-<wire x1="109.22" y1="12.7" x2="109.22" y2="7.62" width="0.1524" layer="91"/>
-<pinref part="R18" gate="G$1" pin="1"/>
-<pinref part="PAD6" gate="P" pin="P"/>
 </segment>
 </net>
 <net name="FB" class="0">
@@ -19048,6 +19043,20 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <pinref part="Q7" gate="G1" pin="B"/>
 <wire x1="170.18" y1="68.58" x2="175.26" y2="68.58" width="0.1524" layer="91"/>
 <pinref part="PAD9" gate="G$1" pin="P"/>
+</segment>
+</net>
+<net name="N$2" class="0">
+<segment>
+<pinref part="R18" gate="G$1" pin="1"/>
+<pinref part="D7" gate="G$1" pin="C"/>
+<wire x1="109.22" y1="12.7" x2="109.22" y2="7.62" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$4" class="0">
+<segment>
+<pinref part="D7" gate="G$1" pin="A"/>
+<pinref part="PAD6" gate="P" pin="P"/>
+<wire x1="109.22" y1="2.54" x2="109.22" y2="-2.54" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
