@@ -6,7 +6,8 @@ Qt*/Makefile*
 */debug/*
 */release/*
 *.user
-Circuits/*/*.raw
+Circuits/Simulation/*.raw
+Circuits/Simulation/*.log
 Circuits/Boards/*/*/*.b#*
 Circuits/Boards/*/*/*.s#*
 Circuits/Boards/*/* /*.pro*
