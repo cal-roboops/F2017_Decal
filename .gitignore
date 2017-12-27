@@ -10,4 +10,5 @@ Circuits/Simulation/*.raw
 Circuits/Simulation/*.log
 Circuits/Boards/*/*/*.b#*
 Circuits/Boards/*/*/*.s#*
-Circuits/Boards/*/* /*.pro*
+Circuits/Boards/*/*/*.pro*
+Circuits/Boards/*/*/~*

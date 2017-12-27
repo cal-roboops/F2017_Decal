@@ -1,0 +1,163 @@
+Forward Design Changes Report
+-----------------------------
+
+Report Written:     Tuesday, December 26, 2017
+Project Path:       C:\Users\Laptop\Desktop\AIAA\F2017_Decal\Circuits\Boards\MotorControllerBoard\MotorBoard\MotorBoard.prj
+Design Path:        C:\Users\Laptop\Desktop\AIAA\F2017_Decal\Circuits\Boards\MotorControllerBoard\MotorBoard\MotorBoard.pcb
+Design Title:       
+Created:            12/26/2017 5:06:16 PM
+Last Saved:         12/26/2017 10:49:06 PM
+Editing Time:       343 min
+Units:              thou (precision 0)
+
+Error: Unable to change component reference "Q1" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q1".
+
+Error: Unable to change component reference "Q2" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q2".
+
+Error: Unable to change component reference "Q3" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q3".
+
+Error: Unable to change component reference "Q4" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q4".
+
+Error: Unable to change component reference "Q5" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q5".
+
+Error: Unable to change component reference "Q6" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q6".
+
+Error: Unable to change component reference "Q7" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q7".
+
+Error: Unable to change component reference "Q8" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q8".
+
+Error: Unable to change component reference "D1" because Component "1N4148DO35-10" not found.
+Deleted value "Value" from component reference "D1".
+
+Error: Unable to change component reference "D2" because Component "1N4148DO35-10" not found.
+Deleted value "Value" from component reference "D2".
+
+Error: Unable to change component reference "D3" because Component "1N4148DO35-10" not found.
+Deleted value "Value" from component reference "D3".
+
+Error: Unable to change component reference "D4" because Component "1N4148DO35-10" not found.
+Deleted value "Value" from component reference "D4".
+
+Error: Unable to change component reference "D5" because Component "1N4148DO35-10" not found.
+Deleted value "Value" from component reference "D5".
+
+Error: Unable to change component reference "M1" because Component "IRFS7537PBF" not found.
+Deleted value "Value" from component reference "M1".
+
+Error: Unable to change component reference "M2" because Component "IRFS7537PBF" not found.
+Deleted value "Value" from component reference "M2".
+
+Error: Unable to change component reference "M3" because Component "IRFS7537PBF" not found.
+Deleted value "Value" from component reference "M3".
+
+Error: Unable to change component reference "M4" because Component "IRFS7537PBF" not found.
+Deleted value "Value" from component reference "M4".
+
+Error: Unable to change component reference "R1" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R2" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R4" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R6" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R7" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R8" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R9" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R10" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R11" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R12" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R17" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R18" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "PAD3" because Component "WIREPAD4,16O1,6" not found.
+Error: Unable to change component reference "PAD4" because Component "WIREPAD4,16O1,6" not found.
+Error: Unable to change component reference "R19" because Component "PTC660A" not found.
+Error: Unable to change component reference "R20" because Component "PTC660A" not found.
+Error: Unable to change component reference "R21" because Component "PTC660A" not found.
+Error: Unable to change component reference "R22" because Component "PTC660A" not found.
+Error: Unable to change component reference "R23" because Component "PTC660A" not found.
+Error: Unable to change component reference "D7" because Component "1N4148DO35-10" not found.
+Deleted value "Value" from component reference "D7".
+
+Error: Unable to change component reference "Q9" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q9".
+
+Error: Unable to change component reference "Q10" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q10".
+
+Error: Unable to change component reference "Q11" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q11".
+
+Error: Unable to change component reference "Q12" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q12".
+
+Error: Unable to change component reference "Q13" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q13".
+
+Error: Unable to change component reference "Q14" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q14".
+
+Error: Unable to change component reference "Q15" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q15".
+
+Error: Unable to change component reference "Q16" because Component "2N3904" not found.
+Deleted value "Value" from component reference "Q16".
+
+Error: Unable to change component reference "D6" because Component "1N4148DO35-10" not found.
+Deleted value "Value" from component reference "D6".
+
+Error: Unable to change component reference "D8" because Component "1N4148DO35-10" not found.
+Deleted value "Value" from component reference "D8".
+
+Error: Unable to change component reference "D9" because Component "1N4148DO35-10" not found.
+Deleted value "Value" from component reference "D9".
+
+Error: Unable to change component reference "D10" because Component "1N4148DO35-10" not found.
+Deleted value "Value" from component reference "D10".
+
+Error: Unable to change component reference "D11" because Component "1N4148DO35-10" not found.
+Deleted value "Value" from component reference "D11".
+
+Error: Unable to change component reference "M5" because Component "IRFS7537PBF" not found.
+Deleted value "Value" from component reference "M5".
+
+Error: Unable to change component reference "M6" because Component "IRFS7537PBF" not found.
+Deleted value "Value" from component reference "M6".
+
+Error: Unable to change component reference "M7" because Component "IRFS7537PBF" not found.
+Deleted value "Value" from component reference "M7".
+
+Error: Unable to change component reference "M8" because Component "IRFS7537PBF" not found.
+Deleted value "Value" from component reference "M8".
+
+Error: Unable to change component reference "R3" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R5" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R13" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R14" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R15" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R16" because Component "R-US_0207/12" not found.
+Error: Unable to change component reference "R24" because Component "R-US_0207/12" not found.
+Error: Unable to change component reference "R25" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R26" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R27" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R28" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "R29" because Component "R-US_0207/7" not found.
+Error: Unable to change component reference "PAD9" because Component "WIREPAD4,16O1,6" not found.
+Error: Unable to change component reference "PAD12" because Component "WIREPAD4,16O1,6" not found.
+Error: Unable to change component reference "R30" because Component "PTC660A" not found.
+Error: Unable to change component reference "R31" because Component "PTC660A" not found.
+Error: Unable to change component reference "R32" because Component "PTC660A" not found.
+Error: Unable to change component reference "R33" because Component "PTC660A" not found.
+Error: Unable to change component reference "R34" because Component "PTC660A" not found.
+Error: Unable to change component reference "D12" because Component "1N4148DO35-10" not found.
+Deleted value "Value" from component reference "D12".
+
+
+Error: Unable to add component reference "R35" of component "Resistor (Box Shape)", package "SPICE" because No PCB information for Component "Resistor (Box Shape)"..
+
+
+End Of Report.
