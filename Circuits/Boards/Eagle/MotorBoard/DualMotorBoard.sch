@@ -9636,7 +9636,6 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <pinref part="Q2" gate="G1" pin="B"/>
 <wire x1="-7.62" y1="129.54" x2="-5.08" y2="129.54" width="0.1524" layer="91"/>
 <wire x1="-15.24" y1="129.54" x2="-5.08" y2="129.54" width="0.1524" layer="91"/>
-<junction x="-5.08" y="129.54"/>
 </segment>
 <segment>
 <pinref part="Q7" gate="G1" pin="B"/>
@@ -9905,10 +9904,6 @@ Source: http://www.murata.com .. GRM43DR72E224KW01.pdf</description>
 <wire x1="-302.26" y1="109.22" x2="-302.26" y2="127" width="0.1524" layer="91"/>
 <pinref part="R3" gate="G$1" pin="2"/>
 <pinref part="Q11" gate="G1" pin="B"/>
-</segment>
-<segment>
-<pinref part="Q12" gate="G1" pin="B"/>
-<wire x1="-236.22" y1="73.66" x2="-243.84" y2="73.66" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="MP1" class="0">

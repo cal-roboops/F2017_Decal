@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source C:/Users/Laptop/Desktop/AIAA/F2017_Decal/Circuits/Boards/KiCAD/Motors/22VPowerBoard.sch)
-    (date "12/27/2017 10:26:13 PM")
+    (date "12/30/2017 2:49:57 PM")
     (tool "Eeschema 4.0.7")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -23,7 +23,7 @@
       (tstamp 5A447E76))
     (comp (ref L1)
       (value 150uH)
-      (footprint Inductors_THT:L_Axial_L11.0mm_D4.5mm_P7.62mm_Vertical_Fastron_MECC)
+      (footprint Inductors_THT:L_Axial_L11.0mm_D4.5mm_P5.08mm_Vertical_Fastron_MECC)
       (libsource (lib device) (part L))
       (sheetpath (names /) (tstamps /))
       (tstamp 5A4481C3))
@@ -52,7 +52,7 @@
       (sheetpath (names /) (tstamps /))
       (tstamp 5A448C49))
     (comp (ref R3)
-      (value 16.5K)
+      (value 20K)
       (footprint Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical)
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))

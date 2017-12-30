@@ -3,7 +3,7 @@
   (general
     (links 21)
     (no_connects 2)
-    (area 101.344981 96.0926 134.695001 124.2174)
+    (area 104.064999 96.444999 134.695001 121.995001)
     (thickness 1.6)
     (drawings 4)
     (tracks 39)
@@ -37,7 +37,7 @@
   )
 
   (setup
-    (last_trace_width 1.27)
+    (last_trace_width 0.8128)
     (user_trace_width 0.1524)
     (user_trace_width 0.8128)
     (user_trace_width 1.27)
@@ -67,7 +67,7 @@
     (pad_drill 0.889)
     (pad_to_mask_clearance 0.2)
     (aux_axis_origin 0 0)
-    (visible_elements 7FFFFFFF)
+    (visible_elements 7FFFFFDF)
     (pcbplotparams
       (layerselection 0x01000_80000001)
       (usegerberextensions false)
@@ -774,7 +774,7 @@
     (fp_text reference R3 (at 1.27 -2.31 180) (layer F.SilkS)
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value 16.5K (at 1.27 2.31 180) (layer F.Fab)
+    (fp_text value 20K (at 1.27 2.31 180) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_circle (center 0 0) (end 1.25 0) (layer F.Fab) (width 0.1))
@@ -882,8 +882,8 @@
   (segment (start 129.54 114.3) (end 129.54 111.76) (width 1.27) (layer Top) (net 3))
   (segment (start 124.46 111.76) (end 129.54 111.76) (width 1.27) (layer Top) (net 3))
   (segment (start 124.46 111.76) (end 124.46 115.57) (width 1.27) (layer Top) (net 3) (tstamp 5A449F32))
-  (segment (start 111.76 100.33) (end 111.76 97.79) (width 1.27) (layer Top) (net 4) (status 400000))
-  (segment (start 121.92 97.79) (end 121.92 100.33) (width 1.27) (layer Top) (net 4) (tstamp 5A44B0AB) (status 800000))
+  (segment (start 111.76 100.33) (end 111.76 97.79) (width 1.27) (layer Top) (net 4))
+  (segment (start 121.92 97.79) (end 121.92 100.33) (width 1.27) (layer Top) (net 4) (tstamp 5A44B0AB))
   (segment (start 111.76 97.79) (end 121.92 97.79) (width 1.27) (layer Top) (net 4) (tstamp 5A44B0AA))
   (segment (start 111.76 104.14) (end 111.76 100.33) (width 1.27) (layer Top) (net 4) (status 20))
   (segment (start 116.84 100.33) (end 116.84 106.68) (width 1.27) (layer Top) (net 5))
