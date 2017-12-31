@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source C:/Users/Laptop/Desktop/AIAA/F2017_Decal/Circuits/Boards/KiCAD/Motors/SingleMotorBoard.sch)
-    (date "12/30/2017 3:13:36 PM")
+    (date "12/30/2017 8:30:32 PM")
     (tool "Eeschema 4.0.7")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -245,7 +245,7 @@
       (tstamp 5A4755E8))
     (comp (ref J1)
       (value Conn_01x05)
-      (footprint Connectors_Molex:Molex_KK-6410-05_05x2.54mm_Straight)
+      (footprint Connectors_JST:JST_VH_B5P-VH-B_5x3.96mm_Vertical)
       (libsource (lib conn) (part Conn_01x05))
       (sheetpath (names /) (tstamps /))
       (tstamp 5A480F71))

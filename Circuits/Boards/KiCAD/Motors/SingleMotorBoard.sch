@@ -31,6 +31,7 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
+LIBS:SingleMotorBoard-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -494,7 +495,7 @@ U 1 1 5A480F71
 P 850 1100
 F 0 "J1" H 850 1400 50  0000 C CNN
 F 1 "Conn_01x05" H 850 800 50  0000 C CNN
-F 2 "Connectors_Molex:Molex_KK-6410-05_05x2.54mm_Straight" H 850 1100 50  0001 C CNN
+F 2 "Connectors_JST:JST_VH_B5P-VH-B_5x3.96mm_Vertical" H 850 1100 50  0001 C CNN
 F 3 "" H 850 1100 50  0001 C CNN
 	1    850  1100
 	-1   0    0    1   
