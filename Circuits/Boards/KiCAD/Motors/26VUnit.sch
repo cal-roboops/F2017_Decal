@@ -1,0 +1,309 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:switches
+LIBS:relays
+LIBS:motors
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:DualMotorBoard-cache
+EELAYER 25 0
+EELAYER END
+$Descr A0 46811 33110
+encoding utf-8
+Sheet 4 5
+Title "22VPowerBoard.sch"
+Date "27 DEC 2017"
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Text Label 10200 7350 2    10   ~ 0
+N$1
+Text Label 10200 7750 2    10   ~ 0
+N$1
+Text Label 10900 8300 3    10   ~ 0
+N$1
+Text Label 11500 8300 3    10   ~ 0
+N$1
+Text Label 9800 7550 2    10   ~ 0
+N$1
+Text Label 10500 6900 2    10   ~ 0
+N$5
+Text Label 10200 7150 2    10   ~ 0
+N$5
+Text Label 10200 7550 2    10   ~ 0
+N$10
+Text Label 10100 7550 0    10   ~ 0
+N$10
+Text Label 10800 7150 0    10   ~ 0
+N$11
+Text Label 10900 7150 2    10   ~ 0
+N$11
+Text Label 10900 6900 0    10   ~ 0
+N$12
+Text Label 10800 7350 0    10   ~ 0
+N$12
+Text Label 11300 7150 0    10   ~ 0
+N$12
+Text Label 11800 7000 1    10   ~ 0
+N$12
+Text Label 10800 7750 0    10   ~ 0
+N$13
+Text Label 11000 7800 2    10   ~ 0
+N$13
+Text Label 10900 7900 1    10   ~ 0
+N$13
+Text Label 10800 7550 0    10   ~ 0
+VDD
+Text Label 11800 7400 3    10   ~ 0
+VDD
+Text Label 11400 7800 0    10   ~ 0
+VG2
+Text Label 11500 8000 1    10   ~ 0
+VG2
+$Comp
+L C C1
+U 1 1 5A447E76
+P 9950 7550
+F 0 "C1" H 9975 7650 50  0000 L CNN
+F 1 "470pF" H 9975 7450 50  0000 L CNN
+F 2 "Capacitors_THT:CP_Radial_D5.0mm_P2.50mm" H 9988 7400 50  0001 C CNN
+F 3 "" H 9950 7550 50  0001 C CNN
+	1    9950 7550
+	0    1    1    0   
+$EndComp
+$Comp
+L L L1
+U 1 1 5A4481C3
+P 10700 6900
+F 0 "L1" V 10650 6900 50  0000 C CNN
+F 1 "150uH" V 10775 6900 50  0000 C CNN
+F 2 "Inductors_THT:L_Axial_L11.0mm_D4.5mm_P5.08mm_Vertical_Fastron_MECC" H 10700 6900 50  0001 C CNN
+F 3 "" H 10700 6900 50  0001 C CNN
+	1    10700 6900
+	0    -1   -1   0   
+$EndComp
+$Comp
+L HCPL063 U1
+U 1 1 5A44875D
+P 10500 7450
+F 0 "U1" H 10500 7925 50  0000 C CNN
+F 1 "MC34063" H 10500 7850 50  0000 C CNN
+F 2 "Housings_DIP:DIP-8_W7.62mm" H 10500 7050 50  0001 C CIN
+F 3 "" H 10510 7655 50  0001 L CNN
+	1    10500 7450
+	1    0    0    -1  
+$EndComp
+$Comp
+L D D17
+U 1 1 5A4489B5
+P 10700 6600
+F 0 "D17" H 10700 6700 50  0000 C CNN
+F 1 "1N4007" H 10700 6500 50  0000 C CNN
+F 2 "Diodes_THT:D_5W_P5.08mm_Vertical_AnodeUp" H 10700 6600 50  0001 C CNN
+F 3 "" H 10700 6600 50  0001 C CNN
+	1    10700 6600
+	-1   0    0    1   
+$EndComp
+$Comp
+L R R32
+U 1 1 5A448A76
+P 11100 7150
+F 0 "R32" V 11180 7150 50  0000 C CNN
+F 1 "1K" V 11100 7150 50  0000 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" V 11030 7150 50  0001 C CNN
+F 3 "" H 11100 7150 50  0001 C CNN
+	1    11100 7150
+	0    1    1    0   
+$EndComp
+$Comp
+L R R34
+U 1 1 5A448C49
+P 11800 7200
+F 0 "R34" V 11880 7200 50  0000 C CNN
+F 1 "0.22" V 11800 7200 50  0000 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" V 11730 7200 50  0001 C CNN
+F 3 "" H 11800 7200 50  0001 C CNN
+	1    11800 7200
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R33
+U 1 1 5A448CBC
+P 11200 7800
+F 0 "R33" V 11280 7800 50  0000 C CNN
+F 1 "20K" V 11200 7800 50  0000 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" V 11130 7800 50  0001 C CNN
+F 3 "" H 11200 7800 50  0001 C CNN
+	1    11200 7800
+	0    1    1    0   
+$EndComp
+$Comp
+L R R31
+U 1 1 5A448D3B
+P 10900 8100
+F 0 "R31" V 10980 8100 50  0000 C CNN
+F 1 "1K" V 10900 8100 50  0000 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" V 10830 8100 50  0001 C CNN
+F 3 "" H 10900 8100 50  0001 C CNN
+	1    10900 8100
+	-1   0    0    1   
+$EndComp
+$Comp
+L C C2
+U 1 1 5A448D7F
+P 11500 8150
+F 0 "C2" H 11525 8250 50  0000 L CNN
+F 1 "470uF" H 11525 8050 50  0000 L CNN
+F 2 "Capacitors_THT:CP_Radial_D5.0mm_P2.50mm" H 11538 8000 50  0001 C CNN
+F 3 "" H 11500 8150 50  0001 C CNN
+	1    11500 8150
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C3
+U 1 1 5A449757
+P 11800 8150
+F 0 "C3" H 11825 8250 50  0000 L CNN
+F 1 "100uF" H 11825 8050 50  0000 L CNN
+F 2 "Capacitors_THT:CP_Radial_D5.0mm_P2.50mm" H 11838 8000 50  0001 C CNN
+F 3 "" H 11800 8150 50  0001 C CNN
+	1    11800 8150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10200 7350 9700 7350
+Wire Wire Line
+	9700 7350 9700 8400
+Wire Wire Line
+	9800 7550 9700 7550
+Wire Wire Line
+	9700 7750 10200 7750
+Wire Wire Line
+	11500 8400 11500 8300
+Connection ~ 9700 7550
+Connection ~ 9700 7750
+Wire Wire Line
+	10000 6900 10550 6900
+Wire Wire Line
+	10000 6600 10000 7150
+Wire Wire Line
+	10000 7150 10200 7150
+Connection ~ 10000 6900
+Wire Wire Line
+	10100 7550 10200 7550
+Wire Wire Line
+	10800 7150 10950 7150
+Wire Wire Line
+	10850 6900 11800 6900
+Wire Wire Line
+	11400 6900 11400 7350
+Wire Wire Line
+	11250 7150 11400 7150
+Wire Wire Line
+	11400 7350 10800 7350
+Wire Wire Line
+	11800 6900 11800 7050
+Connection ~ 11400 7150
+Connection ~ 11400 6900
+Wire Wire Line
+	10800 7750 10900 7750
+Wire Wire Line
+	10900 7750 10900 7950
+Wire Wire Line
+	10900 7800 11050 7800
+Connection ~ 10900 7800
+Wire Wire Line
+	11800 7350 11800 8000
+Connection ~ 11800 7550
+Wire Wire Line
+	11500 6600 11500 8000
+Wire Wire Line
+	10850 6600 11500 6600
+Wire Wire Line
+	10550 6600 10000 6600
+Wire Wire Line
+	10900 8250 10900 8500
+Wire Wire Line
+	9700 8400 11800 8400
+Connection ~ 10900 8400
+Connection ~ 11500 7800
+Wire Wire Line
+	11800 8400 11800 8300
+Connection ~ 11500 8400
+Text HLabel 12650 6600 0    60   Input ~ 0
+VIN
+Text HLabel 12650 6700 0    60   Output ~ 0
+VOUT
+$Comp
+L GND #PWR36
+U 1 1 5A51A33A
+P 10900 8500
+F 0 "#PWR36" H 10900 8250 50  0001 C CNN
+F 1 "GND" H 10900 8350 50  0000 C CNN
+F 2 "" H 10900 8500 50  0001 C CNN
+F 3 "" H 10900 8500 50  0001 C CNN
+	1    10900 8500
+	1    0    0    -1  
+$EndComp
+Text HLabel 12650 6800 0    60   BiDi ~ 0
+VGND
+$Comp
+L GND #PWR37
+U 1 1 5A51A56F
+P 12800 6800
+F 0 "#PWR37" H 12800 6550 50  0001 C CNN
+F 1 "GND" H 12800 6650 50  0000 C CNN
+F 2 "" H 12800 6800 50  0001 C CNN
+F 3 "" H 12800 6800 50  0001 C CNN
+	1    12800 6800
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	11350 7800 11500 7800
+Wire Wire Line
+	10800 7550 11800 7550
+Text Label 11800 7550 0    60   ~ 0
+VIN
+Text Label 11500 7800 0    60   ~ 0
+VOUT
+Text Label 12800 6600 0    60   ~ 0
+VIN
+Text Label 12800 6700 0    60   ~ 0
+VOUT
+Wire Wire Line
+	12650 6600 12800 6600
+Wire Wire Line
+	12800 6700 12650 6700
+Wire Wire Line
+	12650 6800 12800 6800
+$EndSCHEMATC
