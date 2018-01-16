@@ -31,7 +31,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:DualMotorBoard-cache
 EELAYER 25 0
 EELAYER END
 $Descr A0 46811 33110
