@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2017.3.1 (64-bit)
+# SW Build 2035080 on Fri Oct 20 14:20:01 MDT 2017
+# 
+# Start of session at: Tue Jan 23 23:15:23 2018
+# Process ID: 15760
+# Current directory: G:/XILINX/EchoSmall/EchoSmall.sdk/webtalk
+# Command line: wbtcv.exe -mode batch -source sdk_webtalk.tcl
+# Log file: G:/XILINX/EchoSmall/EchoSmall.sdk/webtalk/webtalk.log
+# Journal file: G:/XILINX/EchoSmall/EchoSmall.sdk/webtalk\webtalk.jou
+#-----------------------------------------------------------
+source sdk_webtalk.tcl

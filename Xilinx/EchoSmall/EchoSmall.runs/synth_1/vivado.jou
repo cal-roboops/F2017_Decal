@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2017.3.1 (64-bit)
+# SW Build 2035080 on Fri Oct 20 14:20:01 MDT 2017
+# IP Build 2034413 on Fri Oct 20 15:56:25 MDT 2017
+# Start of session at: Tue Jan 23 22:45:57 2018
+# Process ID: 18084
+# Current directory: G:/XILINX/EchoSmall/EchoSmall.runs/synth_1
+# Command line: vivado.exe -log BaseSystem_wrapper.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source BaseSystem_wrapper.tcl
+# Log file: G:/XILINX/EchoSmall/EchoSmall.runs/synth_1/BaseSystem_wrapper.vds
+# Journal file: G:/XILINX/EchoSmall/EchoSmall.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source BaseSystem_wrapper.tcl -notrace
