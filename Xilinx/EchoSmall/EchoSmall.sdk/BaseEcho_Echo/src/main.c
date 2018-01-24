@@ -23,11 +23,10 @@
 #include "platform_config.h"
 #include "lwipopts.h"
 #include "xil_printf.h"
+#include "lwip/init.h"
+#include "lwipopts.h"
+#include "echo.h"
 
-int start_application();
-int transfer_data();
-
-void lwip_init(void);
 void tcp_fasttmr(void);
 void tcp_slowtmr(void);
 

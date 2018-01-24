@@ -1,7 +1,7 @@
 //Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2017.3.1 (win64) Build 2035080 Fri Oct 20 14:20:01 MDT 2017
-//Date        : Tue Jan 23 22:44:05 2018
+//Date        : Wed Jan 24 15:32:42 2018
 //Host        : DESKTOP-M5L7GPO running 64-bit major release  (build 9200)
 //Command     : generate_target BaseSystem.bd
 //Design      : BaseSystem
@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "BaseSystem,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=BaseSystem,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=1,numReposBlks=1,numNonXlnxBlks=0,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_ps7_cnt=1,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "BaseSystem.hwdef" *) 
+(* CORE_GENERATION_INFO = "BaseSystem,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=BaseSystem,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=2,numReposBlks=2,numNonXlnxBlks=0,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=1,numPkgbdBlks=0,bdsource=USER,da_clkrst_cnt=2,da_ps7_cnt=1,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "BaseSystem.hwdef" *) 
 module BaseSystem
    (DDR_addr,
     DDR_ba,
@@ -31,7 +31,11 @@ module BaseSystem
     FIXED_IO_mio,
     FIXED_IO_ps_clk,
     FIXED_IO_ps_porb,
-    FIXED_IO_ps_srstb);
+    FIXED_IO_ps_srstb,
+    btns,
+    leds,
+    rgb_leds,
+    sws);
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR ADDR" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME DDR, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250" *) inout [14:0]DDR_addr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR BA" *) inout [2:0]DDR_ba;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR CAS_N" *) inout DDR_cas_n;
@@ -53,7 +57,14 @@ module BaseSystem
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_CLK" *) inout FIXED_IO_ps_clk;
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_PORB" *) inout FIXED_IO_ps_porb;
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_SRSTB" *) inout FIXED_IO_ps_srstb;
+  input [3:0]btns;
+  output [3:0]leds;
+  output [5:0]rgb_leds;
+  input [1:0]sws;
 
+  wire [3:0]Buttons2LEDs_0_buttonLEDs;
+  wire [5:0]Buttons2LEDs_0_rgbLEDs;
+  wire [3:0]btns_1;
   wire [14:0]processing_system7_0_DDR_ADDR;
   wire [2:0]processing_system7_0_DDR_BA;
   wire processing_system7_0_DDR_CAS_N;
@@ -76,7 +87,18 @@ module BaseSystem
   wire processing_system7_0_FIXED_IO_PS_CLK;
   wire processing_system7_0_FIXED_IO_PS_PORB;
   wire processing_system7_0_FIXED_IO_PS_SRSTB;
+  wire [1:0]sws_1;
 
+  assign btns_1 = btns[3:0];
+  assign leds[3:0] = Buttons2LEDs_0_buttonLEDs;
+  assign rgb_leds[5:0] = Buttons2LEDs_0_rgbLEDs;
+  assign sws_1 = sws[1:0];
+  BaseSystem_Buttons2LEDs_0_1 Buttons2LEDs_0
+       (.buttonLEDs(Buttons2LEDs_0_buttonLEDs),
+        .clk(processing_system7_0_FCLK_CLK0),
+        .pushButtons(btns_1),
+        .rgbLEDs(Buttons2LEDs_0_rgbLEDs),
+        .switches(sws_1));
   BaseSystem_processing_system7_0_0 processing_system7_0
        (.DDR_Addr(DDR_addr[14:0]),
         .DDR_BankAddr(DDR_ba[2:0]),

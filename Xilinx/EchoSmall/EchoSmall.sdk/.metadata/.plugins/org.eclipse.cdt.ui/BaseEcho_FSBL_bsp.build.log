@@ -1,4 +1,4 @@
-23:00:20 **** Build of project BaseEcho_FSBL_bsp ****
+15:39:32 **** Build of project BaseEcho_FSBL_bsp ****
 make -k all 
 "Running Make include in ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src"
 make -C ps7_cortexa9_0/libsrc/coresightps_dcc_v1_4/src -s include  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -Wall -Wextra"
@@ -99,5 +99,5 @@ ff.c:2610:4: warning: dereferencing type-punned pointer will break strict-aliasi
 make -C ps7_cortexa9_0/libsrc/xilrsa_v1_4/src -s libs  "SHELL=CMD" "COMPILER=arm-none-eabi-gcc" "ARCHIVER=arm-none-eabi-ar" "COMPILER_FLAGS=  -O2 -c" "EXTRA_COMPILER_FLAGS=-mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -nostartfiles -Wall -Wextra"
 'Finished building libraries'
 
-23:00:44 Build Finished (took 23s.855ms)
+15:39:55 Build Finished (took 22s.988ms)
 

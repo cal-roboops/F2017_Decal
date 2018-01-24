@@ -1,7 +1,7 @@
 //Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2017.3.1 (win64) Build 2035080 Fri Oct 20 14:20:01 MDT 2017
-//Date        : Tue Jan 23 22:44:05 2018
+//Date        : Wed Jan 24 15:32:42 2018
 //Host        : DESKTOP-M5L7GPO running 64-bit major release  (build 9200)
 //Command     : generate_target BaseSystem_wrapper.bd
 //Design      : BaseSystem_wrapper
@@ -30,7 +30,11 @@ module BaseSystem_wrapper
     FIXED_IO_mio,
     FIXED_IO_ps_clk,
     FIXED_IO_ps_porb,
-    FIXED_IO_ps_srstb);
+    FIXED_IO_ps_srstb,
+    btns,
+    leds,
+    rgb_leds,
+    sws);
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -52,6 +56,10 @@ module BaseSystem_wrapper
   inout FIXED_IO_ps_clk;
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
+  input [3:0]btns;
+  output [3:0]leds;
+  output [5:0]rgb_leds;
+  input [1:0]sws;
 
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
@@ -74,6 +82,10 @@ module BaseSystem_wrapper
   wire FIXED_IO_ps_clk;
   wire FIXED_IO_ps_porb;
   wire FIXED_IO_ps_srstb;
+  wire [3:0]btns;
+  wire [3:0]leds;
+  wire [5:0]rgb_leds;
+  wire [1:0]sws;
 
   BaseSystem BaseSystem_i
        (.DDR_addr(DDR_addr),
@@ -96,5 +108,9 @@ module BaseSystem_wrapper
         .FIXED_IO_mio(FIXED_IO_mio),
         .FIXED_IO_ps_clk(FIXED_IO_ps_clk),
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
-        .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb));
+        .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
+        .btns(btns),
+        .leds(leds),
+        .rgb_leds(rgb_leds),
+        .sws(sws));
 endmodule

@@ -17,7 +17,8 @@ src/main.o src/main.o: ../src/main.c \
  ../src/platform.h ../src/platform_config.h \
  ../../BaseEcho_Echo_bsp/ps7_cortexa9_0/include/xil_printf.h \
  ../../BaseEcho_Echo_bsp/ps7_cortexa9_0/include/xil_types.h \
- ../../BaseEcho_Echo_bsp/ps7_cortexa9_0/include/xparameters.h
+ ../../BaseEcho_Echo_bsp/ps7_cortexa9_0/include/xparameters.h \
+ ../../BaseEcho_Echo_bsp/ps7_cortexa9_0/include/lwip/init.h ../src/echo.h
 
 ../../BaseEcho_Echo_bsp/ps7_cortexa9_0/include/xparameters.h:
 
@@ -58,3 +59,7 @@ src/main.o src/main.o: ../src/main.c \
 ../../BaseEcho_Echo_bsp/ps7_cortexa9_0/include/xil_types.h:
 
 ../../BaseEcho_Echo_bsp/ps7_cortexa9_0/include/xparameters.h:
+
+../../BaseEcho_Echo_bsp/ps7_cortexa9_0/include/lwip/init.h:
+
+../src/echo.h:

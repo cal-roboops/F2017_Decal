@@ -16,6 +16,7 @@ proc create_report { reportName command } {
     send_msg_id runtcl-5 warning "$msg"
   }
 }
+set_msg_config -id {HDL-1065} -limit 10000
 create_project -in_memory -part xc7z020clg400-1
 
 set_param project.singleFileAddWarning.threshold 0
@@ -44,6 +45,9 @@ set_property used_in_implementation false [get_files -all G:/XILINX/EchoSmall/Ec
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
+read_xdc G:/XILINX/EchoSmall/EchoSmall.srcs/constrs_1/new/ArtyZ7.xdc
+set_property used_in_implementation false [get_files G:/XILINX/EchoSmall/EchoSmall.srcs/constrs_1/new/ArtyZ7.xdc]
+
 read_xdc dont_touch.xdc
 set_property used_in_implementation false [get_files dont_touch.xdc]
 

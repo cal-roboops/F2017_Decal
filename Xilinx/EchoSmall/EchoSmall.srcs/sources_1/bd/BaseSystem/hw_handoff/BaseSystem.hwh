@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Tue Jan 23 22:44:33 2018" VIVADOVERSION="2017.3.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Jan 24 15:32:42 2018" VIVADOVERSION="2017.3.1">
 
   <SYSTEMINFO ARCH="zynq" BOARD="digilentinc.com:arty-z7-20:part0:1.0" DEVICE="7z020" NAME="BaseSystem" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -25,6 +25,26 @@
     <PORT DIR="IO" NAME="FIXED_IO_ps_srstb" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_clk" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef"/>
+    <PORT DIR="O" LEFT="3" NAME="leds" RIGHT="0" SIGIS="undef" SIGNAME="Buttons2LEDs_0_buttonLEDs">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Buttons2LEDs_0" PORT="buttonLEDs"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="5" NAME="rgb_leds" RIGHT="0" SIGIS="undef" SIGNAME="Buttons2LEDs_0_rgbLEDs">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Buttons2LEDs_0" PORT="rgbLEDs"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="3" NAME="btns" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_btns">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Buttons2LEDs_0" PORT="pushButtons"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="1" NAME="sws" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_sws">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Buttons2LEDs_0" PORT="switches"/>
+      </CONNECTIONS>
+    </PORT>
   </EXTERNALPORTS>
 
   <EXTERNALINTERFACES>
@@ -75,6 +95,42 @@
   </EXTERNALINTERFACES>
 
   <MODULES>
+    <MODULE FULLNAME="/Buttons2LEDs_0" HWVERSION="1.0" INSTANCE="Buttons2LEDs_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="Buttons2LEDs" VLNV="xilinx.com:module_ref:Buttons2LEDs:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="clk_freq_in" VALUE="100000000"/>
+        <PARAMETER NAME="Component_Name" VALUE="BaseSystem_Buttons2LEDs_0_1"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="3" NAME="pushButtons" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_btns">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="btns"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="switches" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_sws">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="sws"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="3" NAME="buttonLEDs" RIGHT="0" SIGIS="undef" SIGNAME="Buttons2LEDs_0_buttonLEDs">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="leds"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="5" NAME="rgbLEDs" RIGHT="0" SIGIS="undef" SIGNAME="Buttons2LEDs_0_rgbLEDs">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="rgb_leds"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
     <MODULE CONFIGURABLE="TRUE" FULLNAME="/processing_system7_0" HWVERSION="5.5" INSTANCE="processing_system7_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" IS_PL="FALSE" MODTYPE="processing_system7" VLNV="xilinx.com:ip:processing_system7:5.5">
       <DOCUMENTS>
         <DOCUMENT SOURCE="http://www.xilinx.com/cgi-bin/docs/ipdoc?c=processing_system7;v=v5_3;d=pg082-processing-system7.pdf"/>
@@ -1066,6 +1122,7 @@
         <PORT CLKFREQUENCY="100000000" DIR="O" NAME="FCLK_CLK0" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
           <CONNECTIONS>
             <CONNECTION INSTANCE="processing_system7_0" PORT="M_AXI_GP0_ACLK"/>
+            <CONNECTION INSTANCE="Buttons2LEDs_0" PORT="clk"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="FCLK_RESET0_N" SIGIS="rst"/>

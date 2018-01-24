@@ -60,6 +60,7 @@ proc step_failed { step } {
   close $ch
 }
 
+set_msg_config -id {HDL-1065} -limit 10000
 
 start_step init_design
 set ACTIVE_STEP init_design
@@ -80,6 +81,7 @@ set rc [catch {
   set_param project.isImplRun true
   add_files G:/XILINX/EchoSmall/EchoSmall.srcs/sources_1/bd/BaseSystem/BaseSystem.bd
   set_param project.isImplRun false
+  read_xdc G:/XILINX/EchoSmall/EchoSmall.srcs/constrs_1/new/ArtyZ7.xdc
   set_param project.isImplRun true
   link_design -top BaseSystem_wrapper -part xc7z020clg400-1
   set_param project.isImplRun false
@@ -120,7 +122,7 @@ set rc [catch {
   write_checkpoint -force BaseSystem_wrapper_placed.dcp
   create_report "impl_1_place_report_io_0" "report_io -file BaseSystem_wrapper_io_placed.rpt"
   create_report "impl_1_place_report_utilization_0" "report_utilization -file BaseSystem_wrapper_utilization_placed.rpt -pb BaseSystem_wrapper_utilization_placed.pb"
-  create_report "impl_1_place_report_control_sets_0" "report_control_sets -verbose -file BaseSystem_wrapper_control_sets_placed.rpt"
+  create_report "impl_1_place_report_control_sets_0" "report_control_sets -file BaseSystem_wrapper_control_sets_placed.rpt"
   close_msg_db -file place_design.pb
 } RESULT]
 if {$rc} {
@@ -141,7 +143,7 @@ set rc [catch {
   create_report "impl_1_route_report_methodology_0" "report_methodology -file BaseSystem_wrapper_methodology_drc_routed.rpt -pb BaseSystem_wrapper_methodology_drc_routed.pb -rpx BaseSystem_wrapper_methodology_drc_routed.rpx"
   create_report "impl_1_route_report_power_0" "report_power -file BaseSystem_wrapper_power_routed.rpt -pb BaseSystem_wrapper_power_summary_routed.pb -rpx BaseSystem_wrapper_power_routed.rpx"
   create_report "impl_1_route_report_route_status_0" "report_route_status -file BaseSystem_wrapper_route_status.rpt -pb BaseSystem_wrapper_route_status.pb"
-  create_report "impl_1_route_report_timing_summary_0" "report_timing_summary -max_paths 10 -file BaseSystem_wrapper_timing_summary_routed.rpt -warn_on_violation  -rpx BaseSystem_wrapper_timing_summary_routed.rpx"
+  create_report "impl_1_route_report_timing_summary_0" "report_timing_summary -file BaseSystem_wrapper_timing_summary_routed.rpt -warn_on_violation  -rpx BaseSystem_wrapper_timing_summary_routed.rpx"
   create_report "impl_1_route_report_incremental_reuse_0" "report_incremental_reuse -file BaseSystem_wrapper_incremental_reuse_routed.rpt"
   create_report "impl_1_route_report_clock_utilization_0" "report_clock_utilization -file BaseSystem_wrapper_clock_utilization_routed.rpt"
   close_msg_db -file route_design.pb

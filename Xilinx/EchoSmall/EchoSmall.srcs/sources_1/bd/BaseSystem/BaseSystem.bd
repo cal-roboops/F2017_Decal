@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0xCC6CFA53809FFAAC" bd:device="xc7z020clg400-1" bd:isValidated="true" bd:synthFlowMode="Hierarchical" bd:tool_version="2017.3.1" bd:top="BaseSystem" bd:version="1.00.a">
+<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0x3169F759E7C235C2" bd:device="xc7z020clg400-1" bd:isValidated="true" bd:synthFlowMode="Hierarchical" bd:tool_version="2017.3.1" bd:top="BaseSystem" bd:version="1.00.a">
 
   <spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009">
     <spirit:vendor>xilinx.com</spirit:vendor>
@@ -155,7 +155,48 @@
           <spirit:hierarchyRef spirit:library="BlockDiagram" spirit:name="BaseSystem_imp" spirit:vendor="xilinx.com" spirit:version="1.00.a"/>
         </spirit:view>
       </spirit:views>
-      <spirit:ports/>
+      <spirit:ports>
+        <spirit:port>
+          <spirit:name>leds</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+            <spirit:vector>
+              <spirit:left>3</spirit:left>
+              <spirit:right>0</spirit:right>
+            </spirit:vector>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>rgb_leds</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+            <spirit:vector>
+              <spirit:left>5</spirit:left>
+              <spirit:right>0</spirit:right>
+            </spirit:vector>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>btns</spirit:name>
+          <spirit:wire>
+            <spirit:direction>in</spirit:direction>
+            <spirit:vector>
+              <spirit:left>3</spirit:left>
+              <spirit:right>0</spirit:right>
+            </spirit:vector>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>sws</spirit:name>
+          <spirit:wire>
+            <spirit:direction>in</spirit:direction>
+            <spirit:vector>
+              <spirit:left>1</spirit:left>
+              <spirit:right>0</spirit:right>
+            </spirit:vector>
+          </spirit:wire>
+        </spirit:port>
+      </spirit:ports>
     </spirit:model>
   </spirit:component>
 
@@ -697,13 +738,45 @@
           <spirit:configurableElementValue spirit:referenceId="PCW_PLL_BYPASSMODE_ENABLE">0</spirit:configurableElementValue>
         </spirit:configurableElementValues>
       </spirit:componentInstance>
+      <spirit:componentInstance>
+        <spirit:instanceName>Buttons2LEDs_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="module_ref" spirit:name="Buttons2LEDs" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">BaseSystem_Buttons2LEDs_0_1</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:referenceName">Buttons2LEDs</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:subInstancePath"></spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:referenceType">hdl</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:BoundaryCRC">0x0</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
     </spirit:componentInstances>
     <spirit:interconnections/>
     <spirit:adHocConnections>
       <spirit:adHocConnection>
+        <spirit:name>Buttons2LEDs_0_rgbLEDs</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="Buttons2LEDs_0" spirit:portRef="rgbLEDs"/>
+        <spirit:externalPortReference spirit:portRef="rgb_leds"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>btns_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="btns"/>
+        <spirit:internalPortReference spirit:componentRef="Buttons2LEDs_0" spirit:portRef="pushButtons"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>Buttons2LEDs_0_buttonLEDs</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="Buttons2LEDs_0" spirit:portRef="buttonLEDs"/>
+        <spirit:externalPortReference spirit:portRef="leds"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>sws_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="sws"/>
+        <spirit:internalPortReference spirit:componentRef="Buttons2LEDs_0" spirit:portRef="switches"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
         <spirit:name>processing_system7_0_FCLK_CLK0</spirit:name>
         <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="FCLK_CLK0"/>
         <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="M_AXI_GP0_ACLK"/>
+        <spirit:internalPortReference spirit:componentRef="Buttons2LEDs_0" spirit:portRef="clk"/>
       </spirit:adHocConnection>
     </spirit:adHocConnections>
     <spirit:hierConnections>

@@ -37,6 +37,13 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 # To test this script, run the following commands from Vivado Tcl console:
 # source BaseSystem_script.tcl
 
+
+# The design that will be created by this Tcl script contains the following 
+# module references:
+# Buttons2LEDs
+
+# Please add the sources of those modules before sourcing this Tcl script.
+
 # If there is no project opened, this script will create a
 # project, but make sure you do not have an existing project
 # <./myproj/project_1.xpr> in the current working folder.
@@ -160,7 +167,22 @@ proc create_root_design { parentCell } {
   set FIXED_IO [ create_bd_intf_port -mode Master -vlnv xilinx.com:display_processing_system7:fixedio_rtl:1.0 FIXED_IO ]
 
   # Create ports
+  set btns [ create_bd_port -dir I -from 3 -to 0 btns ]
+  set leds [ create_bd_port -dir O -from 3 -to 0 leds ]
+  set rgb_leds [ create_bd_port -dir O -from 5 -to 0 rgb_leds ]
+  set sws [ create_bd_port -dir I -from 1 -to 0 sws ]
 
+  # Create instance: Buttons2LEDs_0, and set properties
+  set block_name Buttons2LEDs
+  set block_cell_name Buttons2LEDs_0
+  if { [catch {set Buttons2LEDs_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_msg_id "BD_TCL-105" "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $Buttons2LEDs_0 eq "" } {
+     catch {common::send_msg_id "BD_TCL-106" "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
   # Create instance: processing_system7_0, and set properties
   set processing_system7_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:processing_system7:5.5 processing_system7_0 ]
   set_property -dict [ list \
@@ -939,7 +961,11 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net processing_system7_0_FIXED_IO [get_bd_intf_ports FIXED_IO] [get_bd_intf_pins processing_system7_0/FIXED_IO]
 
   # Create port connections
-  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK]
+  connect_bd_net -net Buttons2LEDs_0_buttonLEDs [get_bd_ports leds] [get_bd_pins Buttons2LEDs_0/buttonLEDs]
+  connect_bd_net -net Buttons2LEDs_0_rgbLEDs [get_bd_ports rgb_leds] [get_bd_pins Buttons2LEDs_0/rgbLEDs]
+  connect_bd_net -net btns_1 [get_bd_ports btns] [get_bd_pins Buttons2LEDs_0/pushButtons]
+  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins Buttons2LEDs_0/clk] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK]
+  connect_bd_net -net sws_1 [get_bd_ports sws] [get_bd_pins Buttons2LEDs_0/switches]
 
   # Create address segments
 
