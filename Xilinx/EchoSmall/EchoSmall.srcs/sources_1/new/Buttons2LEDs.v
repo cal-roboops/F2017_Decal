@@ -36,23 +36,12 @@ module Buttons2LEDs #(
     localparam integer pwm_on = pwm_period / 8;
     
     reg [31:0] count = 0;
-    reg [3:0] button_led_reg = 0;
-    reg [5:0] rgb_led_reg = 0;
     
-    assign buttonLEDs = (count < pwm_on) ? button_led_reg : 0;
-    assign rgbLEDs = (count < pwm_on) ? rgb_led_reg : 0;
+    assign buttonLEDs = (count < pwm_on) ? pushButtons : 0;
+    assign rgbLEDs = (count < pwm_on) ? switches : 0;
     
     always @(posedge clk) begin
         if (count < pwm_period) count <= count + 1;
         else count <= 0;
-    end
-    
-    always @(*) begin
-        button_led_reg = pushButtons;
-        
-        case (switches)
-            6'h0, 6'h1, 6'h2, 6'h3 : rgb_led_reg = switches;
-            default : rgb_led_reg = 6'h0;
-        endcase
     end
 endmodule

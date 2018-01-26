@@ -53,3 +53,27 @@
 15:44:13 INFO  : Invoking Bootgen: bootgen -image BaseEcho_Echo.bif -arch zynq -o G:\XILINX\EchoSmall\EchoSmall.sdk\BaseEcho_Echo\bootimage\BOOT.bin -w on
 15:44:15 INFO  : Bootgen command execution is done.
 15:47:36 ERROR : Unexpected error while parsing XMD response ?: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near 
+22:31:55 INFO  : Registering command handlers for SDK TCF services
+22:31:56 INFO  : Launching XSCT server: xsct.bat -interactive G:\XILINX\EchoSmall\EchoSmall.sdk\temp_xsdb_launch_script.tcl
+22:31:59 INFO  : XSCT server has started successfully.
+22:31:59 INFO  : Successfully done setting XSCT server connection channel  
+22:31:59 INFO  : Successfully done setting SDK workspace  
+22:31:59 INFO  : Processing command line option -hwspec G:/XILINX/EchoSmall/EchoSmall.sdk/BaseSystem_wrapper.hdf.
+22:32:00 INFO  : Checking for hwspec changes in the project BaseSystem_wrapper_hw_platform_0.
+22:32:04 INFO  : SDK has detected change in the last modified timestamps for source hardware specification file Source:1516948017870,  Project:1516837041094
+22:32:04 INFO  : The hardware specification for project 'BaseSystem_wrapper_hw_platform_0' is different from G:/XILINX/EchoSmall/EchoSmall.sdk/BaseSystem_wrapper.hdf.
+22:32:04 INFO  : Copied contents of G:/XILINX/EchoSmall/EchoSmall.sdk/BaseSystem_wrapper.hdf into \BaseSystem_wrapper_hw_platform_0\system.hdf.
+22:32:09 INFO  : Synchronizing projects in the workspace with the hardware platform specification changes.
+22:32:10 INFO  : 
+22:32:12 INFO  : 
+22:32:13 INFO  : Updating hardware inferred compiler options for BaseEcho_Echo.
+22:32:14 INFO  : Updating hardware inferred compiler options for BaseEcho_FSBL.
+22:32:14 INFO  : Clearing existing target manager status.
+22:32:14 WARN  : Given IPC port value is invalid. Using default port 2350
+22:32:14 WARN  : Given XMD timeout value is invalid. Using default value of 50000
+22:32:17 WARN  : Given XMD transaction timeout value is invalid. Using default value of 60000 milli seconds
+22:32:17 INFO  : Workspace synchronized with the new hardware specification file. Cleaning dependent projects...
+22:32:23 WARN  : Linker script will not be updated automatically. Users need to update it manually.
+22:38:47 INFO  : Refreshed build settings on project BaseEcho_Echo
+22:38:54 INFO  : Refreshed build settings on project BaseEcho_Echo
+22:50:03 ERROR : Unexpected error while parsing XMD response ?: com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: invalid number or unquoted string near 

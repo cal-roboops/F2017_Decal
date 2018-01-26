@@ -1,10 +1,10 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2017.3.1 (win64) Build 2035080 Fri Oct 20 14:20:01 MDT 2017
--- Date        : Wed Jan 24 15:33:56 2018
+-- Date        : Thu Jan 25 22:23:33 2018
 -- Host        : DESKTOP-M5L7GPO running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
---               g:/XILINX/EchoSmall/EchoSmall.srcs/sources_1/bd/BaseSystem/ip/BaseSystem_Buttons2LEDs_0_1/BaseSystem_Buttons2LEDs_0_1_sim_netlist.vhdl
+--               G:/XILINX/EchoSmall/EchoSmall.srcs/sources_1/bd/BaseSystem/ip/BaseSystem_Buttons2LEDs_0_1/BaseSystem_Buttons2LEDs_0_1_sim_netlist.vhdl
 -- Design      : BaseSystem_Buttons2LEDs_0_1
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.

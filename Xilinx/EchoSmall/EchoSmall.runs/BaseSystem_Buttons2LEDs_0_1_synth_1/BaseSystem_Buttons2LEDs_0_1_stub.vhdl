@@ -1,7 +1,7 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2017.3.1 (win64) Build 2035080 Fri Oct 20 14:20:01 MDT 2017
--- Date        : Wed Jan 24 15:33:55 2018
+-- Date        : Thu Jan 25 22:23:33 2018
 -- Host        : DESKTOP-M5L7GPO running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode synth_stub -rename_top decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix -prefix
 --               decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_ BaseSystem_Buttons2LEDs_0_1_stub.vhdl

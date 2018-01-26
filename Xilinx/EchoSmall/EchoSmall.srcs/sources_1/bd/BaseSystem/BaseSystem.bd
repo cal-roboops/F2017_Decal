@@ -157,16 +157,6 @@
       </spirit:views>
       <spirit:ports>
         <spirit:port>
-          <spirit:name>leds</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
-            <spirit:vector>
-              <spirit:left>3</spirit:left>
-              <spirit:right>0</spirit:right>
-            </spirit:vector>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
           <spirit:name>rgb_leds</spirit:name>
           <spirit:wire>
             <spirit:direction>out</spirit:direction>
@@ -180,6 +170,16 @@
           <spirit:name>btns</spirit:name>
           <spirit:wire>
             <spirit:direction>in</spirit:direction>
+            <spirit:vector>
+              <spirit:left>3</spirit:left>
+              <spirit:right>0</spirit:right>
+            </spirit:vector>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>leds</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
             <spirit:vector>
               <spirit:left>3</spirit:left>
               <spirit:right>0</spirit:right>

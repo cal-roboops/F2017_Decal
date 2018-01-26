@@ -1,4 +1,4 @@
-15:39:30 **** Build of configuration Debug for project BaseEcho_Echo ****
+22:39:37 **** Incremental Build of configuration Debug for project BaseEcho_Echo ****
 make pre-build main-build 
 a9-linaro-pre-build-step
  
@@ -29,5 +29,5 @@ arm-none-eabi-size BaseEcho_Echo.elf  |tee "BaseEcho_Echo.elf.size"
 Finished building: BaseEcho_Echo.elf.size
  
 
-15:39:31 Build Finished (took 1s.452ms)
+22:39:39 Build Finished (took 1s.402ms)
 

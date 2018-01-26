@@ -2,175 +2,20 @@
 # Vivado v2017.3.1 (64-bit)
 # SW Build 2035080 on Fri Oct 20 14:20:01 MDT 2017
 # IP Build 2034413 on Fri Oct 20 15:56:25 MDT 2017
-# Start of session at: Wed Jan 24 13:28:48 2018
-# Process ID: 19500
+# Start of session at: Thu Jan 25 22:20:06 2018
+# Process ID: 18196
 # Current directory: G:/XILINX/EchoSmall
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent14912 G:\XILINX\EchoSmall\EchoSmall.xpr
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent18408 G:\XILINX\EchoSmall\EchoSmall.xpr
 # Log file: G:/XILINX/EchoSmall/vivado.log
 # Journal file: G:/XILINX/EchoSmall\vivado.jou
 #-----------------------------------------------------------
 start_gui
 open_project G:/XILINX/EchoSmall/EchoSmall.xpr
 update_compile_order -fileset sources_1
-file mkdir G:/XILINX/EchoSmall/EchoSmall.srcs/sources_1/new
-close [ open G:/XILINX/EchoSmall/EchoSmall.srcs/sources_1/new/Buttons2LEDs.v w ]
-add_files G:/XILINX/EchoSmall/EchoSmall.srcs/sources_1/new/Buttons2LEDs.v
-update_compile_order -fileset sources_1
-file mkdir G:/XILINX/EchoSmall/EchoSmall.srcs/constrs_1
-file mkdir G:/XILINX/EchoSmall/EchoSmall.srcs/constrs_1/new
-close [ open G:/XILINX/EchoSmall/EchoSmall.srcs/constrs_1/new/ArtyZ7.xdc w ]
-add_files -fileset constrs_1 G:/XILINX/EchoSmall/EchoSmall.srcs/constrs_1/new/ArtyZ7.xdc
-open_bd_design {G:/XILINX/EchoSmall/EchoSmall.srcs/sources_1/bd/BaseSystem/BaseSystem.bd}
-create_bd_cell -type module -reference Buttons2LEDs Buttons2LEDs_0
-set_property location {1 206 -396} [get_bd_cells Buttons2LEDs_0]
-save_bd_design
-update_module_reference BaseSystem_Buttons2LEDs_0_0
-update_compile_order -fileset sources_1
-set_property location {1 229 -346} [get_bd_cells Buttons2LEDs_0]
-validate_bd_design
-startgroup
-make_bd_pins_external  [get_bd_pins Buttons2LEDs_0/buttonLEDs]
-endgroup
-startgroup
-make_bd_pins_external  [get_bd_pins Buttons2LEDs_0/RGB_LEDs]
-endgroup
-startgroup
-make_bd_pins_external  [get_bd_pins Buttons2LEDs_0/pushButtons]
-endgroup
-startgroup
-make_bd_pins_external  [get_bd_pins Buttons2LEDs_0/switches]
-endgroup
-validate_bd_design
-set_property name btns [get_bd_ports pushButtons_0]
-set_property name sws [get_bd_ports switches_0]
-set_property name btn_leds [get_bd_ports buttonLEDs_0]
-set_property name leds [get_bd_ports btn_leds]
-set_property name rgb_leds [get_bd_ports RGB_LEDs_0]
-save_bd_design
-update_module_reference BaseSystem_Buttons2LEDs_0_0
-startgroup
-apply_bd_automation -rule xilinx.com:bd_rule:clkrst -config {Clk "/processing_system7_0/FCLK_CLK0 (100 MHz)" }  [get_bd_pins Buttons2LEDs_0/clk]
-endgroup
-set_property location {-35 -324} [get_bd_ports sws]
-save_bd_design
-update_compile_order -fileset sources_1
-update_module_reference BaseSystem_Buttons2LEDs_0_0
-update_compile_order -fileset sources_1
-connect_bd_net [get_bd_ports rgb_leds] [get_bd_pins Buttons2LEDs_0/rgbLEDs]
-save_bd_design
-validate_bd_design
-validate_bd_design -force
-update_module_reference BaseSystem_Buttons2LEDs_0_0
-update_module_reference BaseSystem_Buttons2LEDs_0_0
-update_module_reference BaseSystem_Buttons2LEDs_0_0
-validate_bd_design
-save_bd_design
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 8
-wait_on_run impl_1
-delete_bd_objs [get_bd_nets Buttons2LEDs_0_buttonLEDs]
-connect_bd_net [get_bd_ports leds] [get_bd_pins Buttons2LEDs_0/buttonLEDs]
-save_bd_design
-reset_run synth_1
-reset_run BaseSystem_Buttons2LEDs_0_0_synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 8
-wait_on_run impl_1
-update_module_reference BaseSystem_Buttons2LEDs_0_0
-update_module_reference BaseSystem_Buttons2LEDs_0_0
-update_module_reference BaseSystem_Buttons2LEDs_0_0
-validate_bd_design
-save_bd_design
-reset_run synth_1
-update_module_reference BaseSystem_Buttons2LEDs_0_0
-delete_bd_objs [get_bd_nets pushButtons_0_1]
-delete_bd_objs [get_bd_nets switches_0_1]
-delete_bd_objs [get_bd_nets Buttons2LEDs_0_buttonLEDs]
-delete_bd_objs [get_bd_nets Buttons2LEDs_0_RGB_LEDs]
-update_module_reference BaseSystem_Buttons2LEDs_0_0
-connect_bd_net [get_bd_ports leds] [get_bd_pins Buttons2LEDs_0/buttonLEDs]
-connect_bd_net [get_bd_ports rgb_leds] [get_bd_pins Buttons2LEDs_0/rgbLEDs]
-startgroup
-connect_bd_net [get_bd_ports sws] [get_bd_pins Buttons2LEDs_0/switches]
-endgroup
-startgroup
-connect_bd_net [get_bd_ports btns] [get_bd_pins Buttons2LEDs_0/pushButtons]
-endgroup
-regenerate_bd_layout
-save_bd_design
-validate_bd_design
-save_bd_design
-launch_runs impl_1 -to_step write_bitstream -jobs 8
-wait_on_run impl_1
-delete_bd_objs [get_bd_nets sws_1] [get_bd_nets Buttons2LEDs_0_rgbLEDs] [get_bd_nets Buttons2LEDs_0_buttonLEDs] [get_bd_nets btns_1] [get_bd_cells Buttons2LEDs_0]
-update_compile_order -fileset sources_1
-create_bd_cell -type module -reference Buttons2LEDs Buttons2LEDs_0
-apply_bd_automation -rule xilinx.com:bd_rule:clkrst -config {Clk "/processing_system7_0/FCLK_CLK0 (100 MHz)" }  [get_bd_pins Buttons2LEDs_0/clk]
-set_property location {-15 210} [get_bd_ports btns]
-set_property location {-17 238} [get_bd_ports sws]
-connect_bd_net [get_bd_ports btns] [get_bd_pins Buttons2LEDs_0/pushButtons]
-connect_bd_net [get_bd_ports sws] [get_bd_pins Buttons2LEDs_0/switches]
-set_property location {471 193} [get_bd_ports leds]
-set_property location {465 216} [get_bd_ports rgb_leds]
-connect_bd_net [get_bd_ports rgb_leds] [get_bd_pins Buttons2LEDs_0/rgbLEDs]
-connect_bd_net [get_bd_ports leds] [get_bd_pins Buttons2LEDs_0/buttonLEDs]
-save_bd_design
-update_compile_order -fileset sources_1
-regenerate_bd_layout
-delete_bd_objs [get_bd_nets sws_1] [get_bd_nets Buttons2LEDs_0_buttonLEDs] [get_bd_nets btns_1] [get_bd_nets Buttons2LEDs_0_rgbLEDs] [get_bd_cells Buttons2LEDs_0]
-update_compile_order -fileset sources_1
-undo
-update_compile_order -fileset sources_1
-report_ip_status -name ip_status 
-delete_bd_objs [get_bd_nets processing_system7_0_FCLK_CLK0]
-connect_bd_net [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK]
-startgroup
-make_bd_pins_external  [get_bd_pins Buttons2LEDs_0/clk]
-endgroup
-regenerate_bd_layout
-save_bd_design
-set_property name clk [get_bd_ports clk_0]
-save_bd_design
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 8
-wait_on_run impl_1
-make_wrapper -files [get_files G:/XILINX/EchoSmall/EchoSmall.srcs/sources_1/bd/BaseSystem/BaseSystem.bd] -top
 update_module_reference BaseSystem_Buttons2LEDs_0_1
-connect_bd_net [get_bd_ports clk] [get_bd_pins Buttons2LEDs_0/clk_A]
-save_bd_design
-set_property name clk_A [get_bd_ports clk]
-save_bd_design
-validate_bd_design
-save_bd_design
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 8
-wait_on_run impl_1
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 8
-wait_on_run impl_1
-update_module_reference BaseSystem_Buttons2LEDs_0_1
-reset_run impl_1
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 8
-wait_on_run impl_1
-delete_bd_objs [get_bd_nets clk_0_1] [get_bd_ports clk_A]
-connect_bd_net [get_bd_pins Buttons2LEDs_0/clk_A] [get_bd_pins processing_system7_0/FCLK_CLK0]
-regenerate_bd_layout
-reset_run impl_1
-save_bd_design
-update_module_reference BaseSystem_Buttons2LEDs_0_1
-connect_bd_net [get_bd_pins Buttons2LEDs_0/clk] [get_bd_pins processing_system7_0/FCLK_CLK0]
-save_bd_design
-regenerate_bd_layout
-save_bd_design
 reset_run synth_1
 launch_runs impl_1 -to_step write_bitstream -jobs 8
 wait_on_run impl_1
 file copy -force G:/XILINX/EchoSmall/EchoSmall.runs/impl_1/BaseSystem_wrapper.sysdef G:/XILINX/EchoSmall/EchoSmall.sdk/BaseSystem_wrapper.hdf
 
 launch_sdk -workspace G:/XILINX/EchoSmall/EchoSmall.sdk -hwspec G:/XILINX/EchoSmall/EchoSmall.sdk/BaseSystem_wrapper.hdf
-update_module_reference BaseSystem_Buttons2LEDs_0_1
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 8
-wait_on_run impl_1
-file copy -force G:/XILINX/EchoSmall/EchoSmall.runs/impl_1/BaseSystem_wrapper.sysdef G:/XILINX/EchoSmall/EchoSmall.sdk/BaseSystem_wrapper.hdf
-

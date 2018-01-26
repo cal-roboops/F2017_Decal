@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Jan 24 15:32:42 2018" VIVADOVERSION="2017.3.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Jan 25 22:22:21 2018" VIVADOVERSION="2017.3.1">
 
   <SYSTEMINFO ARCH="zynq" BOARD="digilentinc.com:arty-z7-20:part0:1.0" DEVICE="7z020" NAME="BaseSystem" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -25,11 +25,6 @@
     <PORT DIR="IO" NAME="FIXED_IO_ps_srstb" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_clk" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef"/>
-    <PORT DIR="O" LEFT="3" NAME="leds" RIGHT="0" SIGIS="undef" SIGNAME="Buttons2LEDs_0_buttonLEDs">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Buttons2LEDs_0" PORT="buttonLEDs"/>
-      </CONNECTIONS>
-    </PORT>
     <PORT DIR="O" LEFT="5" NAME="rgb_leds" RIGHT="0" SIGIS="undef" SIGNAME="Buttons2LEDs_0_rgbLEDs">
       <CONNECTIONS>
         <CONNECTION INSTANCE="Buttons2LEDs_0" PORT="rgbLEDs"/>
@@ -38,6 +33,11 @@
     <PORT DIR="I" LEFT="3" NAME="btns" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_btns">
       <CONNECTIONS>
         <CONNECTION INSTANCE="Buttons2LEDs_0" PORT="pushButtons"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="3" NAME="leds" RIGHT="0" SIGIS="undef" SIGNAME="Buttons2LEDs_0_buttonLEDs">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Buttons2LEDs_0" PORT="buttonLEDs"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" LEFT="1" NAME="sws" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_sws">
