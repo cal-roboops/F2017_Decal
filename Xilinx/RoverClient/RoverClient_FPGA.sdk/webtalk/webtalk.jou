@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2017.3.1 (64-bit)
+# SW Build 2035080 on Fri Oct 20 14:20:01 MDT 2017
+# 
+# Start of session at: Fri Jan 26 20:18:43 2018
+# Process ID: 4304
+# Current directory: G:/XILINX/RoverClient/RoverClient_FPGA/RoverClient_FPGA.sdk/webtalk
+# Command line: wbtcv.exe -mode batch -source sdk_webtalk.tcl
+# Log file: G:/XILINX/RoverClient/RoverClient_FPGA/RoverClient_FPGA.sdk/webtalk/webtalk.log
+# Journal file: G:/XILINX/RoverClient/RoverClient_FPGA/RoverClient_FPGA.sdk/webtalk\webtalk.jou
+#-----------------------------------------------------------
+source sdk_webtalk.tcl
