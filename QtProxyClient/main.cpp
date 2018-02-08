@@ -55,23 +55,23 @@ Qt3DCore::QEntity *createScene()
     rectangle->setSource(QUrl("qrc:/rectangle.obj"));
 
     // Position the rectangle +6 on the x axis (so the box isn't covering it)
-    Qt3DCore::QTransform *transform = new Qt3DCore::QTransform;
-    transform->setTranslation(QVector3D(6, 0, 0));
+    Qt3DCore::QTransform *transformRect = new Qt3DCore::QTransform;
+    transformRect->setTranslation(QVector3D(6, 0, 0));
 
     // Angle at which you want to rotate the rectangle about the box
     double angle = 135;
 
     // Operations to perform the rotation of the rectangle about the box
-    transform->setRotationZ(angle);
+    transformRect->setRotationZ(angle);
     double angleCos = qCos(qDegreesToRadians(angle));
     double angleSin = qSin(qDegreesToRadians(angle));
-    transform->setTranslation(QVector3D((6*angleCos), (6*angleSin), 0));
+    transformRect->setTranslation(QVector3D((6*angleCos), (6*angleSin), 0));
 
     // Add all the components to each entity
     shapesEntity->addComponent(box);
     shapesEntity->addComponent(transformBox);
     shapesEntity2->addComponent(rectangle);
-    shapesEntity2->addComponent(transform);
+    shapesEntity2->addComponent(transformRect);
     shapesEntity->addComponent(material);
     shapesEntity2->addComponent(material);
 
