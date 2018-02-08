@@ -1,7 +1,10 @@
 #ifndef CONTROLPANEL_H
 #define CONTROLPANEL_H
+
 #include <QMainWindow>
 #include <QTcpSocket>
+
+
 namespace Ui {
 class ControlPanel;
 }

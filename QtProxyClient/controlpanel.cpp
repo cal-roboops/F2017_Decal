@@ -11,11 +11,13 @@
 #include <QKeyEvent>
 #include <QJsonDocument>
 #include <QMessageBox>
+
 ControlPanel::ControlPanel(QWidget *parent):
     QMainWindow(parent),
     ui(new Ui::ControlPanel)
 {
     ui->setupUi(this);
+    ui->radio0->setChecked(true);
 }
 
 ControlPanel::~ControlPanel()
@@ -468,7 +470,8 @@ void ControlPanel::on_button_middle_down_down_pressed() //button 8 pressed
 {
     QJsonObject input;
     input["DT_M_L"] = -1;
-    input["DT_M_R"] = 1;
+    input["DT_M_R"] = -
+            1;
     format_JSON(input);
 }
 

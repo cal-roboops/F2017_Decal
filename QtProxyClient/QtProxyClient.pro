@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network
+QT += core gui network qml quick 3dcore 3drender 3dquick 3dextras 3danimation
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,12 +28,20 @@ SOURCES += \
         mainwindow.cpp \
     tank_json.cpp \
     controlpanel.cpp \
-    regular_json.cpp
+    regular_json.cpp \
+    armgraphic.cpp
 
 HEADERS += \
         mainwindow.h \
-    controlpanel.h
+    controlpanel.h \
+    armgraphic.h
 
 FORMS += \
         mainwindow.ui \
-    controlpanel.ui
+    controlpanel.ui \
+    armgraphic.ui
+
+DISTFILES +=
+
+RESOURCES += \
+    arm.qrc

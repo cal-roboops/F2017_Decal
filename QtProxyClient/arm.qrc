@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>joint_demo.obj</file>
+        <file>box.obj</file>
+        <file>rectangle.obj</file>
+        <file>box2.obj</file>
+    </qresource>
+</RCC>
