@@ -26,10 +26,12 @@ MainWindow::MainWindow(QWidget *parent) :
     disconnectPressed = false;
     ui->sendMSG->setEnabled(false);
     ui->radioButton_nc_mode->setChecked(true);
+    ui->nonControlArm->setChecked(true);
     on_radioButton_nc_mode_clicked();
     // Connect desired SIGNALs and SLOTs
     connect(socket, SIGNAL(readyRead()), this, SLOT(on_recvMSG()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(on_disconnect()));
+    ui->infoLabel->setVisible(false);
 }
 
 MainWindow::~MainWindow()

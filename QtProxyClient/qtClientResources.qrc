@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>joint_demo.obj</file>
+    </qresource>
+</RCC>

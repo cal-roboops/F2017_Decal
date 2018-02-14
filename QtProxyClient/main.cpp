@@ -35,39 +35,39 @@ Qt3DCore::QEntity *createScene()
     // Root entity
     Qt3DCore::QEntity *rootEntity = new Qt3DCore::QEntity;
 
-    // Shapes entity (we create two entities because we have two shapes)
+    // Shapes entity (we create two entities because we have two shapes) ***
     Qt3DCore::QEntity *shapesEntity = new Qt3DCore::QEntity(rootEntity);
     Qt3DCore::QEntity *shapesEntity2 = new Qt3DCore::QEntity(rootEntity);
 
     // Material
     Qt3DRender::QMaterial *material = new Qt3DExtras::QPhongMaterial(rootEntity);
 
-    // Load the box object file
+    // Load the box object file ***
     Qt3DRender::QMesh *box = new Qt3DRender::QMesh(rootEntity);
     box->setSource(QUrl("qrc:/box2.obj"));
 
-    // Position the box at the origin
+    // Position the box at the origin ***
     Qt3DCore::QTransform *transformBox = new Qt3DCore::QTransform;
     transformBox->setTranslation(QVector3D(0, 0, 0));
 
-    // Load the rectangle object file
+    // Load the rectangle object file ***
     Qt3DRender::QMesh *rectangle = new Qt3DRender::QMesh(rootEntity);
     rectangle->setSource(QUrl("qrc:/rectangle.obj"));
 
-    // Position the rectangle +6 on the x axis (so the box isn't covering it)
+    // Position the rectangle +6 on the x axis (so the box isn't covering it) ***
     Qt3DCore::QTransform *transformRect = new Qt3DCore::QTransform;
     transformRect->setTranslation(QVector3D(6, 0, 0));
 
-    // Angle at which you want to rotate the rectangle about the box
+    // Angle at which you want to rotate the rectangle about the box ***
     double angle = 135;
 
-    // Operations to perform the rotation of the rectangle about the box
+    // Operations to perform the rotation of the rectangle about the box ***
     transformRect->setRotationZ(angle);
     double angleCos = qCos(qDegreesToRadians(angle));
     double angleSin = qSin(qDegreesToRadians(angle));
     transformRect->setTranslation(QVector3D((6*angleCos), (6*angleSin), 0));
 
-    // Add all the components to each entity
+    // Add all the components to each entity ***
     shapesEntity->addComponent(box);
     shapesEntity->addComponent(transformBox);
     shapesEntity2->addComponent(rectangle);

@@ -38,6 +38,12 @@ private slots:
 
     void on_radioButton_c_mode_clicked();
 
+    // #################### ARM ####################
+
+    // TODO: Declare arm buttons here
+
+    // #############################################
+
     void on_armGraphic_clicked();
 
     void on_cameraMast_valueChanged(int position);

@@ -97,6 +97,7 @@ private slots:
 
     void on_horizontalSlider_speed_sliderReleased();
 
+
 private:
     Ui::ControlPanel *ui;
 };
