@@ -24,13 +24,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     socket = new QTcpSocket(this);
     disconnectPressed = false;
-    ui->sendMSG->setEnabled(false);
     ui->radioButton_nc_mode->setChecked(true);
     ui->nonControlArm->setChecked(true);
     on_radioButton_nc_mode_clicked();
+
     // Connect desired SIGNALs and SLOTs
     connect(socket, SIGNAL(readyRead()), this, SLOT(on_recvMSG()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(on_disconnect()));
+    connect(ui->drawerSlider, SIGNAL(valueChanged(int)), this, SLOT(drawerSliderChanged(int)));
+
     ui->infoLabel->setVisible(false);
 }
 
@@ -63,7 +65,6 @@ void MainWindow::on_connect_clicked()
     } else
     {
         msg += "Connected to " + newPeer;
-        ui->sendMSG->setEnabled(true);
     }
 
     // Update info label
@@ -97,11 +98,6 @@ void MainWindow::on_disconnect_clicked()
 
     ui->infoLabel->setText(disMsg);
     disconnectPressed = false;
-}
-
-void MainWindow::on_sendMSG_clicked()
-{
-    socket->write(ui->msgEdit->toPlainText().toLocal8Bit());
 }
 
 void MainWindow::on_recvMSG()
@@ -162,8 +158,6 @@ void MainWindow::on_disconnect()
     {
         ui->infoLabel->setText("Connection Lost!");
     }
-
-    ui->sendMSG->setEnabled(false);
 }
 
 void MainWindow::format_JSON(QJsonObject input) //formates JSON Object
@@ -218,4 +212,18 @@ void MainWindow::uncheck_checkBox_show_cp()
 void MainWindow::on_cameraMast_valueChanged(int position)
 {
     qDebug() << position;
+}
+
+void MainWindow::drawerSliderChanged(int value) {\
+    ui->drawerValueLabel->setText(QString::number(value));
+}
+
+void MainWindow::on_setDrawerValue_clicked() {
+    if (ui->drawerLineEdit->text().isEmpty()) {
+        qDebug() << "Nothing to set";
+    } else {
+        ui->drawerValueLabel->setText(ui->drawerLineEdit->text());
+        ui->drawerSlider->setSliderPosition(ui->drawerLineEdit->text().toInt());
+        // SEND JSON VALUE TO SERVER
+    }
 }

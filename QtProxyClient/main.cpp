@@ -59,7 +59,7 @@ Qt3DCore::QEntity *createScene()
     transformRect->setTranslation(QVector3D(6, 0, 0));
 
     // Angle at which you want to rotate the rectangle about the box ***
-    double angle = 135;
+    double angle = 90;
 
     // Operations to perform the rotation of the rectangle about the box ***
     transformRect->setRotationZ(angle);

@@ -18,6 +18,8 @@ ControlPanel::ControlPanel(QWidget *parent):
 {
     ui->setupUi(this);
     ui->radio0->setChecked(true);
+
+    connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderValueChanged(int)));
 }
 
 ControlPanel::~ControlPanel()
@@ -100,6 +102,10 @@ void ControlPanel::on_radioButton_custom_clicked() //set controls to custom
 /*
  * Regular Page
  * */
+
+void ControlPanel::sliderValueChanged(int value) {
+    ui->lineEdit_input->setText(QString::number(value));
+}
 
 void ControlPanel::on_button_set_clicked() //slider button
 {

@@ -21,6 +21,8 @@ public:
 
 private slots:
 
+    void sliderValueChanged(int value);
+
     void on_button_set_clicked();
 
     void on_pushButton_up_pressed();

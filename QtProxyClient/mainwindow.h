@@ -21,10 +21,12 @@ public:
     void format_JSON(QJsonObject input);
     void uncheck_checkBox_show_cp();
 private slots:
+    void on_setDrawerValue_clicked();
+    void drawerSliderChanged(int value);
+
     void on_connect_clicked();
     void on_disconnect_clicked();
 
-    void on_sendMSG_clicked();
     void on_recvMSG();
     void on_clearRECV_clicked();
 

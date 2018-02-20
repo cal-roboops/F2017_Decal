@@ -17,29 +17,6 @@
    <string>QtProxyClient</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTextEdit" name="msgEdit">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>100</y>
-      <width>221</width>
-      <height>101</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="sendMSG">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>210</y>
-      <width>93</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Send</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="recvLabel">
     <property name="geometry">
      <rect>
@@ -51,22 +28,6 @@
     </property>
     <property name="text">
      <string>Server Feedback</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="msgLabel">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>100</y>
-      <width>60</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Message</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -559,20 +520,23 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="geometry">
      <rect>
-      <x>740</x>
-      <y>190</y>
-      <width>55</width>
-      <height>16</height>
+      <x>664</x>
+      <y>169</y>
+      <width>211</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
-     <string>Info Label</string>
+     <string/>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QDial" name="cameraMast">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>10</x>
       <y>320</y>
       <width>261</width>
       <height>121</height>
@@ -609,7 +573,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="cameraMast_2">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>70</x>
       <y>290</y>
       <width>141</width>
       <height>20</height>
@@ -630,7 +594,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="drawer">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>70</x>
       <y>490</y>
       <width>141</width>
       <height>20</height>
@@ -648,10 +612,10 @@ p, li { white-space: pre-wrap; }
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider">
+   <widget class="QSlider" name="drawerSlider">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>50</x>
       <y>540</y>
       <width>191</width>
       <height>22</height>
@@ -659,6 +623,52 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="setDrawerValue">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>590</y>
+      <width>71</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Set</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="drawerValueLabel">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>540</y>
+      <width>21</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="drawerLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>590</y>
+      <width>113</width>
+      <height>27</height>
+     </rect>
     </property>
    </widget>
   </widget>
