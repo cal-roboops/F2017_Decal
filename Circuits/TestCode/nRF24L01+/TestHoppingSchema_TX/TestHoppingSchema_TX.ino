@@ -44,7 +44,7 @@ typedef struct{ // Struct of data received from PRX
 }
 B_t;
 
-A_t data_TX ;
+A_t data_TX;
 B_t data_RX;
 
 void setup()
@@ -101,7 +101,7 @@ void loop()
         data_TX.var1_value=5;
       }
   }
-  if(fired) { // When the interrupt occurred, we need to perform the following task  
+  if (fired) { // When the interrupt occurred, we need to perform the following task  
     fired=false;  // Reset fired flag
     Int_cnt++;  // Increment Interrupts counter
     if(Int_cnt==(Int_TX_cnt-1)) { // If it's time to perform channel change (10ms before trasmission time)
