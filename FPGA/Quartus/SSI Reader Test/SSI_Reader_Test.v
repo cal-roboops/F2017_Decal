@@ -40,14 +40,15 @@ module SSI_Reader_Test(
 //  REG/WIRE declarations
 //=======================================================
 	localparam RESOLUTION = 10;
+	localparam CLOCK_FREQ = 50_000_000;
 	
 	//SSI Wires/Regs
 	wire NCS, SSI_DataLine, SSI_CLK;
 	wire [RESOLUTION-1:0] SSI_DataOut;
-	
+	reg NCS_prev;
 	
 	//UART Wires/Regs
-	wire SSI_DataValid = 1'b1;
+	reg SSI_DataValid = 1'b0;
 
 	reg [7:0] data_in_reg;
    wire [7:0] data_in, data_out;
@@ -63,8 +64,8 @@ module SSI_Reader_Test(
 	assign SSI_DataLine = GPIOH0[7];
 	
 	//UART assignments:
-	assign data_in = SSI_DataOut[7:0];
-	assign LED = SSI_DataOut[7:0];
+	assign data_in = SSI_DataOut[9:2];
+	assign LED = {GPIOH0[9], GPIOH0[11], SSI_DataOut[9:4]};
 
 //=======================================================
 //  Structural coding
@@ -72,7 +73,9 @@ module SSI_Reader_Test(
 
 
 	SSI_Reader #(
-		.RES(RESOLUTION)
+		.CLOCK_FREQ(CLOCK_FREQ),
+		.SSI_CLK_PERIOD(0.000_001),
+		.SSI_RES(RESOLUTION)
 	) Read_SSI(
 		.clk(CLOCK_50),
 		.DataIn(SSI_DataLine),
@@ -80,13 +83,11 @@ module SSI_Reader_Test(
 		.magLOW(),
 		.SSI_CLK(SSI_CLK),
 		.NCS(NCS),
-		.DataOut(SSI_DataOut),
-		.Poll_test()
-		
+		.DataOut(SSI_DataOut),		
 	);
 
 	 uart # (
-        .CLOCK_FREQ(50_000_000),
+        .CLOCK_FREQ(CLOCK_FREQ),
         .BAUD_RATE(9600)
     ) on_chip_uart (
         .clk(CLOCK_50),
@@ -100,4 +101,19 @@ module SSI_Reader_Test(
         .serial_in(FPGA_SERIAL_RX),
         .serial_out(FPGA_SERIAL_TX)
     );
+	 
+	 always @(posedge CLOCK_50) begin
+		if (NCS && (NCS != NCS_prev)) begin
+			SSI_DataValid <= 1'b1;
+			NCS_prev <= NCS;
+		end
+		else if (NCS) begin
+			SSI_DataValid <= 1'b0;
+		end
+		else begin
+			SSI_DataValid <= 1'b0;
+			NCS_prev <= NCS;
+		end
+	 end
+	 
 endmodule
