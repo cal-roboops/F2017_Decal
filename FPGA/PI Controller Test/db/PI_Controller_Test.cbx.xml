@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<LOG_ROOT>
+	<PROJECT NAME="PI_Controller_Test">
+		<CBX_INST_ENTRY INSTANCE_NAME="|PI_Controller_Test|PI:Controller|averager:average1|altshift_taps:data_rtl_0" CBX_FILE_NAME="shift_taps_15m.tdf"/>
+	</PROJECT>
+</LOG_ROOT>
