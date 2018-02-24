@@ -1,0 +1,568 @@
+Analysis & Synthesis report for SSI_Reader_Test
+Fri Feb 23 15:26:05 2018
+Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. User-Specified and Inferred Latches
+  9. Registers Removed During Synthesis
+ 10. General Register Statistics
+ 11. Inverted Register Statistics
+ 12. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 13. Parameter Settings for User Entity Instance: SSI_Reader:Read_SSI
+ 14. Parameter Settings for User Entity Instance: uart:on_chip_uart
+ 15. Parameter Settings for User Entity Instance: uart:on_chip_uart|uart_transmitter:uatransmit
+ 16. Parameter Settings for User Entity Instance: uart:on_chip_uart|uart_receiver:uareceive
+ 17. Port Connectivity Checks: "uart:on_chip_uart"
+ 18. Port Connectivity Checks: "SSI_Reader:Read_SSI"
+ 19. Elapsed Time Per Partition
+ 20. Analysis & Synthesis Messages
+ 21. Analysis & Synthesis Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++--------------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                         ;
++------------------------------------+-------------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Fri Feb 23 15:26:05 2018           ;
+; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
+; Revision Name                      ; SSI_Reader_Test                                 ;
+; Top-level Entity Name              ; SSI_Reader_Test                                 ;
+; Family                             ; Cyclone IV E                                    ;
+; Total logic elements               ; 101                                             ;
+;     Total combinational functions  ; 100                                             ;
+;     Dedicated logic registers      ; 58                                              ;
+; Total registers                    ; 58                                              ;
+; Total pins                         ; 105                                             ;
+; Total virtual pins                 ; 0                                               ;
+; Total memory bits                  ; 0                                               ;
+; Embedded Multiplier 9-bit elements ; 0                                               ;
+; Total PLLs                         ; 0                                               ;
++------------------------------------+-------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                        ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                     ; Setting            ; Default Value      ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                     ; EP4CE22F17C6       ;                    ;
+; Top-level entity name                                                      ; SSI_Reader_Test    ; SSI_Reader_Test    ;
+; Family name                                                                ; Cyclone IV E       ; Cyclone IV GX      ;
+; Use smart compilation                                                      ; Off                ; Off                ;
+; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                                ; Off                ; Off                ;
+; Restructure Multiplexers                                                   ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                                        ; Off                ; Off                ;
+; Preserve fewer node names                                                  ; On                 ; On                 ;
+; Disable OpenCore Plus hardware evaluation                                  ; Off                ; Off                ;
+; Verilog Version                                                            ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                               ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                   ; Auto               ; Auto               ;
+; Safe State Machine                                                         ; Off                ; Off                ;
+; Extract Verilog State Machines                                             ; On                 ; On                 ;
+; Extract VHDL State Machines                                                ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                          ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                 ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                             ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                    ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                  ; On                 ; On                 ;
+; Parallel Synthesis                                                         ; On                 ; On                 ;
+; DSP Block Balancing                                                        ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                         ; On                 ; On                 ;
+; Power-Up Don't Care                                                        ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                               ; Off                ; Off                ;
+; Remove Duplicate Registers                                                 ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                       ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                     ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                      ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                  ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                       ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                        ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                             ; Off                ; Off                ;
+; Optimization Technique                                                     ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                         ; 70                 ; 70                 ;
+; Auto Carry Chains                                                          ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                       ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                      ; Off                ; Off                ;
+; Auto ROM Replacement                                                       ; On                 ; On                 ;
+; Auto RAM Replacement                                                       ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                 ; On                 ; On                 ;
+; Auto Shift Register Replacement                                            ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                            ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                              ; On                 ; On                 ;
+; Strict RAM Replacement                                                     ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                          ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                     ; Off                ; Off                ;
+; Auto RAM Block Balancing                                                   ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                      ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                              ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                        ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                          ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                    ; On                 ; On                 ;
+; Report Parameter Settings                                                  ; On                 ; On                 ;
+; Report Source Assignments                                                  ; On                 ; On                 ;
+; Report Connectivity Checks                                                 ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                         ; Off                ; Off                ;
+; Synchronization Register Chain Length                                      ; 2                  ; 2                  ;
+; PowerPlay Power Optimization                                               ; Normal compilation ; Normal compilation ;
+; HDL message level                                                          ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                            ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                   ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                         ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                  ; 100                ; 100                ;
+; Clock MUX Protection                                                       ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                ; Off                ; Off                ;
+; Block Design Naming                                                        ; Auto               ; Auto               ;
+; SDC constraint protection                                                  ; Off                ; Off                ;
+; Synthesis Effort                                                           ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal               ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                       ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                         ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                     ; On                 ; On                 ;
+; Synthesis Seed                                                             ; 1                  ; 1                  ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+
+
+Parallel compilation was disabled, but you have multiple processors available. Enable parallel compilation to reduce compilation time.
++-------------------------------------+
+; Parallel Compilation                ;
++----------------------------+--------+
+; Processors                 ; Number ;
++----------------------------+--------+
+; Number detected on machine ; 4      ;
+; Maximum allowed            ; 1      ;
++----------------------------+--------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                                   ;
++-------------------------------------------------------------+-----------------+------------------------------+---------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path                            ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                    ; Library ;
++-------------------------------------------------------------+-----------------+------------------------------+---------------------------------------------------------------------------------+---------+
+; ../Library/uart_transmitter.v                               ; yes             ; User Verilog HDL File        ; C:/Users/Cole/Downloads/Mars Rover Decal/FPGA/Library/uart_transmitter.v        ;         ;
+; ../Library/uart_receiver.v                                  ; yes             ; User Verilog HDL File        ; C:/Users/Cole/Downloads/Mars Rover Decal/FPGA/Library/uart_receiver.v           ;         ;
+; ../Library/uart.v                                           ; yes             ; User Verilog HDL File        ; C:/Users/Cole/Downloads/Mars Rover Decal/FPGA/Library/uart.v                    ;         ;
+; ../Library/SSI_Reader.v                                     ; yes             ; User Verilog HDL File        ; C:/Users/Cole/Downloads/Mars Rover Decal/FPGA/Library/SSI_Reader.v              ;         ;
+; /users/cole/downloads/mars rover decal/fpga/library/util.vh ; yes             ; Auto-Found Unspecified File  ; /users/cole/downloads/mars rover decal/fpga/library/util.vh                     ;         ;
+; ssi_reader_test.v                                           ; yes             ; Auto-Found Verilog HDL File  ; C:/Users/Cole/Downloads/Mars Rover Decal/FPGA/SSI Reader Test/ssi_reader_test.v ;         ;
++-------------------------------------------------------------+-----------------+------------------------------+---------------------------------------------------------------------------------+---------+
+
+
++--------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                  ;
++---------------------------------------------+----------------+
+; Resource                                    ; Usage          ;
++---------------------------------------------+----------------+
+; Estimated Total logic elements              ; 101            ;
+;                                             ;                ;
+; Total combinational functions               ; 100            ;
+; Logic element usage by number of LUT inputs ;                ;
+;     -- 4 input functions                    ; 27             ;
+;     -- 3 input functions                    ; 26             ;
+;     -- <=2 input functions                  ; 47             ;
+;                                             ;                ;
+; Logic elements by mode                      ;                ;
+;     -- normal mode                          ; 60             ;
+;     -- arithmetic mode                      ; 40             ;
+;                                             ;                ;
+; Total registers                             ; 58             ;
+;     -- Dedicated logic registers            ; 58             ;
+;     -- I/O registers                        ; 0              ;
+;                                             ;                ;
+; I/O pins                                    ; 105            ;
+; Embedded Multiplier 9-bit elements          ; 0              ;
+; Maximum fan-out node                        ; CLOCK_50~input ;
+; Maximum fan-out                             ; 52             ;
+; Total fan-out                               ; 639            ;
+; Average fan-out                             ; 1.42           ;
++---------------------------------------------+----------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                             ;
++-------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------+--------------+
+; Compilation Hierarchy Node          ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                            ; Library Name ;
++-------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------+--------------+
+; |SSI_Reader_Test                    ; 100 (1)           ; 58 (0)       ; 0           ; 0            ; 0       ; 0         ; 105  ; 0            ; |SSI_Reader_Test                                               ; work         ;
+;    |SSI_Reader:Read_SSI|            ; 69 (69)           ; 31 (31)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |SSI_Reader_Test|SSI_Reader:Read_SSI                           ; work         ;
+;    |uart:on_chip_uart|              ; 30 (1)            ; 27 (1)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |SSI_Reader_Test|uart:on_chip_uart                             ; work         ;
+;       |uart_transmitter:uatransmit| ; 29 (29)           ; 26 (26)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |SSI_Reader_Test|uart:on_chip_uart|uart_transmitter:uatransmit ; work         ;
++-------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++-------------------------------------------------------------------------------------------------------------+
+; User-Specified and Inferred Latches                                                                         ;
++-----------------------------------------------------+------------------------------+------------------------+
+; Latch Name                                          ; Latch Enable Signal          ; Free of Timing Hazards ;
++-----------------------------------------------------+------------------------------+------------------------+
+; SSI_Reader:Read_SSI|DataOut_Reg[1]                  ; SSI_Reader:Read_SSI|Equal2   ; yes                    ;
+; SSI_Reader:Read_SSI|DataOut_Reg[2]                  ; SSI_Reader:Read_SSI|Equal2   ; yes                    ;
+; SSI_Reader:Read_SSI|DataOut_Reg[3]                  ; SSI_Reader:Read_SSI|Equal2   ; yes                    ;
+; SSI_Reader:Read_SSI|DataOut_Reg[4]                  ; SSI_Reader:Read_SSI|Equal2   ; yes                    ;
+; SSI_Reader:Read_SSI|DataOut_Reg[5]                  ; SSI_Reader:Read_SSI|Equal2   ; yes                    ;
+; SSI_Reader:Read_SSI|DataOut_Reg[6]                  ; SSI_Reader:Read_SSI|Equal2   ; yes                    ;
+; SSI_Reader:Read_SSI|DataOut_Reg[7]                  ; SSI_Reader:Read_SSI|Equal2   ; yes                    ;
+; SSI_Reader:Read_SSI|Temp_Reading[1]                 ; SSI_Reader:Read_SSI|Decoder0 ; yes                    ;
+; SSI_Reader:Read_SSI|Temp_Reading[2]                 ; SSI_Reader:Read_SSI|Decoder0 ; yes                    ;
+; SSI_Reader:Read_SSI|Temp_Reading[3]                 ; SSI_Reader:Read_SSI|Decoder0 ; yes                    ;
+; SSI_Reader:Read_SSI|Temp_Reading[4]                 ; SSI_Reader:Read_SSI|Decoder0 ; yes                    ;
+; SSI_Reader:Read_SSI|Temp_Reading[5]                 ; SSI_Reader:Read_SSI|Decoder0 ; yes                    ;
+; SSI_Reader:Read_SSI|Temp_Reading[6]                 ; SSI_Reader:Read_SSI|Decoder0 ; yes                    ;
+; SSI_Reader:Read_SSI|Temp_Reading[7]                 ; SSI_Reader:Read_SSI|Decoder0 ; yes                    ;
+; SSI_Reader:Read_SSI|NCS_Reg                         ; SSI_Reader:Read_SSI|WideNor0 ; yes                    ;
+; Number of user-specified and inferred latches = 15  ;                              ;                        ;
++-----------------------------------------------------+------------------------------+------------------------+
+Note: All latches listed above may not be present at the end of synthesis due to various synthesis optimizations.
+
+
++------------------------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                                   ;
++-------------------------------------------------------------+----------------------------------------+
+; Register name                                               ; Reason for Removal                     ;
++-------------------------------------------------------------+----------------------------------------+
+; uart:on_chip_uart|uart_transmitter:uatransmit|tx_shift[0,1] ; Stuck at GND due to stuck port data_in ;
+; Total Number of Removed Registers = 2                       ;                                        ;
++-------------------------------------------------------------+----------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 58    ;
+; Number of registers using Synchronous Clear  ; 43    ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 0     ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 8     ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++-----------------------------------------------------------------+
+; Inverted Register Statistics                                    ;
++-------------------------------------------------------+---------+
+; Inverted Register                                     ; Fan out ;
++-------------------------------------------------------+---------+
+; uart:on_chip_uart|uart_transmitter:uatransmit|bit_out ; 1       ;
+; Total number of inverted registers = 1                ;         ;
++-------------------------------------------------------+---------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                              ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                    ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------------------------------+
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |SSI_Reader_Test|uart:on_chip_uart|uart_transmitter:uatransmit|bit_counter[2] ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------------------------------+
+
+
++------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: SSI_Reader:Read_SSI ;
++-------------------+-------+--------------------------------------+
+; Parameter Name    ; Value ; Type                                 ;
++-------------------+-------+--------------------------------------+
+; POLLWAITMS        ; 100   ; Signed Integer                       ;
+; POLL_COUNTER_SIZE ; 25    ; Signed Integer                       ;
+; RES               ; 10    ; Signed Integer                       ;
+; RES_COUNTER_SIZE  ; 4     ; Signed Integer                       ;
+; CYCLESINMS        ; 100   ; Signed Integer                       ;
++-------------------+-------+--------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: uart:on_chip_uart ;
++----------------+----------+------------------------------------+
+; Parameter Name ; Value    ; Type                               ;
++----------------+----------+------------------------------------+
+; CLOCK_FREQ     ; 50000000 ; Signed Integer                     ;
+; BAUD_RATE      ; 9600     ; Signed Integer                     ;
++----------------+----------+------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: uart:on_chip_uart|uart_transmitter:uatransmit ;
++----------------+----------+----------------------------------------------------------------+
+; Parameter Name ; Value    ; Type                                                           ;
++----------------+----------+----------------------------------------------------------------+
+; CLOCK_FREQ     ; 50000000 ; Signed Integer                                                 ;
+; BAUD_RATE      ; 9600     ; Signed Integer                                                 ;
++----------------+----------+----------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: uart:on_chip_uart|uart_receiver:uareceive ;
++----------------+----------+------------------------------------------------------------+
+; Parameter Name ; Value    ; Type                                                       ;
++----------------+----------+------------------------------------------------------------+
+; CLOCK_FREQ     ; 50000000 ; Signed Integer                                             ;
+; BAUD_RATE      ; 9600     ; Signed Integer                                             ;
++----------------+----------+------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "uart:on_chip_uart"                                                                            ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port           ; Type   ; Severity ; Details                                                                             ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+; data_in_valid  ; Input  ; Info     ; Stuck at VCC                                                                        ;
+; data_in_ready  ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; data_out       ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; data_out_valid ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "SSI_Reader:Read_SSI"                                                                         ;
++---------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port          ; Type   ; Severity ; Details                                                                             ;
++---------------+--------+----------+-------------------------------------------------------------------------------------+
+; magHIGH       ; Input  ; Info     ; Explicitly unconnected                                                              ;
+; magLOW        ; Input  ; Info     ; Explicitly unconnected                                                              ;
+; DataOut[9..8] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; Poll_test     ; Output ; Info     ; Explicitly unconnected                                                              ;
++---------------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:00     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II 64-Bit Analysis & Synthesis
+    Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+    Info: Processing started: Fri Feb 23 15:26:03 2018
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off SSI_Reader_Test -c SSI_Reader_Test
+Warning (20028): Parallel compilation is not licensed and has been disabled
+Info (12021): Found 1 design units, including 1 entities, in source file /users/cole/downloads/mars rover decal/fpga/library/uart_transmitter.v
+    Info (12023): Found entity 1: uart_transmitter
+Info (12021): Found 1 design units, including 1 entities, in source file /users/cole/downloads/mars rover decal/fpga/library/uart_receiver.v
+    Info (12023): Found entity 1: uart_receiver
+Warning (10335): Unrecognized synthesis attribute "iob" at ../Library/uart.v(26)
+Info (12021): Found 1 design units, including 1 entities, in source file /users/cole/downloads/mars rover decal/fpga/library/uart.v
+    Info (12023): Found entity 1: uart
+Info (12021): Found 1 design units, including 1 entities, in source file /users/cole/downloads/mars rover decal/fpga/library/ssi_reader.v
+    Info (12023): Found entity 1: SSI_Reader
+Warning (12125): Using design file ssi_reader_test.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info (12023): Found entity 1: SSI_Reader_Test
+Info (12127): Elaborating entity "SSI_Reader_Test" for the top level hierarchy
+Warning (10034): Output port "I2C_SCLK" at ssi_reader_test.v(21) has no driver
+Info (12128): Elaborating entity "SSI_Reader" for hierarchy "SSI_Reader:Read_SSI"
+Warning (10036): Verilog HDL or VHDL warning at SSI_Reader.v(24): object "Poll_State" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at SSI_Reader.v(27): object "Poll_Counter" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at SSI_Reader.v(29): object "Inner_Loop_Counter" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at SSI_Reader.v(30): object "Bit_Counter" assigned a value but never read
+Warning (10230): Verilog HDL assignment warning at SSI_Reader.v(25): truncated value with size 2 to match size of target (1)
+Warning (10230): Verilog HDL assignment warning at SSI_Reader.v(30): truncated value with size 32 to match size of target (4)
+Warning (10230): Verilog HDL assignment warning at SSI_Reader.v(49): truncated value with size 32 to match size of target (25)
+Warning (10230): Verilog HDL assignment warning at SSI_Reader.v(54): truncated value with size 32 to match size of target (5)
+Warning (10240): Verilog HDL Always Construct warning at SSI_Reader.v(58): inferring latch(es) for variable "NCS_Reg", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at SSI_Reader.v(58): inferring latch(es) for variable "DataOut_Reg", which holds its previous value in one or more paths through the always construct
+Warning (10240): Verilog HDL Always Construct warning at SSI_Reader.v(58): inferring latch(es) for variable "Temp_Reading", which holds its previous value in one or more paths through the always construct
+Info (10041): Inferred latch for "Temp_Reading[0]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "Temp_Reading[1]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "Temp_Reading[2]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "Temp_Reading[3]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "Temp_Reading[4]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "Temp_Reading[5]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "Temp_Reading[6]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "Temp_Reading[7]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "Temp_Reading[8]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "Temp_Reading[9]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "DataOut_Reg[0]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "DataOut_Reg[1]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "DataOut_Reg[2]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "DataOut_Reg[3]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "DataOut_Reg[4]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "DataOut_Reg[5]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "DataOut_Reg[6]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "DataOut_Reg[7]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "DataOut_Reg[8]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "DataOut_Reg[9]" at SSI_Reader.v(58)
+Info (10041): Inferred latch for "NCS_Reg" at SSI_Reader.v(58)
+Info (12128): Elaborating entity "uart" for hierarchy "uart:on_chip_uart"
+Info (12128): Elaborating entity "uart_transmitter" for hierarchy "uart:on_chip_uart|uart_transmitter:uatransmit"
+Warning (10230): Verilog HDL assignment warning at uart_transmitter.v(48): truncated value with size 32 to match size of target (13)
+Warning (10230): Verilog HDL assignment warning at uart_transmitter.v(58): truncated value with size 32 to match size of target (4)
+Warning (10230): Verilog HDL assignment warning at uart_transmitter.v(69): truncated value with size 32 to match size of target (1)
+Info (12128): Elaborating entity "uart_receiver" for hierarchy "uart:on_chip_uart|uart_receiver:uareceive"
+Warning (10230): Verilog HDL assignment warning at uart_receiver.v(53): truncated value with size 32 to match size of target (13)
+Warning (10230): Verilog HDL assignment warning at uart_receiver.v(63): truncated value with size 32 to match size of target (4)
+Warning (14025): LATCH primitive "SSI_Reader:Read_SSI|Temp_Reading[0]" is permanently disabled
+Warning (13034): The following nodes have both tri-state and non-tri-state drivers
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIOH0[0]" and its non-tri-state driver.
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIOH0[3]" and its non-tri-state driver.
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIOH0[5]" and its non-tri-state driver.
+Warning (13039): The following bidir pins have no drivers
+    Warning (13040): Bidir "GPIOH0[1]" has no driver
+    Warning (13040): Bidir "GPIOH0[7]" has no driver
+    Warning (13040): Bidir "I2C_SDAT" has no driver
+    Warning (13040): Bidir "GPIO_2[0]" has no driver
+    Warning (13040): Bidir "GPIO_2[1]" has no driver
+    Warning (13040): Bidir "GPIO_2[2]" has no driver
+    Warning (13040): Bidir "GPIO_2[3]" has no driver
+    Warning (13040): Bidir "GPIO_2[4]" has no driver
+    Warning (13040): Bidir "GPIO_2[5]" has no driver
+    Warning (13040): Bidir "GPIO_2[6]" has no driver
+    Warning (13040): Bidir "GPIO_2[7]" has no driver
+    Warning (13040): Bidir "GPIO_2[8]" has no driver
+    Warning (13040): Bidir "GPIO_2[9]" has no driver
+    Warning (13040): Bidir "GPIO_2[10]" has no driver
+    Warning (13040): Bidir "GPIO_2[11]" has no driver
+    Warning (13040): Bidir "GPIO_2[12]" has no driver
+    Warning (13040): Bidir "GPIOH0[2]" has no driver
+    Warning (13040): Bidir "GPIOH0[4]" has no driver
+    Warning (13040): Bidir "GPIOH0[6]" has no driver
+    Warning (13040): Bidir "GPIOH0[8]" has no driver
+    Warning (13040): Bidir "GPIOH0[9]" has no driver
+    Warning (13040): Bidir "GPIOH0[10]" has no driver
+    Warning (13040): Bidir "GPIOH0[11]" has no driver
+    Warning (13040): Bidir "GPIOH0[12]" has no driver
+    Warning (13040): Bidir "GPIOH0[13]" has no driver
+    Warning (13040): Bidir "GPIOH0[14]" has no driver
+    Warning (13040): Bidir "GPIOH0[15]" has no driver
+    Warning (13040): Bidir "GPIOH0[16]" has no driver
+    Warning (13040): Bidir "GPIOH0[17]" has no driver
+    Warning (13040): Bidir "GPIOH0[18]" has no driver
+    Warning (13040): Bidir "GPIOH0[19]" has no driver
+    Warning (13040): Bidir "GPIOH0[20]" has no driver
+    Warning (13040): Bidir "GPIOH0[21]" has no driver
+    Warning (13040): Bidir "GPIOH0[22]" has no driver
+    Warning (13040): Bidir "GPIOH0[23]" has no driver
+    Warning (13040): Bidir "GPIOH0[24]" has no driver
+    Warning (13040): Bidir "GPIOH0[25]" has no driver
+    Warning (13040): Bidir "GPIOH0[26]" has no driver
+    Warning (13040): Bidir "GPIOH0[27]" has no driver
+    Warning (13040): Bidir "GPIOH0[28]" has no driver
+    Warning (13040): Bidir "GPIOH0[29]" has no driver
+    Warning (13040): Bidir "GPIOH0[30]" has no driver
+    Warning (13040): Bidir "GPIOH0[31]" has no driver
+    Warning (13040): Bidir "GPIOH0[32]" has no driver
+    Warning (13040): Bidir "GPIOH0[33]" has no driver
+    Warning (13040): Bidir "GPIOH1[0]" has no driver
+    Warning (13040): Bidir "GPIOH1[1]" has no driver
+    Warning (13040): Bidir "GPIOH1[2]" has no driver
+    Warning (13040): Bidir "GPIOH1[3]" has no driver
+    Warning (13040): Bidir "GPIOH1[4]" has no driver
+    Warning (13040): Bidir "GPIOH1[5]" has no driver
+    Warning (13040): Bidir "GPIOH1[6]" has no driver
+    Warning (13040): Bidir "GPIOH1[7]" has no driver
+    Warning (13040): Bidir "GPIOH1[8]" has no driver
+    Warning (13040): Bidir "GPIOH1[9]" has no driver
+    Warning (13040): Bidir "GPIOH1[10]" has no driver
+    Warning (13040): Bidir "GPIOH1[11]" has no driver
+    Warning (13040): Bidir "GPIOH1[12]" has no driver
+    Warning (13040): Bidir "GPIOH1[13]" has no driver
+    Warning (13040): Bidir "GPIOH1[14]" has no driver
+    Warning (13040): Bidir "GPIOH1[15]" has no driver
+    Warning (13040): Bidir "GPIOH1[16]" has no driver
+    Warning (13040): Bidir "GPIOH1[17]" has no driver
+    Warning (13040): Bidir "GPIOH1[18]" has no driver
+    Warning (13040): Bidir "GPIOH1[19]" has no driver
+    Warning (13040): Bidir "GPIOH1[20]" has no driver
+    Warning (13040): Bidir "GPIOH1[21]" has no driver
+    Warning (13040): Bidir "GPIOH1[22]" has no driver
+    Warning (13040): Bidir "GPIOH1[23]" has no driver
+    Warning (13040): Bidir "GPIOH1[24]" has no driver
+    Warning (13040): Bidir "GPIOH1[25]" has no driver
+    Warning (13040): Bidir "GPIOH1[26]" has no driver
+    Warning (13040): Bidir "GPIOH1[27]" has no driver
+    Warning (13040): Bidir "GPIOH1[28]" has no driver
+    Warning (13040): Bidir "GPIOH1[29]" has no driver
+    Warning (13040): Bidir "GPIOH1[30]" has no driver
+    Warning (13040): Bidir "GPIOH1[31]" has no driver
+    Warning (13040): Bidir "GPIOH1[32]" has no driver
+    Warning (13040): Bidir "GPIOH1[33]" has no driver
+Warning (13012): Latch SSI_Reader:Read_SSI|NCS_Reg has unsafe behavior
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal SSI_Reader:Read_SSI|next_state[0]
+Warning (13009): TRI or OPNDRN buffers permanently enabled
+    Warning (13010): Node "GPIOH0[0]~synth"
+    Warning (13010): Node "GPIOH0[3]~synth"
+    Warning (13010): Node "GPIOH0[5]~synth"
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "LED[0]" is stuck at GND
+    Warning (13410): Pin "I2C_SCLK" is stuck at GND
+Info (286030): Timing-Driven Synthesis is running
+Info (144001): Generated suppressed messages file C:/Users/Cole/Downloads/Mars Rover Decal/FPGA/SSI Reader Test/SSI_Reader_Test.map.smsg
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 13 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "KEY[0]"
+    Warning (15610): No output dependent on input pin "KEY[1]"
+    Warning (15610): No output dependent on input pin "SW[0]"
+    Warning (15610): No output dependent on input pin "SW[1]"
+    Warning (15610): No output dependent on input pin "SW[2]"
+    Warning (15610): No output dependent on input pin "SW[3]"
+    Warning (15610): No output dependent on input pin "GPIO_2_IN[0]"
+    Warning (15610): No output dependent on input pin "GPIO_2_IN[1]"
+    Warning (15610): No output dependent on input pin "GPIO_2_IN[2]"
+    Warning (15610): No output dependent on input pin "GPIOH0_IN[0]"
+    Warning (15610): No output dependent on input pin "GPIOH0_IN[1]"
+    Warning (15610): No output dependent on input pin "GPIOH1_IN[0]"
+    Warning (15610): No output dependent on input pin "GPIOH1_IN[1]"
+Info (21057): Implemented 213 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 14 input pins
+    Info (21059): Implemented 9 output pins
+    Info (21060): Implemented 82 bidirectional pins
+    Info (21061): Implemented 108 logic cells
+Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 128 warnings
+    Info: Peak virtual memory: 500 megabytes
+    Info: Processing ended: Fri Feb 23 15:26:05 2018
+    Info: Elapsed time: 00:00:02
+    Info: Total CPU time (on all processors): 00:00:02
+
+
++------------------------------------------+
+; Analysis & Synthesis Suppressed Messages ;
++------------------------------------------+
+The suppressed messages can be found in C:/Users/Cole/Downloads/Mars Rover Decal/FPGA/SSI Reader Test/SSI_Reader_Test.map.smsg.
+
+
