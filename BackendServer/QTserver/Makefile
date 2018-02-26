@@ -53,20 +53,20 @@ OBJECTS_DIR   = ./
 SOURCES       = main.cpp \
 		mainwindow.cpp \
 		server.cpp \
-		thread.cpp \
-		tempthread.cpp moc_mainwindow.cpp \
+		clientthread.cpp \
+		roverthread.cpp moc_mainwindow.cpp \
 		moc_server.cpp \
-		moc_thread.cpp \
-		moc_tempthread.cpp
+		moc_clientthread.cpp \
+		moc_roverthread.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		server.o \
-		thread.o \
-		tempthread.o \
+		clientthread.o \
+		roverthread.o \
 		moc_mainwindow.o \
 		moc_server.o \
-		moc_thread.o \
-		moc_tempthread.o
+		moc_clientthread.o \
+		moc_roverthread.o
 DIST          = ../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../Qt/5.9.1/clang_64/mkspecs/qdevice.pri \
 		../../Qt/5.9.1/clang_64/mkspecs/features/device_config.prf \
@@ -252,12 +252,12 @@ DIST          = ../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../Qt/5.9.1/clang_64/mkspecs/features/lex.prf \
 		server.pro mainwindow.h \
 		server.h \
-		thread.h \
-		tempthread.h main.cpp \
+		clientthread.h \
+		roverthread.h main.cpp \
 		mainwindow.cpp \
 		server.cpp \
-		thread.cpp \
-		tempthread.cpp
+		clientthread.cpp \
+		roverthread.cpp
 QMAKE_TARGET  = server
 DESTDIR       = 
 TARGET        = server.app/Contents/MacOS/server
@@ -682,8 +682,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h server.h thread.h tempthread.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp server.cpp thread.cpp tempthread.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h server.h clientthread.h roverthread.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp server.cpp clientthread.cpp roverthread.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
 
 
@@ -715,9 +715,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -O2 -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk -mmacosx-version-min=10.10 -Wall -W -dM -E -o moc_predefs.h ../../Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_server.cpp moc_thread.cpp moc_tempthread.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_server.cpp moc_clientthread.cpp moc_roverthread.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_server.cpp moc_thread.cpp moc_tempthread.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_server.cpp moc_clientthread.cpp moc_roverthread.cpp
 moc_mainwindow.cpp: ../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		server.h \
@@ -739,14 +739,14 @@ moc_mainwindow.cpp: ../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QMai
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qmutex.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
-		thread.h \
+		clientthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QThread \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonDocument \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsondocument.h \
+		roverthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonObject \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
-		tempthread.h \
 		mainwindow.h \
 		moc_predefs.h \
 		../../Qt/5.9.1/clang_64/bin/moc
@@ -770,59 +770,52 @@ moc_server.cpp: ../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qmutex.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
-		thread.h \
+		clientthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QThread \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonDocument \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsondocument.h \
+		roverthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonObject \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
-		tempthread.h \
 		server.h \
 		moc_predefs.h \
 		../../Qt/5.9.1/clang_64/bin/moc
 	/Users/scottreese/Qt/5.9.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/scottreese/Qt/5.9.1/clang_64/mkspecs/macx-clang -I/Users/scottreese/Desktop/server -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/scottreese/Qt/5.9.1/clang_64/lib server.h -o moc_server.cpp
 
-moc_thread.cpp: ../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QObject \
+moc_clientthread.cpp: ../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QThread \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/QTcpSocket \
 		../../Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QLinkedList \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qlinkedlist.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonDocument \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsondocument.h \
+		roverthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonObject \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
-		../../Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/QHostAddress \
-		../../Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/qhostaddress.h \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QMutex \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qmutex.h \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
-		tempthread.h \
-		thread.h \
+		clientthread.h \
+		clientthread.h \
 		moc_predefs.h \
 		../../Qt/5.9.1/clang_64/bin/moc
-	/Users/scottreese/Qt/5.9.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/scottreese/Qt/5.9.1/clang_64/mkspecs/macx-clang -I/Users/scottreese/Desktop/server -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/scottreese/Qt/5.9.1/clang_64/lib thread.h -o moc_thread.cpp
+	/Users/scottreese/Qt/5.9.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/scottreese/Qt/5.9.1/clang_64/mkspecs/macx-clang -I/Users/scottreese/Desktop/server -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/scottreese/Qt/5.9.1/clang_64/lib clientthread.h -o moc_clientthread.cpp
 
-moc_tempthread.cpp: ../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QObject \
+moc_roverthread.cpp: ../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QThread \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qthread.h \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonObject \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonDocument \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsondocument.h \
 		../../Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/QTcpSocket \
 		../../Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QMutex \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qmutex.h \
-		tempthread.h \
+		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonDocument \
+		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsondocument.h \
+		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonObject \
+		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
+		clientthread.h \
+		roverthread.h \
+		roverthread.h \
 		moc_predefs.h \
 		../../Qt/5.9.1/clang_64/bin/moc
-	/Users/scottreese/Qt/5.9.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/scottreese/Qt/5.9.1/clang_64/mkspecs/macx-clang -I/Users/scottreese/Desktop/server -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/scottreese/Qt/5.9.1/clang_64/lib tempthread.h -o moc_tempthread.cpp
+	/Users/scottreese/Qt/5.9.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/scottreese/Qt/5.9.1/clang_64/mkspecs/macx-clang -I/Users/scottreese/Desktop/server -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers -I/Users/scottreese/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/scottreese/Qt/5.9.1/clang_64/lib roverthread.h -o moc_roverthread.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -867,14 +860,14 @@ main.o: main.cpp mainwindow.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qmutex.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
-		thread.h \
+		clientthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QThread \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonDocument \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsondocument.h \
+		roverthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonObject \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
-		tempthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
@@ -901,14 +894,14 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qmutex.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
-		thread.h \
+		clientthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QThread \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonDocument \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsondocument.h \
+		roverthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonObject \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
-		tempthread.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
@@ -931,52 +924,43 @@ server.o: server.cpp server.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qmutex.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
-		thread.h \
+		clientthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QThread \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonDocument \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsondocument.h \
+		roverthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonObject \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
-		tempthread.h
+		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsonobject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o server.o server.cpp
 
-thread.o: thread.cpp thread.h \
+clientthread.o: clientthread.cpp clientthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QThread \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/QTcpSocket \
 		../../Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QLinkedList \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qlinkedlist.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonDocument \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsondocument.h \
+		roverthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonObject \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
-		../../Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/QHostAddress \
-		../../Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/qhostaddress.h \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QMutex \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qmutex.h \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
-		tempthread.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o thread.o thread.cpp
+		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsonobject.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o clientthread.o clientthread.cpp
 
-tempthread.o: tempthread.cpp tempthread.h \
+roverthread.o: roverthread.cpp roverthread.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QThread \
 		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qthread.h \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonObject \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonDocument \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsondocument.h \
 		../../Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/QTcpSocket \
 		../../Qt/5.9.1/clang_64/lib/QtNetwork.framework/Headers/qtcpsocket.h \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QMutex \
-		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qmutex.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tempthread.o tempthread.cpp
+		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonDocument \
+		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsondocument.h \
+		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QJsonObject \
+		../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
+		clientthread.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o roverthread.o roverthread.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
@@ -984,11 +968,11 @@ moc_mainwindow.o: moc_mainwindow.cpp
 moc_server.o: moc_server.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_server.o moc_server.cpp
 
-moc_thread.o: moc_thread.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_thread.o moc_thread.cpp
+moc_clientthread.o: moc_clientthread.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_clientthread.o moc_clientthread.cpp
 
-moc_tempthread.o: moc_tempthread.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_tempthread.o moc_tempthread.cpp
+moc_roverthread.o: moc_roverthread.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_roverthread.o moc_roverthread.cpp
 
 ####### Install
 

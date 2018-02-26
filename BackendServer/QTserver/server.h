@@ -11,7 +11,8 @@
 #include <QMutex>
 #include <QDebug>
 
-#include "thread.h"
+#include "clientthread.h"
+#include "roverthread.h"
 
 class Server : public QTcpServer
 {
@@ -25,18 +26,16 @@ signals:
 
 public slots:
     void update_client_count();
+    void remove_client();
     void rover_disconnected();
 
 private:
-    QLinkedList<Thread*> threads;
+    QLinkedList<ClientThread*> clientThreads;
+    RoverThread *roverThread;
     QLCDNumber *client_count;
     QProgressBar *roverConnected;
     QHostAddress *roverIP;
-    QTcpSocket *roverComm;
-    QTcpSocket *roverEmerg;
-    QMutex roverCommMutex;
-    QMutex roverEmergMutex;
-    QMutex threadsMutex;
+
 
 
 protected:

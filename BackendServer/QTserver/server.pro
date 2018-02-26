@@ -29,14 +29,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     server.cpp \
-    thread.cpp \
-    tempthread.cpp
+    clientthread.cpp \
+    roverthread.cpp
 
 HEADERS += \
         mainwindow.h \
     server.h \
-    thread.h \
-    tempthread.h
+    clientthread.h \
+    roverthread.h
 
 FORMS += \
         mainwindow.ui
