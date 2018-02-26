@@ -32,7 +32,7 @@ void ClientThread::read_and_send_command() {
     /*if (command.begin().key().toInt() == -1) {
         //EMERGENCY
     } else*/ if (!this->isBusy && this->roverThread && this->roverThread->isRunning()) {
-        emit send_command(command);
+        emit send_command(this->clientSocket->socketDescriptor(), command);
         this->isBusy = true;
     } else {
         QString err = error("ERROR: rover busy or disconnected");
@@ -41,14 +41,18 @@ void ClientThread::read_and_send_command() {
     }
 }
 
-void ClientThread::receive_response(QJsonObject response) {
+void ClientThread::receive_response(int clientSocketDescriptor, QJsonObject response) {
+    if (this->clientSocket->socketDescriptor() != clientSocketDescriptor) {
+        return;
+    }
+
     QJsonDocument *doc = new QJsonDocument(response);
     QString *strJson = new QString(doc->toJson(QJsonDocument::Compact));
 
     this->clientSocket->write(strJson->toStdString().c_str());
     this->isBusy = false;
 
-    disconnect(sender(), SIGNAL(respond_to_client(QJsonObject)), this, SLOT(receive_response(QJsonObject)));
+    disconnect(sender(), SIGNAL(respond_to_client(int, QJsonObject)), this, SLOT(receive_response(int, QJsonObject)));
 
     //update other clients if needed
 }
@@ -56,13 +60,14 @@ void ClientThread::receive_response(QJsonObject response) {
 void ClientThread::add_rover_connection(RoverThread *roverThread) {
     this->roverThread = roverThread;
 
-    connect(this, SIGNAL(send_command(QJsonObject)), this->roverThread,
-            SLOT(receive_command(QJsonObject)), Qt::QueuedConnection);
+    connect(this, SIGNAL(send_command(int, QJsonObject)), this->roverThread,
+            SLOT(receive_command(int, QJsonObject)), Qt::QueuedConnection);
 }
 
 void ClientThread::remove_rover_connection() {
-    disconnect(this, SIGNAL(send_command(QJsonObject)), this->roverThread, SLOT(receive_command(QJsonObject)));
+    disconnect(this, SIGNAL(send_command(int, QJsonObject)), this->roverThread, SLOT(receive_command(int, QJsonObject)));
     this->roverThread = nullptr;
+    this->isBusy = false;
 }
 
 QString ClientThread::error(QString message) {

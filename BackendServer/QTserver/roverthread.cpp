@@ -1,5 +1,4 @@
 #include "roverthread.h"
-#include <QDebug>
 
 RoverThread::RoverThread(QTcpSocket *roverComm, QObject *parent) : QThread(parent) {
     this->roverComm = roverComm;
@@ -26,30 +25,30 @@ void RoverThread::analyze_response() {
         //error
     } else {
         response = document.object();
-        emit respond_to_client(response);
+        emit respond_to_client(this->currClientSocketDescriptor, response);
     }
     this->isBusy = false;
-    this->currClient = nullptr;
 }
 
-void RoverThread::receive_command(QJsonObject command) {
+void RoverThread::receive_command(int clientSocketDescriptor, QJsonObject command) {
     if (this->isBusy) {
         QJsonObject *err = new QJsonObject();
         err->insert("ERROR: rover busy", -1);
 
-        connect(this, SIGNAL(respond_to_client(QJsonObject)), sender(), SLOT(receive_response(QJsonObject)), Qt::QueuedConnection);
-        emit respond_to_client(*err);
+        if (this->currClientSocketDescriptor != clientSocketDescriptor) {
+            connect(this, SIGNAL(respond_to_client(int, QJsonObject)), sender(), SLOT(receive_response(int, QJsonObject)), Qt::QueuedConnection);
+        }
 
+        emit respond_to_client(clientSocketDescriptor, *err);
         return;
     }
-
 
     QJsonDocument *doc = new QJsonDocument(command);
     QString *strJson = new QString(doc->toJson(QJsonDocument::Compact));
 
-    connect(this, SIGNAL(respond_to_client(QJsonObject)), sender(), SLOT(receive_response(QJsonObject)), Qt::QueuedConnection);
+    connect(this, SIGNAL(respond_to_client(int, QJsonObject)), sender(), SLOT(receive_response(int, QJsonObject)), Qt::QueuedConnection);
 
-    this->currClient = sender();
+    this->currClientSocketDescriptor = clientSocketDescriptor;
     this->roverComm->write(strJson->toStdString().c_str());
     this->isBusy = true;
 }
@@ -57,9 +56,14 @@ void RoverThread::receive_command(QJsonObject command) {
 void RoverThread::add_emerg_connection(QTcpSocket *roverEmerg) {
     this->roverEmerg = roverEmerg;
     connect(this->roverEmerg, SIGNAL(readyRead()), this, SLOT(analyze_response()));
+    connect(this->roverEmerg, SIGNAL(disconnected()), this, SLOT(disconnect_rover()));
 }
 
 void RoverThread::disconnect_rover() {
+    if (!this->isRunning()) {
+        return;
+    }
+
     this->roverComm->deleteLater();
 
     if (this->roverEmerg) {

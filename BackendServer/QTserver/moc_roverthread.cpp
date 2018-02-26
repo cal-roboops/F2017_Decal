@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_RoverThread_t {
-    QByteArrayData data[7];
-    char stringdata0[89];
+    QByteArrayData data[8];
+    char stringdata0[112];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,12 +37,14 @@ QT_MOC_LITERAL(2, 30, 0), // ""
 QT_MOC_LITERAL(3, 31, 16), // "analyze_response"
 QT_MOC_LITERAL(4, 48, 16), // "disconnect_rover"
 QT_MOC_LITERAL(5, 65, 15), // "receive_command"
-QT_MOC_LITERAL(6, 81, 7) // "command"
+QT_MOC_LITERAL(6, 81, 22), // "clientSocketDescriptor"
+QT_MOC_LITERAL(7, 104, 7) // "command"
 
     },
     "RoverThread\0respond_to_client\0\0"
     "analyze_response\0disconnect_rover\0"
-    "receive_command\0command"
+    "receive_command\0clientSocketDescriptor\0"
+    "command"
 };
 #undef QT_MOC_LITERAL
 
@@ -60,20 +62,20 @@ static const uint qt_meta_data_RoverThread[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   34,    2, 0x06 /* Public */,
+       1,    2,   34,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,   37,    2, 0x0a /* Public */,
-       4,    0,   38,    2, 0x0a /* Public */,
-       5,    1,   39,    2, 0x0a /* Public */,
+       3,    0,   39,    2, 0x0a /* Public */,
+       4,    0,   40,    2, 0x0a /* Public */,
+       5,    2,   41,    2, 0x0a /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QJsonObject,    2,
+    QMetaType::Void, QMetaType::Int, QMetaType::QJsonObject,    2,    2,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QJsonObject,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::QJsonObject,    6,    7,
 
        0        // eod
 };
@@ -84,17 +86,17 @@ void RoverThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         RoverThread *_t = static_cast<RoverThread *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->respond_to_client((*reinterpret_cast< QJsonObject(*)>(_a[1]))); break;
+        case 0: _t->respond_to_client((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QJsonObject(*)>(_a[2]))); break;
         case 1: _t->analyze_response(); break;
         case 2: _t->disconnect_rover(); break;
-        case 3: _t->receive_command((*reinterpret_cast< QJsonObject(*)>(_a[1]))); break;
+        case 3: _t->receive_command((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QJsonObject(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (RoverThread::*_t)(QJsonObject );
+            typedef void (RoverThread::*_t)(int , QJsonObject );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&RoverThread::respond_to_client)) {
                 *result = 0;
                 return;
@@ -140,9 +142,9 @@ int RoverThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void RoverThread::respond_to_client(QJsonObject _t1)
+void RoverThread::respond_to_client(int _t1, QJsonObject _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP

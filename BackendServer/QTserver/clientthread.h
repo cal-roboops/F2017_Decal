@@ -23,11 +23,11 @@ private:
     QString error(QString message);
 
 signals:
-    void send_command(QJsonObject command);
+    void send_command(int clientSocketDescriptor, QJsonObject command);
 
 public slots:
     void read_and_send_command();
-    void receive_response(QJsonObject response);
+    void receive_response(int clientSocketDescriptor, QJsonObject response);
     void disconnect_client();
 };
 

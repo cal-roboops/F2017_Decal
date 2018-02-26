@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ClientThread_t {
-    QByteArrayData data[8];
-    char stringdata0[101];
+    QByteArrayData data[9];
+    char stringdata0[124];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,14 +34,16 @@ static const qt_meta_stringdata_ClientThread_t qt_meta_stringdata_ClientThread =
 QT_MOC_LITERAL(0, 0, 12), // "ClientThread"
 QT_MOC_LITERAL(1, 13, 12), // "send_command"
 QT_MOC_LITERAL(2, 26, 0), // ""
-QT_MOC_LITERAL(3, 27, 7), // "command"
-QT_MOC_LITERAL(4, 35, 21), // "read_and_send_command"
-QT_MOC_LITERAL(5, 57, 16), // "receive_response"
-QT_MOC_LITERAL(6, 74, 8), // "response"
-QT_MOC_LITERAL(7, 83, 17) // "disconnect_client"
+QT_MOC_LITERAL(3, 27, 22), // "clientSocketDescriptor"
+QT_MOC_LITERAL(4, 50, 7), // "command"
+QT_MOC_LITERAL(5, 58, 21), // "read_and_send_command"
+QT_MOC_LITERAL(6, 80, 16), // "receive_response"
+QT_MOC_LITERAL(7, 97, 8), // "response"
+QT_MOC_LITERAL(8, 106, 17) // "disconnect_client"
 
     },
-    "ClientThread\0send_command\0\0command\0"
+    "ClientThread\0send_command\0\0"
+    "clientSocketDescriptor\0command\0"
     "read_and_send_command\0receive_response\0"
     "response\0disconnect_client"
 };
@@ -61,19 +63,19 @@ static const uint qt_meta_data_ClientThread[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   34,    2, 0x06 /* Public */,
+       1,    2,   34,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   37,    2, 0x0a /* Public */,
-       5,    1,   38,    2, 0x0a /* Public */,
-       7,    0,   41,    2, 0x0a /* Public */,
+       5,    0,   39,    2, 0x0a /* Public */,
+       6,    2,   40,    2, 0x0a /* Public */,
+       8,    0,   45,    2, 0x0a /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QJsonObject,    3,
+    QMetaType::Void, QMetaType::Int, QMetaType::QJsonObject,    3,    4,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QJsonObject,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::QJsonObject,    3,    7,
     QMetaType::Void,
 
        0        // eod
@@ -85,9 +87,9 @@ void ClientThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         ClientThread *_t = static_cast<ClientThread *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->send_command((*reinterpret_cast< QJsonObject(*)>(_a[1]))); break;
+        case 0: _t->send_command((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QJsonObject(*)>(_a[2]))); break;
         case 1: _t->read_and_send_command(); break;
-        case 2: _t->receive_response((*reinterpret_cast< QJsonObject(*)>(_a[1]))); break;
+        case 2: _t->receive_response((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QJsonObject(*)>(_a[2]))); break;
         case 3: _t->disconnect_client(); break;
         default: ;
         }
@@ -95,7 +97,7 @@ void ClientThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (ClientThread::*_t)(QJsonObject );
+            typedef void (ClientThread::*_t)(int , QJsonObject );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ClientThread::send_command)) {
                 *result = 0;
                 return;
@@ -141,9 +143,9 @@ int ClientThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void ClientThread::send_command(QJsonObject _t1)
+void ClientThread::send_command(int _t1, QJsonObject _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP

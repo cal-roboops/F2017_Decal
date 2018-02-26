@@ -17,16 +17,16 @@ public:
 private:
     QTcpSocket *roverComm;
     QTcpSocket *roverEmerg;
-    QObject *currClient;
+    int currClientSocketDescriptor;
     bool isBusy;
 
 signals:
-    void respond_to_client(QJsonObject);
+    void respond_to_client(int, QJsonObject);
 
 public slots:
     void analyze_response();
     void disconnect_rover();
-    void receive_command(QJsonObject command);
+    void receive_command(int clientSocketDescriptor, QJsonObject command);
 };
 
 #endif // ROVERTHREAD_H
