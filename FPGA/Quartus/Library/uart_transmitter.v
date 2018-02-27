@@ -2,28 +2,30 @@
 
 module uart_transmitter #(
     parameter CLOCK_FREQ = 33_000_000,
-    parameter BAUD_RATE = 115_200)
-(
+    parameter BAUD_RATE = 115_200,
+    parameter DATA_WIDTH = 8
+) (
     input clk,
     input reset,
 
-    input [7:0] data_in,
+    input [DATA_WIDTH-1:0] data_in,
     input data_in_valid,
     output data_in_ready,
 
     output serial_out
 );
     // See diagram in the lab guide
-    localparam  SYMBOL_EDGE_TIME    =   CLOCK_FREQ / BAUD_RATE;
-    localparam  CLOCK_COUNTER_WIDTH =   `log2(SYMBOL_EDGE_TIME);
+    localparam SYMBOL_EDGE_TIME = CLOCK_FREQ / BAUD_RATE;
+    localparam CLOCK_COUNTER_WIDTH = `log2(SYMBOL_EDGE_TIME);
+    localparam DATA_WIDTH_BITS = `log2(DATA_WIDTH);
 
     wire symbol_edge;
     wire start;
     wire tx_running;
 
     reg bit_out = 1;
-    reg [9:0] tx_shift = 0;
-    reg [3:0] bit_counter = 0;
+    reg [DATA_WIDTH+1:0] tx_shift = 0;
+    reg [DATA_WIDTH_BITS:0] bit_counter = 0;
     reg [CLOCK_COUNTER_WIDTH-1:0] clock_counter = 0;
 
     //--|Signal Assignments|------------------------------------------------------
@@ -48,12 +50,12 @@ module uart_transmitter #(
         clock_counter <= (start || reset || symbol_edge) ? 0 : clock_counter + 1;
     end
 
-    // Counts down from 10 bits for every character
+    // Counts down from DATA_WIDTH+2 bits for every character
     always @ (posedge clk) begin
         if (reset) begin
             bit_counter <= 0;
         end else if (start) begin
-            bit_counter <= 10;
+            bit_counter <= DATA_WIDTH + 2;
         end else if (symbol_edge && tx_running) begin
             bit_counter <= bit_counter - 1;
         end

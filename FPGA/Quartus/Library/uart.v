@@ -1,15 +1,16 @@
 module uart #(
     parameter CLOCK_FREQ = 33_000_000,
-    parameter BAUD_RATE = 115_200)
-(
+    parameter BAUD_RATE = 115_200,
+    parameter DATA_WIDTH = 8
+) (
     input clk,
     input reset,
 
-    input [7:0] data_in,
+    input [DATA_WIDTH-1:0] data_in,
     input data_in_valid,
     output data_in_ready,
 
-    output [7:0] data_out,
+    output [DATA_WIDTH-1:0] data_out,
     output data_out_valid,
     input data_out_ready,
 
@@ -33,7 +34,8 @@ module uart #(
 
     uart_transmitter #(
         .CLOCK_FREQ(CLOCK_FREQ),
-        .BAUD_RATE(BAUD_RATE)
+        .BAUD_RATE(BAUD_RATE),
+        .DATA_WIDTH(DATA_WIDTH)
     ) uatransmit (
         .clk(clk),
         .reset(reset),
@@ -45,7 +47,8 @@ module uart #(
 
     uart_receiver #(
         .CLOCK_FREQ(CLOCK_FREQ),
-        .BAUD_RATE(BAUD_RATE)
+        .BAUD_RATE(BAUD_RATE),
+        .DATA_WIDTH(DATA_WIDTH)
     ) uareceive (
         .clk(clk),
         .reset(reset),

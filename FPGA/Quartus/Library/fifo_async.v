@@ -1,144 +1,101 @@
 `include "util.vh"
 
-module pos_edge_det ( 
-    input sig,
-    input clk,
-    output pe
-);
-reg sig_dly;
-assign pe = sig & ~sig_dly;
-
-always @ (posedge clk) begin
-    sig_dly <= sig;
-  end
-  
-endmodule 
-
-// Grey code module
-module g2bcode #(
-    parameter addr_width = 5
-) (
-    input [addr_width-1:0] gin,
-
-    output [addr_width-1:0] bout
-);
-    assign bout = ((((gin ^ (gin >> 8)) ^ (gin >> 4)) ^ (gin >> 2)) ^ (gin >> 1));
-endmodule
-
-// Grey code module
-module b2gcode #(
-    parameter addr_width = 5
-) (
-    input [addr_width-1:0] bin,
-    output [addr_width-1:0] gout
-);
-    assign gout = bin ^ (bin>>1);
-endmodule
-
 module fifo_async #(
-    parameter data_width = 8,
-    parameter fifo_depth = 32,
-    parameter addr_width = `log2(fifo_depth)
+    parameter DATA_WIDTH = 8,
+    parameter FIFO_DEPTH = 32
 ) (
     input wr_clk,
     input rd_clk,
+    input reset,
 
     input wr_en,
     input rd_en,
-    input [data_width-1:0] din,
+    input [DATA_WIDTH-1:0] data_in,  
 
-    output full,
-    output empty,
-    output [data_width-1:0] dout
+    output reg full,
+    output reg empty,
+    output reg [DATA_WIDTH-1:0] data_out
 );
+    localparam ADDRESS_WIDTH = `log2(FIFO_DEPTH);
 
+    /////Internal connections & variables//////
+    reg Status;
+    reg [DATA_WIDTH-1:0] Mem [FIFO_DEPTH-1:0];
 
-    wire pos_rd_en;
-    wire pos_wr_en;
+    wire [ADDRESS_WIDTH-1:0] pNextWordToWrite, pNextWordToRead;
+    wire EqualAddresses;
+    wire NextWriteAddressEn, NextReadAddressEn;
+    wire Set_Status, Rst_Status;
+    wire PresetFull, PresetEmpty;
+    
+    //////////////Code///////////////
+    // 'data_out' logic:
+    always @ (posedge rd_clk) begin
+        if (rd_en & !empty) begin
+            data_out <= Mem[pNextWordToRead];
+        end
+    end
+            
+    // 'data_in' logic:
+    always @(posedge wr_clk) begin
+        if (wr_en & !full) begin
+            Mem[pNextWordToWrite] <= data_in;
+        end
+    end
 
-    pos_edge_det rd_detect (
-        .sig(rd_en),
-        .clk(rd_clk),
-        .pe(pos_rd_en)
-    );
+    // Fifo addresses support logic: 
+    assign NextWriteAddressEn = wr_en & ~full;
+    assign NextReadAddressEn  = rd_en  & ~empty;
 
-    pos_edge_det wr_detect (
-        .sig(wr_en),
+    // 'GrayCounter' logic:
+    GrayCounter GrayCounter_pWr (
         .clk(wr_clk),
-        .pe(pos_wr_en)
+        .reset(reset),
+
+        .enable(NextWriteAddressEn),
+
+        .GrayCount_out(pNextWordToWrite)
+    );
+       
+    GrayCounter GrayCounter_pRd (
+        .clk(rd_clk),
+        .reset(reset),
+
+        .enable(NextReadAddressEn),
+
+        .GrayCount_out(pNextWordToRead)
     );
 
-    // Create regs
-    reg [data_width-1:0] data [fifo_depth-1:0];
-    reg [addr_width-1:0] rPtr = 0, wPtr = 0;
-    reg rPtrL = 0, wPtrL = 0, r2wPtrL = 0, w2rPtrL = 0;
-    reg [data_width-1:0] ddo = 0;
+    // 'EqualAddresses' logic:
+    assign EqualAddresses = (pNextWordToWrite == pNextWordToRead);
 
-    wire [addr_width-1:0] wg2b_out, rg2b_out, wwC_b2g, wrC_b2g;
-    reg [addr_width-1:0] wC_b2g = 0, wC_g2b = 0, rC_b2g = 0, rC_g2b = 0;
-
-    // Create modules
-    b2gcode #(
-        .addr_width(addr_width)
-    ) wb2g (
-        .bin(wPtr),
-        .gout(wwC_b2g)
-    );
-
-    g2bcode #(
-        .addr_width(addr_width)
-    ) wg2b (
-        .gin(wC_g2b),
-        .bout(wg2b_out)
-    );
-
-    b2gcode #(
-        .addr_width(addr_width)
-    ) rb2g (
-        .bin(rPtr),
-        .gout(wrC_b2g)
-    );
-
-    g2bcode #(
-        .addr_width(addr_width)
-    ) rg2b (
-        .gin(rC_b2g),
-        .bout(rg2b_out)
-    );
-
-
-    // Assign outputs
-    assign full = ((r2wPtrL != wPtrL) && (rg2b_out == wPtr));
-    assign empty = ((rPtrL == w2rPtrL) && (rPtr == wg2b_out));
-    assign dout = ddo;
-
-    always @ (posedge wr_clk) begin
-        wC_b2g <= wwC_b2g;
-        rC_g2b <= rC_b2g;
-        r2wPtrL <= rPtrL;
-
-        if (pos_wr_en && !full) begin
-            data[wPtr] <= din;
-            if (fifo_depth-1 <= wPtr) begin
-                wPtr <=  0;
-                wPtrL <= !wPtrL;
-            end
-            else wPtr <=  wPtr + 1;
-        end
+    // 'Quadrant selectors' logic:
+    assign Set_Status = (pNextWordToWrite[ADDRESS_WIDTH-2] ~^ pNextWordToRead[ADDRESS_WIDTH-1]) &
+                        (pNextWordToWrite[ADDRESS_WIDTH-1] ^ pNextWordToRead[ADDRESS_WIDTH-2]);
+                            
+    assign Rst_Status = (pNextWordToWrite[ADDRESS_WIDTH-2] ^ pNextWordToRead[ADDRESS_WIDTH-1]) &
+                        (pNextWordToWrite[ADDRESS_WIDTH-1] ~^ pNextWordToRead[ADDRESS_WIDTH-2]);
+                         
+    // 'Status' latch logic:
+    always @ (Set_Status, Rst_Status, reset) begin
+        if (Rst_Status | reset) Status = 0;  //Going 'Empty'.
+        else if (Set_Status) Status = 1;  //Going 'Full'.
     end
-
-    always @(posedge rd_clk) begin
-        rC_b2g <= wrC_b2g;
-        wC_g2b <= wC_b2g;
-        w2rPtrL <= wPtrL;
-
-        if (pos_rd_en && !empty) begin
-            ddo <= data[rPtr];
-            if (fifo_depth-1 <= rPtr) begin
-                rPtr <=  0;
-                rPtrL <= !rPtrL;
-            end
-            else rPtr <=  rPtr + 1;
-        end
+            
+    // 'full' logic for the writing port:
+    assign PresetFull = Status & EqualAddresses;  // 'Full' Fifo.
+    
+    always @(posedge wr_clk, posedge PresetFull) begin
+        if (PresetFull) full <= 1;
+        else full <= 0;
     end
+            
+    // 'empty' logic for the reading port:
+    assign PresetEmpty = ~Status & EqualAddresses;  // 'Empty' Fifo.
+    
+    always @(posedge rd_clk, posedge PresetEmpty)  begin
+        if (PresetEmpty) empty <= 1;
+        else empty <= 0;
+    end
+            
 endmodule

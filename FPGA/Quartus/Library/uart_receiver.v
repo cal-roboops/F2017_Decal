@@ -2,12 +2,13 @@
 
 module uart_receiver #(
     parameter CLOCK_FREQ = 33_000_000,
-    parameter BAUD_RATE = 115_200)
-(
+    parameter BAUD_RATE = 115_200,
+    parameter DATA_WIDTH = 8
+) (
     input clk,
     input reset,
 
-    output [7:0] data_out,
+    output [DATA_WIDTH-1:0] data_out,
     output data_out_valid,
     input data_out_ready,
 
@@ -17,14 +18,15 @@ module uart_receiver #(
     localparam SYMBOL_EDGE_TIME = CLOCK_FREQ / BAUD_RATE;
     localparam SAMPLE_TIME = SYMBOL_EDGE_TIME / 2;
     localparam CLOCK_COUNTER_WIDTH= `log2(SYMBOL_EDGE_TIME);
+    localparam DATA_WIDTH_BITS = `log2(DATA_WIDTH);
 
     wire symbol_edge;
     wire sample;
     wire start;
     wire rx_running;
 
-    reg [9:0] rx_shift;
-    reg [3:0] bit_counter;
+    reg [DATA_WIDTH+1:0] rx_shift;
+    reg [DATA_WIDTH_BITS:0] bit_counter;
     reg [CLOCK_COUNTER_WIDTH-1:0] clock_counter;
     reg has_byte;
 
@@ -43,7 +45,7 @@ module uart_receiver #(
     assign rx_running = bit_counter != 4'd0;
 
     // Outputs
-    assign data_out = rx_shift[8:1];
+    assign data_out = rx_shift[DATA_WIDTH:1];
     assign data_out_valid = has_byte && !rx_running;
 
     //--|Counters|----------------------------------------------------------------
@@ -53,12 +55,12 @@ module uart_receiver #(
         clock_counter <= (start || reset || symbol_edge) ? 0 : clock_counter + 1;
     end
 
-    // Counts down from 10 bits for every character
+    // Counts down from DATA_WIDTH+2 bits for every character
     always @ (posedge clk) begin
         if (reset) begin
             bit_counter <= 0;
         end else if (start) begin
-            bit_counter <= 10;
+            bit_counter <= DATA_WIDTH + 2;
         end else if (symbol_edge && rx_running) begin
             bit_counter <= bit_counter - 1;
         end
