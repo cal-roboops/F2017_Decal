@@ -57,6 +57,8 @@ public:
     static char* ninezeroServo;
 
     static char* make_json(std::initializer_list<std::pair<uint8_t, uint8_t>> kv);
+    static std::list<std::pair<uint8_t, uint8_t>> parse_json(char* jsonSTR);
+    
     static void cleanup_json(char* jsonSTR);
     static bool valid_json(char* jsonSTR);
 };

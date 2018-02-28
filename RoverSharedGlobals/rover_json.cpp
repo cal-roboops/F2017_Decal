@@ -75,7 +75,7 @@ char* Rover_JSON::ninezeroServo = Rover_JSON::make_json({
 
 char* Rover_JSON::make_json(std::initializer_list<std::pair<uint8_t, uint8_t>> kv)
 {
-    std::size_t kSize= kv.size();
+    std::size_t kSize = kv.size();
     char* jsonSTR = new char[(2*kSize)+1];
 
     int pos = 0;
@@ -88,6 +88,13 @@ char* Rover_JSON::make_json(std::initializer_list<std::pair<uint8_t, uint8_t>> k
     jsonSTR[kSize] = '\0';
 
     return jsonSTR;
+}
+
+std::list<std::pair<uint8_t, uint8_t>> Rover_JSON::parse_json(char* jsonSTR)
+{
+    if (!valid_json(jsonSTR)) return NULL;
+
+    std::size_t kSize = strlen(jsonSTR);
 }
 
 void Rover_JSON::cleanup_json(char* jsonSTR)
