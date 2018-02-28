@@ -26,13 +26,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    controlpanel.cpp \
-    rover_json.cpp
+    controlpanel.cpp
 
 HEADERS += \
         mainwindow.h \
-    controlpanel.h \
-    rover_json.h
+    controlpanel.h
 
 FORMS += \
         mainwindow.ui \

@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>QtProxyClient</string>
+   <string>Rover Controller</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTextEdit" name="msgEdit">

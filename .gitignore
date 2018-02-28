@@ -6,4 +6,8 @@ Qt*/Makefile*
 */debug/*
 */release/*
 *.user
-
+*/*.o
+*/*.app
+*/moc_*
+*/ui_*.h
+*/*_plugin_import.cpp
