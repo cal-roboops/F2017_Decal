@@ -1,11 +1,19 @@
-#include "mainwindow.h"
 #include <QApplication>
+#include <QObject>
+#include "mainwindow.h"
+#include "controlpanel.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
+    ControlPanel c;
+    c.hide();
+
+    QObject::connect(&c, SIGNAL(send_data(QString)), &w, SLOT(send_data(QString)));
+    QObject::connect(&w, SIGNAL(enableDriveControl(bool)), &c, SLOT(enableDriveControl(bool)));
+    QObject::connect(&w, SIGNAL(showDriveControl(bool)), &c, SLOT(showDriveControl(bool)));
 
     return a.exec();
 }

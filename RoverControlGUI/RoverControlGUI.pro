@@ -8,7 +8,7 @@ QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = QtProxyClient
+TARGET = RoverControlGUI
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    controlpanel.cpp
+    controlpanel.cpp \
+    ../RoverSharedGlobals/rover_json.cpp
 
 HEADERS += \
         mainwindow.h \
-    controlpanel.h
+    controlpanel.h \
+    ../RoverSharedGlobals/rover_json.h
 
 FORMS += \
         mainwindow.ui \

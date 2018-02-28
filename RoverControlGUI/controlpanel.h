@@ -2,7 +2,6 @@
 #define CONTROLPANEL_H
 
 #include <QMainWindow>
-#include <QTcpSocket>
 
 namespace Ui {
 class ControlPanel;
@@ -13,94 +12,79 @@ class ControlPanel : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ControlPanel(QWidget *parent = 0);
+    ControlPanel(QWidget *parent = 0);
     ~ControlPanel();
+
+signals:
     void send_data(QString data);
-    void format_JSON(QJsonObject input);
+
+public slots:
+    void enableDriveControl(bool en);
+    void showDriveControl(bool en);
 
 private slots:
-
-    void sliderValueChanged(int value);
-
-    void on_button_set_clicked();
-
-    void on_pushButton_up_pressed();
-
-    void on_pushButton_up_released();
-
-    void on_radioButton_clicked();
-
-    void on_radioButton_tank_clicked();
-
-    void on_radioButton_custom_clicked();
-
-    void on_radio0_clicked();
-    void on_radio45_clicked();
-    void on_radio90_clicked();
+    // Select drive mode
+    void on_regularDrive_radio_clicked();
+    void on_tankDrive_radio_clicked();
+    void on_customDrive_radio_clicked();
 
     void keyPressEvent(QKeyEvent * event);
-
     void keyReleaseEvent(QKeyEvent * event);
 
-    void on_tank_up_pressed();
+    // Regular Drive
+    void on_regularServo_slider_valueChanged(int value);
+    void on_regularServoSet_button_clicked();
 
-    void on_tank_up_released();
+    void on_regularDriveUp_button_pressed();
+    void on_regularDriveUp_button_released();
+    void on_regularDriveDown_button_pressed();
+    void on_regularDriveDown_button_released();
+    void on_regularDriveRight_button_clicked();
+    void on_regularDriveLeft_button_clicked();
 
-    void on_tank_down_pressed();
+    // Tank Drive
+    void on_tankServo0_radio_clicked();
+    void on_tankServo45_radio_clicked();
+    void on_tankServo90_radio_clicked();
 
-    void on_tank_down_released();
+    void on_tankUp_button_pressed();
+    void on_tankUp_button_released();
+    void on_tankDown_button_pressed();
+    void on_tankDown_button_released();
 
-    void on_pushButton_submit_clicked();
+    // Custom Drive
+    void on_customServoSet_button_clicked();
 
-    void on_pushButton_down_pressed();
+    void on_customLeftUp_button_pressed();
+    void on_customLeftUp_button_released();
+    void on_customUpDown_button_pressed();
+    void on_customUpDown_button_released();
+    void on_customLeftDown_button_pressed();
+    void on_customLeftDown_button_released();
 
-    void on_pushButton_down_released();
+    void on_customRightUp_button_pressed();
+    void on_customRightUp_button_released();
+    void on_customDownUp_button_pressed();
+    void on_customDownUp_button_released();
+    void on_customRightDown_button_pressed();
+    void on_customRightDown_button_released();
 
-    void on_pushButton_right_clicked();
+    void on_customUpUp_button_pressed();
+    void on_customUpUp_button_released();
+    void on_customDownDown_button_pressed();
+    void on_customDownDown_button_released();
 
-    void on_pushButton_left_clicked();
-
-    void on_button_submit_servo_clicked();
-
-    void on_button_left_up_pressed();
-
-    void on_button_left_up_released();
-
-    void on_button_left_up_down_pressed();
-
-    void on_button_left_up_down_released();
-
-    void on_button_left_down_pressed();
-
-    void on_button_left_down_released();
-
-    void on_button_right_up_pressed();
-
-    void on_button_right_up_released();
-
-    void on_button_right_down_up_pressed();
-
-    void on_button_right_down_up_released();
-
-    void on_button_right_down_pressed();
-
-    void on_button_right_down_released();
-
-    void on_button_middle_up_up_pressed();
-
-    void on_button_middle_up_up_released();
-
-    void on_button_middle_down_down_pressed();
-
-    void on_button_middle_down_down_released();
-
-    void on_horizontalSlider_speed_sliderPressed();
-
-    void on_horizontalSlider_speed_sliderReleased();
+    // Speed Setting
+    void on_speedValue_slider_sliderPressed();
+    void on_speedValue_slider_sliderReleased();
+    void on_speedSubmit_button_clicked();
 
 
 private:
     Ui::ControlPanel *ui;
+
+    void transmit_command(QString kv);
+    void transmit_command(std::initializer_list<std::pair<uint8_t, uint8_t>> kv);
 };
 
 #endif // CONTROLPANEL_H
