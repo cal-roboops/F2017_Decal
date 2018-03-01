@@ -104,9 +104,9 @@ void MainWindow::on_clearRECV_clicked()
 }
 
 
-void MainWindow::send_data(QString data)
+void MainWindow::send_data(QByteArray data)
 {
-    socket->write(data.toLocal8Bit());
+    socket->write(data);
     qDebug() << data;
 }
 

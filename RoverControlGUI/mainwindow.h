@@ -21,7 +21,7 @@ signals:
     void showDriveControl(bool en);
 
 public slots:
-    void send_data(QString data);
+    void send_data(QByteArray data);
 
 private slots:
     void on_drawerSetValue_button_clicked();

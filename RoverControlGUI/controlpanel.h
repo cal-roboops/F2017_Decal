@@ -16,7 +16,7 @@ public:
     ~ControlPanel();
 
 signals:
-    void send_data(QString data);
+    void send_data(QByteArray data);
 
 public slots:
     void enableDriveControl(bool en);
@@ -77,14 +77,14 @@ private slots:
     // Speed Setting
     void on_speedValue_slider_sliderPressed();
     void on_speedValue_slider_sliderReleased();
+    void on_speedValue_slider_valueChanged(int x);
     void on_speedSubmit_button_clicked();
 
 
 private:
     Ui::ControlPanel *ui;
 
-    void transmit_command(QString kv);
-    void transmit_command(std::initializer_list<std::pair<uint8_t, uint8_t>> kv);
+    void transmit_command(std::list<uint8_t> kv);
 };
 
 #endif // CONTROLPANEL_H

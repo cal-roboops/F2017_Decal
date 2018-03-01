@@ -28,13 +28,15 @@ SOURCES += \
         mainwindow.cpp \
     server.cpp \
     clientthread.cpp \
-    roverthread.cpp
+    roverthread.cpp \
+    ../RoverSharedGlobals/rover_json.cpp
 
 HEADERS += \
         mainwindow.h \
     server.h \
     clientthread.h \
-    roverthread.h
+    roverthread.h \
+    ../RoverSharedGlobals/rover_json.h
 
 FORMS += \
         mainwindow.ui

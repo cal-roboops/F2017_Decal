@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QThread>
 #include <QTcpSocket>
-#include <QJsonDocument>
-#include <QJsonObject>
 #include "roverthread.h"
 
 class ClientThread : public QThread {
@@ -23,11 +21,11 @@ private:
     QString error(QString message);
 
 signals:
-    void send_command(int clientSocketDescriptor, QJsonObject command);
+    void send_command(int clientSocketDescriptor, QByteArray command);
 
 public slots:
     void read_and_send_command();
-    void receive_response(int clientSocketDescriptor, QJsonObject response);
+    void receive_response(int clientSocketDescriptor, QByteArray response);
     void disconnect_client();
 };
 

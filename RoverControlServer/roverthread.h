@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QThread>
 #include <QTcpSocket>
-#include <QJsonDocument>
-#include <QJsonObject>
 
 class RoverThread : public QThread {
     Q_OBJECT
@@ -21,12 +19,12 @@ private:
     bool isBusy;
 
 signals:
-    void respond_to_client(int, QJsonObject);
+    void respond_to_client(int, QByteArray);
 
 public slots:
     void analyze_response();
     void disconnect_rover();
-    void receive_command(int clientSocketDescriptor, QJsonObject command);
+    void receive_command(int clientSocketDescriptor, QByteArray command);
 };
 
 #endif // ROVERTHREAD_H

@@ -38,16 +38,11 @@ void ControlPanel::showDriveControl(bool en)
     }
 }
 
-void ControlPanel::transmit_command(QString kv)
+void ControlPanel::transmit_command(std::list<uint8_t> kv)
 {
-    emit send_data(kv);
-}
-
-void ControlPanel::transmit_command(std::initializer_list<std::pair<uint8_t, uint8_t>> kv)
-{
-    char* jsonSTR = Rover_JSON::make_json(kv);
-    emit send_data(QString(jsonSTR));
-    delete jsonSTR;
+    QByteArray data;
+    for (auto it = kv.cbegin(); it != kv.cend(); it++) data.append((char) *it);
+    if (Rover_JSON::isValid(kv)) emit send_data(data);
 }
 
 /*
@@ -59,7 +54,7 @@ void ControlPanel::on_regularDrive_radio_clicked() //set controls to regular
     ui->stackedWidget->setCurrentIndex(0);
     ui->regularServo_slider->setValue(0);
 
-    transmit_command(QString(Rover_JSON::zeroAll));
+    transmit_command(Rover_JSON::zeroAll);
 }
 
 void ControlPanel::on_tankDrive_radio_clicked() //set controls to tank
@@ -67,7 +62,7 @@ void ControlPanel::on_tankDrive_radio_clicked() //set controls to tank
     ui->stackedWidget->setCurrentIndex(1);
     ui->tankServo0_radio->setChecked(true);
 
-    transmit_command(QString(Rover_JSON::zeroAll));
+    transmit_command(Rover_JSON::zeroAll);
 
 }
 
@@ -81,7 +76,7 @@ void ControlPanel::on_customDrive_radio_clicked() //set controls to custom
     ui->customServoRightMiddle_edit->setText("0");
     ui->customServoRightBack_edit->setText("0");
 
-    transmit_command(QString(Rover_JSON::zeroAll));
+    transmit_command(Rover_JSON::zeroAll);
 }
 
 /*
@@ -99,29 +94,29 @@ void ControlPanel::on_regularServoSet_button_clicked() //slider button
     ui->regularServo_slider->setValue(slider_value);
 
     transmit_command({
-                         {rover_keys::DT_S_LF, slider_value},
-                         {rover_keys::DT_S_RF, slider_value}
+                         rover_keys::DT_S_LF, slider_value,
+                         rover_keys::DT_S_RF, slider_value
                      });
 }
 
 void ControlPanel::on_regularDriveUp_button_pressed()
 {
-    transmit_command(QString(Rover_JSON::forwardDrive));
+    transmit_command(Rover_JSON::forwardDrive);
 }
 
 void ControlPanel::on_regularDriveUp_button_released()
 {
-    transmit_command(QString(Rover_JSON::stopDrive));
+    transmit_command(Rover_JSON::stopDrive);
 }
 
 void ControlPanel::on_regularDriveDown_button_pressed()
 {
-    transmit_command(QString(Rover_JSON::backwardDrive));
+    transmit_command(Rover_JSON::backwardDrive);
 }
 
 void ControlPanel::on_regularDriveDown_button_released()
 {
-    transmit_command(QString(Rover_JSON::stopDrive));
+    transmit_command(Rover_JSON::stopDrive);
 }
 
 void ControlPanel::on_regularDriveRight_button_clicked()
@@ -144,36 +139,36 @@ void ControlPanel::on_regularDriveLeft_button_clicked()
 
 void ControlPanel::on_tankServo0_radio_clicked()
 {
-    transmit_command(QString(Rover_JSON::zeroServo));
+    transmit_command(Rover_JSON::zeroServo);
 }
 void ControlPanel::on_tankServo45_radio_clicked()
 {
-    transmit_command(QString(Rover_JSON::fourfiveServo));
+    transmit_command(Rover_JSON::fourfiveServo);
 }
 void ControlPanel::on_tankServo90_radio_clicked()
 {
-    transmit_command(QString(Rover_JSON::ninezeroServo));
+    transmit_command(Rover_JSON::ninezeroServo);
 }
 
 
 void ControlPanel::on_tankUp_button_pressed()
 {
-    transmit_command(QString(Rover_JSON::forwardDrive));
+    transmit_command(Rover_JSON::forwardDrive);
 }
 
 void ControlPanel::on_tankUp_button_released()
 {
-    transmit_command(QString(Rover_JSON::stopDrive));
+    transmit_command(Rover_JSON::stopDrive);
 }
 
 void ControlPanel::on_tankDown_button_pressed()
 {
-    transmit_command(QString(Rover_JSON::motor_backward));
+    transmit_command(Rover_JSON::backwardDrive);
 }
 
 void ControlPanel::on_tankDown_button_released()
 {
-    transmit_command(QString(Rover_JSON::stopDrive));
+    transmit_command(Rover_JSON::stopDrive);
 }
 
 
@@ -234,13 +229,13 @@ void ControlPanel::on_customServoSet_button_clicked()
     }
     else{
         transmit_command({
-                             {rover_keys::DT_S_LF, tb1},
-                             {rover_keys::DT_S_LM, tb2},
-                             {rover_keys::DT_S_LB, tb3},
+                             rover_keys::DT_S_LF, tb1,
+                             rover_keys::DT_S_LM, tb2,
+                             rover_keys::DT_S_LB, tb3,
 
-                             {rover_keys::DT_S_RF, tb4},
-                             {rover_keys::DT_S_RM, tb5},
-                             {rover_keys::DT_S_RB, tb6}
+                             rover_keys::DT_S_RF, tb4,
+                             rover_keys::DT_S_RM, tb5,
+                             rover_keys::DT_S_RB, tb6
                         });
     }
 }
@@ -248,99 +243,99 @@ void ControlPanel::on_customServoSet_button_clicked()
 void ControlPanel::on_customLeftUp_button_pressed()
 {
     transmit_command({
-                         {rover_keys::DT_M_LD, Rover_JSON::motor_forward},
-                         {rover_keys::DT_M_RD, Rover_JSON::motor_stop}
+                         rover_keys::DT_M_LD, Rover_JSON::motor_forward,
+                         rover_keys::DT_M_RD, Rover_JSON::motor_stop
                     });
 }
 
 void ControlPanel::on_customLeftUp_button_released()
 {
-    transmit_command(QString(Rover_JSON::stopDrive));
+    transmit_command(Rover_JSON::stopDrive);
 }
 
 void ControlPanel::on_customUpDown_button_pressed()
 {
     transmit_command({
-                         {rover_keys::DT_M_LD, Rover_JSON::motor_forward},
-                         {rover_keys::DT_M_RD, Rover_JSON::motor_backward}
+                         rover_keys::DT_M_LD, Rover_JSON::motor_forward,
+                         rover_keys::DT_M_RD, Rover_JSON::motor_backward
                     });
 }
 
 void ControlPanel::on_customUpDown_button_released()
 {
-    transmit_command(QString(Rover_JSON::stopDrive));
+    transmit_command(Rover_JSON::stopDrive);
 }
 
 void ControlPanel::on_customLeftDown_button_pressed()
 {
     transmit_command({
-                         {rover_keys::DT_M_LD, Rover_JSON::motor_backward},
-                         {rover_keys::DT_M_RD, Rover_JSON::motor_stop}
+                         rover_keys::DT_M_LD, Rover_JSON::motor_backward,
+                         rover_keys::DT_M_RD, Rover_JSON::motor_stop
                     });
 }
 
 void ControlPanel::on_customLeftDown_button_released()
 {
-    transmit_command(QString(Rover_JSON::stopDrive));
+    transmit_command(Rover_JSON::stopDrive);
 }
 
 void ControlPanel::on_customRightUp_button_pressed()
 {
     transmit_command({
-                         {rover_keys::DT_M_LD, Rover_JSON::motor_stop},
-                         {rover_keys::DT_M_RD, Rover_JSON::motor_forward}
+                         rover_keys::DT_M_LD, Rover_JSON::motor_stop,
+                         rover_keys::DT_M_RD, Rover_JSON::motor_forward
                     });
 }
 
 void ControlPanel::on_customRightUp_button_released()
 {
-    transmit_command(QString(Rover_JSON::stopDrive));
+    transmit_command(Rover_JSON::stopDrive);
 }
 
 void ControlPanel::on_customDownUp_button_pressed()
 {
     transmit_command({
-                         {rover_keys::DT_M_LD, Rover_JSON::motor_backward},
-                         {rover_keys::DT_M_RD, Rover_JSON::motor_forward}
+                         rover_keys::DT_M_LD, Rover_JSON::motor_backward,
+                         rover_keys::DT_M_RD, Rover_JSON::motor_forward
                     });
 }
 
 void ControlPanel::on_customDownUp_button_released()
 {
-    transmit_command(QString(Rover_JSON::stopDrive));
+    transmit_command(Rover_JSON::stopDrive);
 }
 
 void ControlPanel::on_customRightDown_button_pressed()
 {
     transmit_command({
-                         {rover_keys::DT_M_LD, Rover_JSON::motor_stop},
-                         {rover_keys::DT_M_RD, Rover_JSON::motor_backward}
+                         rover_keys::DT_M_LD, Rover_JSON::motor_stop,
+                         rover_keys::DT_M_RD, Rover_JSON::motor_backward
                     });
 }
 
 void ControlPanel::on_customRightDown_button_released()
 {
-    transmit_command(QString(Rover_JSON::stopDrive));
+    transmit_command(Rover_JSON::stopDrive);
 }
 
 void ControlPanel::on_customUpUp_button_pressed()
 {
-    transmit_command(QString(Rover_JSON::motor_forward));
+    transmit_command(Rover_JSON::forwardDrive);
 }
 
 void ControlPanel::on_customUpUp_button_released()
 {
-    transmit_command(QString(Rover_JSON::stopDrive));
+    transmit_command(Rover_JSON::stopDrive);
 }
 
 void ControlPanel::on_customDownDown_button_pressed()
 {
-    transmit_command(QString(Rover_JSON::motor_backward));
+    transmit_command(Rover_JSON::backwardDrive);
 }
 
 void ControlPanel::on_customDownDown_button_released()
 {
-    transmit_command(QString(Rover_JSON::stopDrive));
+    transmit_command(Rover_JSON::stopDrive);
 }
 
 /*
@@ -363,11 +358,17 @@ void ControlPanel::on_speedValue_slider_sliderReleased()
     ui->speedValue_label->setText(s);
 }
 
+void ControlPanel::on_speedValue_slider_valueChanged(int x)
+{
+    QString s = QString::number(x);
+    ui->speedValue_label->setText(s);
+}
+
 void ControlPanel::on_speedSubmit_button_clicked()
 {
      int value = ui->speedValue_slider->value();
 
      transmit_command({
-                          {rover_keys::DT_M_Speed, value}
+                          rover_keys::DT_M_Speed, value
                      });
 }

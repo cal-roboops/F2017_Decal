@@ -15,41 +15,30 @@ void RoverThread::run() {
 
 void RoverThread::analyze_response() {
     QByteArray buf;
-    QJsonDocument document;
-    QJsonObject response;
-
     buf = this->roverComm->readAll();
-    document = QJsonDocument::fromJson(buf);
 
-    if (document.isNull()) {
+    if (buf.isEmpty()) {
         //error
     } else {
-        response = document.object();
-        emit respond_to_client(this->currClientSocketDescriptor, response);
+        emit respond_to_client(this->currClientSocketDescriptor, buf);
     }
     this->isBusy = false;
 }
 
-void RoverThread::receive_command(int clientSocketDescriptor, QJsonObject command) {
+void RoverThread::receive_command(int clientSocketDescriptor, QByteArray command) {
     if (this->isBusy) {
-        QJsonObject *err = new QJsonObject();
-        err->insert("ERROR: rover busy", -1);
-
         if (this->currClientSocketDescriptor != clientSocketDescriptor) {
-            connect(this, SIGNAL(respond_to_client(int, QJsonObject)), sender(), SLOT(receive_response(int, QJsonObject)), Qt::QueuedConnection);
+            connect(this, SIGNAL(respond_to_client(int, QByteArray)), sender(), SLOT(receive_response(int, QByteArray)), Qt::QueuedConnection);
         }
 
-        emit respond_to_client(clientSocketDescriptor, *err);
+//        emit respond_to_client(clientSocketDescriptor, *err);
         return;
     }
 
-    QJsonDocument *doc = new QJsonDocument(command);
-    QString *strJson = new QString(doc->toJson(QJsonDocument::Compact));
-
-    connect(this, SIGNAL(respond_to_client(int, QJsonObject)), sender(), SLOT(receive_response(int, QJsonObject)), Qt::QueuedConnection);
+    connect(this, SIGNAL(respond_to_client(int, QByteArray)), sender(), SLOT(receive_response(int, QByteArray)), Qt::QueuedConnection);
 
     this->currClientSocketDescriptor = clientSocketDescriptor;
-    this->roverComm->write(strJson->toStdString().c_str());
+    this->roverComm->write(command);
     this->isBusy = true;
 }
 

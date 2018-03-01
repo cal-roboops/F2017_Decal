@@ -46,21 +46,17 @@ public:
     static uint8_t servo_negfourfive;
     static uint8_t servo_ninezero;
 
-    static char* zeroAll;
+    static std::list<uint8_t> zeroAll;
 
-    static char* stopDrive;
-    static char* forwardDrive;
-    static char* backwardDrive;
+    static std::list<uint8_t> stopDrive;
+    static std::list<uint8_t> forwardDrive;
+    static std::list<uint8_t> backwardDrive;
 
-    static char* zeroServo;
-    static char* fourfiveServo;
-    static char* ninezeroServo;
+    static std::list<uint8_t> zeroServo;
+    static std::list<uint8_t> fourfiveServo;
+    static std::list<uint8_t> ninezeroServo;
 
-    static char* make_json(std::initializer_list<std::pair<uint8_t, uint8_t>> kv);
-    static std::list<std::pair<uint8_t, uint8_t>> parse_json(char* jsonSTR);
-    
-    static void cleanup_json(char* jsonSTR);
-    static bool valid_json(char* jsonSTR);
+    static bool isValid(std::list<uint8_t> jsonVEC);
 };
 
 // Precompiled JSONs for custom positions/targets

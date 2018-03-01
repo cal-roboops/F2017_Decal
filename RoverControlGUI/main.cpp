@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     ControlPanel c;
     c.hide();
 
-    QObject::connect(&c, SIGNAL(send_data(QString)), &w, SLOT(send_data(QString)));
+    QObject::connect(&c, SIGNAL(send_data(QByteArray)), &w, SLOT(send_data(QByteArray)));
     QObject::connect(&w, SIGNAL(enableDriveControl(bool)), &c, SLOT(enableDriveControl(bool)));
     QObject::connect(&w, SIGNAL(showDriveControl(bool)), &c, SLOT(showDriveControl(bool)));
 

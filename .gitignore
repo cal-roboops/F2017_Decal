@@ -11,3 +11,5 @@ Qt*/Makefile*
 */moc_*
 */ui_*.h
 */*_plugin_import.cpp
+*/object_script.*
+RoverControl*/Makefile*
