@@ -94,8 +94,8 @@ void ControlPanel::on_regularServoSet_button_clicked() //slider button
     ui->regularServo_slider->setValue(slider_value);
 
     transmit_command({
-                         rover_keys::DT_S_LF, slider_value,
-                         rover_keys::DT_S_RF, slider_value
+                         rover_keys::DT_S_LF, (uint8_t) slider_value,
+                         rover_keys::DT_S_RF, (uint8_t) slider_value
                      });
 }
 
@@ -229,13 +229,13 @@ void ControlPanel::on_customServoSet_button_clicked()
     }
     else{
         transmit_command({
-                             rover_keys::DT_S_LF, tb1,
-                             rover_keys::DT_S_LM, tb2,
-                             rover_keys::DT_S_LB, tb3,
+                             rover_keys::DT_S_LF, (uint8_t) tb1,
+                             rover_keys::DT_S_LM, (uint8_t) tb2,
+                             rover_keys::DT_S_LB, (uint8_t) tb3,
 
-                             rover_keys::DT_S_RF, tb4,
-                             rover_keys::DT_S_RM, tb5,
-                             rover_keys::DT_S_RB, tb6
+                             rover_keys::DT_S_RF, (uint8_t) tb4,
+                             rover_keys::DT_S_RM, (uint8_t) tb5,
+                             rover_keys::DT_S_RB, (uint8_t) tb6
                         });
     }
 }
@@ -369,6 +369,6 @@ void ControlPanel::on_speedSubmit_button_clicked()
      int value = ui->speedValue_slider->value();
 
      transmit_command({
-                          rover_keys::DT_M_Speed, value
+                          rover_keys::DT_M_Speed, (uint8_t) value
                      });
 }

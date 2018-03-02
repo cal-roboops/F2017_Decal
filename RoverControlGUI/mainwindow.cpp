@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     socket = new QTcpSocket();
     disconnectPressed = false;
+    connect(socket, SIGNAL(readyRead()), this, SLOT(on_recvMSG()));
 
     ui->driveMode_NonControl_Radio->setChecked(true);
     ui->armMode_NonControl_Radio->setChecked(true);
