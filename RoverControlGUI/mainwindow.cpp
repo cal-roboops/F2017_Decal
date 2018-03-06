@@ -152,12 +152,23 @@ void MainWindow::on_disconnect()
 }
 
 
-void MainWindow::on_showDriveControl_Check_clicked() //Show Control Panel Checkbox clicked
+void MainWindow::on_showArmControl_Check_clicked()
 {
-    if(ui->showDriveControl_Check->isChecked() == true){
+    if (ui->showArmControl_Check->isChecked()) {
+//        qDebug()
+        emit showArmControl(true);
+    } else {
+        emit showArmControl(false);
+    }
+}
+
+
+void MainWindow::on_showDriveControl_Check_clicked() // Show Control Panel Checkbox clicked
+{
+    if(ui->showDriveControl_Check->isChecked()){
         emit showDriveControl(true);
     }
-   else{
+    else{
        emit showDriveControl(false);
     }
 }

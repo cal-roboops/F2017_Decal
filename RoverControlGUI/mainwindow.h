@@ -19,6 +19,7 @@ public:
 signals:
     void enableDriveControl(bool en);
     void showDriveControl(bool en);
+    void showArmControl(bool en);
 
 public slots:
     void send_data(QByteArray data);
@@ -39,6 +40,7 @@ private slots:
     void on_showDriveControl_Check_clicked();
     void on_driveMode_Control_Radio_clicked();
     void on_driveMode_NonControl_Radio_clicked();
+    void on_showArmControl_Check_clicked();
 
     // #################### ARM ####################
 
