@@ -24,11 +24,25 @@ MainWindow::MainWindow(QWidget *parent) :
     on_driveMode_NonControl_Radio_clicked();
 
     ui->infoLabel->setVisible(false);
+    ui->drawer_LineEdit->setText("0");
+    ui->drawer_LineEdit->setValidator(new QIntValidator(0, 100, this));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_drawerValue_slider_valueChanged(int x)
+{
+    QString s = QString::number(x);
+    ui->drawer_LineEdit->setText(s);
+    ui->drawerValue_label->setText(s);
+}
+
+void MainWindow::on_eStopButton_clicked()
+{
+    // Mitch - Send Emergency Stop JSON values
 }
 
 void MainWindow::on_connect_clicked()
@@ -191,9 +205,6 @@ void MainWindow::on_cameraMast_dial_valueChanged(int position)
     qDebug() << position;
 }
 
-void MainWindow::on_drawerValue_slider_valueChanged(int value) {\
-    ui->drawerValue_label->setText(QString::number(value));
-}
 
 void MainWindow::on_drawerSetValue_button_clicked() {
     if (ui->drawer_LineEdit->text().isEmpty()) {
@@ -201,6 +212,6 @@ void MainWindow::on_drawerSetValue_button_clicked() {
     } else {
         ui->drawerValue_label->setText(ui->drawer_LineEdit->text());
         ui->drawerValue_slider->setSliderPosition(ui->drawer_LineEdit->text().toInt());
-        // SEND JSON VALUE TO SERVER
+        // Mitch - SEND DRAWER JSON VALUE TO SERVER
     }
 }

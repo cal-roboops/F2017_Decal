@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="baseAngleTextEdit">
+   <widget class="QLineEdit" name="baseAngleLineEdit">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -24,7 +24,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="biformAngleTextEdit">
+   <widget class="QLineEdit" name="biformAngleLineEdit">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -34,7 +34,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="elbowAngleTextEdit">
+   <widget class="QLineEdit" name="elbowAngleLineEdit">
     <property name="geometry">
      <rect>
       <x>410</x>
@@ -83,7 +83,7 @@
      <string>Elbow Angle</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="setBaseAngleBtn">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -96,7 +96,7 @@
      <string>Set Base Angle</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="setBiformAngleBtn">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -109,7 +109,7 @@
      <string>Set Biform Angle</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="setElbowAngleBtn">
     <property name="geometry">
      <rect>
       <x>410</x>

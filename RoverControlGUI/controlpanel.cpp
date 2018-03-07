@@ -15,6 +15,8 @@ ControlPanel::ControlPanel(QWidget *parent):
 
     ui->stackedWidget->setCurrentIndex(0);
     enableDriveControl(false);
+    ui->speed_lineEdit->setValidator(new QIntValidator(0, 100, this));
+    ui->speed_lineEdit->setText("0");
 }
 
 ControlPanel::~ControlPanel()
@@ -344,24 +346,18 @@ void ControlPanel::on_customDownDown_button_released()
  *
  * */
 
-void ControlPanel::on_speedValue_slider_sliderPressed() //updates speed slider label
-{
-    int x = ui->speedValue_slider->value();
-    QString s = QString::number(x);
-    ui->speedValue_label->setText(s);
-}
-
-void ControlPanel::on_speedValue_slider_sliderReleased()
-{
-    int x = ui->speedValue_slider->value();
-    QString s = QString::number(x);
-    ui->speedValue_label->setText(s);
-}
-
 void ControlPanel::on_speedValue_slider_valueChanged(int x)
 {
     QString s = QString::number(x);
     ui->speedValue_label->setText(s);
+    ui->speed_lineEdit->setText(s);
+}
+
+void ControlPanel::on_speed_setBtn_clicked()
+{
+    QString value = ui->speed_lineEdit->text();
+    ui->speedValue_label->setText(value);
+    ui->speedValue_slider->setValue(value.toInt());
 }
 
 void ControlPanel::on_speedSubmit_button_clicked()

@@ -26,7 +26,6 @@ public slots:
 
 private slots:
     void on_drawerSetValue_button_clicked();
-    void on_drawerValue_slider_valueChanged(int value);
 
     void on_connect_clicked();
     void on_disconnect_clicked();
@@ -42,11 +41,15 @@ private slots:
     void on_driveMode_NonControl_Radio_clicked();
     void on_showArmControl_Check_clicked();
 
+    void on_eStopButton_clicked();
+
     // #################### ARM ####################
 
     // TODO: Declare arm buttons here
 
     // #############################################
+
+    void on_drawerValue_slider_valueChanged(int x);
 
     void on_cameraMast_dial_valueChanged(int position);
 

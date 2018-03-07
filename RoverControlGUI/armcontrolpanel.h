@@ -18,6 +18,11 @@ public:
 public slots:
     void showArmControl(bool en);
 
+private slots:
+    void on_setBaseAngleBtn_clicked();
+    void on_setBiformAngleBtn_clicked();
+    void on_setElbowAngleBtn_clicked();
+
 private:
     Ui::ArmControlPanel *ui;
 };
