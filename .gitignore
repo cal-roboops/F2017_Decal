@@ -1,6 +1,6 @@
 *.pro.user
-build-Qt*/*
-build-Qt*/*/*
+build-*/*
+build-*/*/*
 .qmake.stash
 Qt*/Makefile*
 */debug/*
