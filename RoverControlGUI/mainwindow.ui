@@ -520,10 +520,10 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>110</y>
-      <width>281</width>
-      <height>41</height>
+      <x>710</x>
+      <y>180</y>
+      <width>91</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
@@ -537,7 +537,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>330</y>
+      <y>230</y>
       <width>221</width>
       <height>101</height>
      </rect>
@@ -574,7 +574,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>290</y>
+      <y>190</y>
       <width>221</width>
       <height>20</height>
      </rect>
@@ -595,7 +595,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>480</y>
+      <y>450</y>
       <width>251</width>
       <height>20</height>
      </rect>
@@ -616,7 +616,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>510</y>
+      <y>490</y>
       <width>191</width>
       <height>22</height>
      </rect>
@@ -631,15 +631,15 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="drawerSetValue_button">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>110</x>
       <y>540</y>
       <width>71</width>
-      <height>28</height>
+      <height>27</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>10</pointsize>
      </font>
     </property>
     <property name="text">
@@ -650,7 +650,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>510</y>
+      <y>490</y>
       <width>51</width>
       <height>16</height>
      </rect>
@@ -661,15 +661,15 @@ p, li { white-space: pre-wrap; }
      </font>
     </property>
     <property name="text">
-     <string>0</string>
+     <string>0%</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="drawer_LineEdit">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>30</x>
       <y>540</y>
-      <width>113</width>
+      <width>71</width>
       <height>27</height>
      </rect>
     </property>
@@ -677,15 +677,15 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="eStopButton">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>110</y>
-      <width>191</width>
-      <height>51</height>
+      <x>20</x>
+      <y>120</y>
+      <width>141</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>10</pointsize>
      </font>
     </property>
     <property name="autoFillBackground">
@@ -698,22 +698,104 @@ p, li { white-space: pre-wrap; }
      <string>Emergency Stop </string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="shutdownBtn">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>180</y>
-      <width>191</width>
-      <height>51</height>
+      <x>200</x>
+      <y>120</y>
+      <width>101</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>10</pointsize>
      </font>
     </property>
     <property name="text">
      <string>Shutdown</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="cameraDialLabel">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>330</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>0°</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="cameraLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>370</y>
+      <width>71</width>
+      <height>27</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cameraSetButton">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>370</y>
+      <width>71</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Set</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cameraSubmitBtn">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>370</y>
+      <width>75</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Submit</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="drawerSubmitBtn">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>540</y>
+      <width>75</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Submit</string>
     </property>
    </widget>
   </widget>

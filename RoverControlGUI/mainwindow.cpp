@@ -26,18 +26,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->infoLabel->setVisible(false);
     ui->drawer_LineEdit->setText("0");
     ui->drawer_LineEdit->setValidator(new QIntValidator(0, 100, this));
+    ui->cameraLineEdit->setValidator(new QIntValidator(0, 100, this));
+    ui->cameraDialLabel->setText("0°");
+    ui->cameraLineEdit->setText("180");
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::on_drawerValue_slider_valueChanged(int x)
-{
-    QString s = QString::number(x);
-    ui->drawer_LineEdit->setText(s);
-    ui->drawerValue_label->setText(s);
 }
 
 void MainWindow::on_eStopButton_clicked()
@@ -203,8 +199,34 @@ void MainWindow::on_driveMode_Control_Radio_clicked() //radio button enables con
 void MainWindow::on_cameraMast_dial_valueChanged(int position)
 {
     qDebug() << position;
+    QString s = QString::number(position);
+    ui->cameraLineEdit->setText(s);
+    ui->cameraDialLabel->setText(s + "°");
 }
 
+void MainWindow::on_cameraSetButton_clicked()
+{
+    if (ui->cameraLineEdit->text().isEmpty()) {
+        qDebug() << "Nothing to set";
+    } else {
+        ui->cameraDialLabel->setText(ui->cameraLineEdit->text());
+        ui->cameraMast_dial->setValue(ui->cameraLineEdit->text().toInt());
+    }
+}
+
+void MainWindow::on_cameraSubmitBtn_clicked()
+{
+    qDebug() << "Camera value transmitted.";
+    int value = ui->cameraMast_dial->value();
+    // Mitch - SEND DRAWER JSON VALUE TO SERVER
+}
+
+void MainWindow::on_drawerValue_slider_valueChanged(int x)
+{
+    QString s = QString::number(x);
+    ui->drawer_LineEdit->setText(s);
+    ui->drawerValue_label->setText(s + " %");
+}
 
 void MainWindow::on_drawerSetValue_button_clicked() {
     if (ui->drawer_LineEdit->text().isEmpty()) {
@@ -212,6 +234,20 @@ void MainWindow::on_drawerSetValue_button_clicked() {
     } else {
         ui->drawerValue_label->setText(ui->drawer_LineEdit->text());
         ui->drawerValue_slider->setSliderPosition(ui->drawer_LineEdit->text().toInt());
-        // Mitch - SEND DRAWER JSON VALUE TO SERVER
     }
 }
+
+void MainWindow::on_drawerSubmitBtn_clicked()
+{
+    qDebug() << "Drawer value transmitted.";
+    int value = ui->drawerValue_slider->value();
+    // Mitch - SEND DRAWER JSON VALUE TO SERVER
+}
+
+void MainWindow::on_shutdownBtn_clicked()
+{
+    // Need to have pop up dialog say "restart? Shutdown?"
+    // Mitch - send shutdown button signal
+}
+
+

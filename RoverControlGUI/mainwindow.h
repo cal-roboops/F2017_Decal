@@ -53,6 +53,15 @@ private slots:
 
     void on_cameraMast_dial_valueChanged(int position);
 
+    void on_cameraSetButton_clicked();
+
+    void on_cameraSubmitBtn_clicked();
+
+    void on_drawerSubmitBtn_clicked();
+
+    void on_shutdownBtn_clicked();
+
+
 private:
     Ui::MainWindow *ui;
 
