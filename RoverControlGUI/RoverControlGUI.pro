@@ -27,13 +27,16 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     controlpanel.cpp \
-    ../RoverSharedGlobals/rover_json.cpp
+    ../RoverSharedGlobals/rover_json.cpp \
+    armcontrolpanel.cpp
 
 HEADERS += \
         mainwindow.h \
     controlpanel.h \
-    ../RoverSharedGlobals/rover_json.h
+    ../RoverSharedGlobals/rover_json.h \
+    armcontrolpanel.h
 
 FORMS += \
         mainwindow.ui \
-    controlpanel.ui
+    controlpanel.ui \
+    armcontrolpanel.ui

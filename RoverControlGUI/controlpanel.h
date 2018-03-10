@@ -75,10 +75,9 @@ private slots:
     void on_customDownDown_button_released();
 
     // Speed Setting
-    void on_speedValue_slider_sliderPressed();
-    void on_speedValue_slider_sliderReleased();
     void on_speedValue_slider_valueChanged(int x);
     void on_speedSubmit_button_clicked();
+    void on_speed_setBtn_clicked();
 
 
 private:

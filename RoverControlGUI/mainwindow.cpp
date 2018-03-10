@@ -24,11 +24,21 @@ MainWindow::MainWindow(QWidget *parent) :
     on_driveMode_NonControl_Radio_clicked();
 
     ui->infoLabel->setVisible(false);
+    ui->drawer_LineEdit->setText("0");
+    ui->drawer_LineEdit->setValidator(new QIntValidator(0, 100, this));
+    ui->cameraLineEdit->setValidator(new QIntValidator(0, 100, this));
+    ui->cameraDialLabel->setText("0°");
+    ui->cameraLineEdit->setText("180");
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_eStopButton_clicked()
+{
+    // Mitch - Send Emergency Stop JSON values
 }
 
 void MainWindow::on_connect_clicked()
@@ -152,12 +162,23 @@ void MainWindow::on_disconnect()
 }
 
 
-void MainWindow::on_showDriveControl_Check_clicked() //Show Control Panel Checkbox clicked
+void MainWindow::on_showArmControl_Check_clicked()
 {
-    if(ui->showDriveControl_Check->isChecked() == true){
+    if (ui->showArmControl_Check->isChecked()) {
+//        qDebug()
+        emit showArmControl(true);
+    } else {
+        emit showArmControl(false);
+    }
+}
+
+
+void MainWindow::on_showDriveControl_Check_clicked() // Show Control Panel Checkbox clicked
+{
+    if(ui->showDriveControl_Check->isChecked()){
         emit showDriveControl(true);
     }
-   else{
+    else{
        emit showDriveControl(false);
     }
 }
@@ -178,10 +199,33 @@ void MainWindow::on_driveMode_Control_Radio_clicked() //radio button enables con
 void MainWindow::on_cameraMast_dial_valueChanged(int position)
 {
     qDebug() << position;
+    QString s = QString::number(position);
+    ui->cameraLineEdit->setText(s);
+    ui->cameraDialLabel->setText(s + "°");
 }
 
-void MainWindow::on_drawerValue_slider_valueChanged(int value) {\
-    ui->drawerValue_label->setText(QString::number(value));
+void MainWindow::on_cameraSetButton_clicked()
+{
+    if (ui->cameraLineEdit->text().isEmpty()) {
+        qDebug() << "Nothing to set";
+    } else {
+        ui->cameraDialLabel->setText(ui->cameraLineEdit->text());
+        ui->cameraMast_dial->setValue(ui->cameraLineEdit->text().toInt());
+    }
+}
+
+void MainWindow::on_cameraSubmitBtn_clicked()
+{
+    qDebug() << "Camera value transmitted.";
+    int value = ui->cameraMast_dial->value();
+    // Mitch - SEND DRAWER JSON VALUE TO SERVER
+}
+
+void MainWindow::on_drawerValue_slider_valueChanged(int x)
+{
+    QString s = QString::number(x);
+    ui->drawer_LineEdit->setText(s);
+    ui->drawerValue_label->setText(s + " %");
 }
 
 void MainWindow::on_drawerSetValue_button_clicked() {
@@ -190,6 +234,20 @@ void MainWindow::on_drawerSetValue_button_clicked() {
     } else {
         ui->drawerValue_label->setText(ui->drawer_LineEdit->text());
         ui->drawerValue_slider->setSliderPosition(ui->drawer_LineEdit->text().toInt());
-        // SEND JSON VALUE TO SERVER
     }
 }
+
+void MainWindow::on_drawerSubmitBtn_clicked()
+{
+    qDebug() << "Drawer value transmitted.";
+    int value = ui->drawerValue_slider->value();
+    // Mitch - SEND DRAWER JSON VALUE TO SERVER
+}
+
+void MainWindow::on_shutdownBtn_clicked()
+{
+    // Need to have pop up dialog say "restart? Shutdown?"
+    // Mitch - send shutdown button signal
+}
+
+
