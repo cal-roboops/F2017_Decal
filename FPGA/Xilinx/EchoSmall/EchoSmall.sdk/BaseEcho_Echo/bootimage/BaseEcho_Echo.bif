@@ -1,0 +1,7 @@
+//arch = zynq; split = false; format = BIN
+the_ROM_image:
+{
+	[bootloader]G:\XILINX\EchoSmall\EchoSmall.sdk\BaseEcho_FSBL\Debug\BaseEcho_FSBL.elf
+	G:\XILINX\EchoSmall\EchoSmall.sdk\BaseSystem_wrapper_hw_platform_0\BaseSystem_wrapper.bit
+	G:\XILINX\EchoSmall\EchoSmall.sdk\BaseEcho_Echo\Debug\BaseEcho_Echo.elf
+}

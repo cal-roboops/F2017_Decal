@@ -1,0 +1,10 @@
+/*/.Xil
+/*/*.cache/*
+/*/*.runs/*
+/*/*.sim/*
+/*/Packages/*
+/*/vivado*
+/*/*.sdk/.metadata/*
+/*/*.sdk/.webtalk/*
+/*/*.sdk/RemoteSystemsTempFiles/*
+/*/*.sdk/SDK.log
