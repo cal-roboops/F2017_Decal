@@ -1,7 +1,0 @@
-//arch = zynq; split = false; format = BIN
-the_ROM_image:
-{
-	[bootloader]G:\XILINX\RoverClient\RoverClient_FPGA.sdk\RoverClient_FSBL\Debug\RoverClient_FSBL.elf
-	G:\XILINX\RoverClient\RoverClient_FPGA.sdk\RoverClient_FPGA_BD_wrapper_hw_platform_0\RoverClient_FPGA_BD_wrapper.bit
-	G:\XILINX\RoverClient\RoverClient_FPGA.sdk\RoverClient_ConnManager\Debug\RoverClient_ConnManager.elf
-}

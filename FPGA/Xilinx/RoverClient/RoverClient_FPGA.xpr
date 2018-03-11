@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="32" Path="G:/XILINX/RoverClient/RoverClient_FPGA.xpr">
+<Project Version="7" Minor="32" Path="H:/MITCHELL_STUFF_2/Work/Berkeley/Berkeley_AIAA/Code_F2017/FPGA/Xilinx/RoverClient/RoverClient_FPGA.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="1f374ac002474563ba2eb4608f187abc"/>
@@ -20,7 +20,7 @@
     <Option Name="BoardPart" Val="digilentinc.com:arty-z7-20:part0:1.0"/>
     <Option Name="ActiveSimSet" Val="sim_1"/>
     <Option Name="DefaultLib" Val="xil_defaultlib"/>
-    <Option Name="IPRepoPath" Val="$PPRDIR/../ip_repo/AXI_UART_PERIPHERAL_1.0"/>
+    <Option Name="IPRepoPath" Val="G:/XILINX/ip_repo/AXI_UART_PERIPHERAL_1.0"/>
     <Option Name="IPRepoPath" Val="C:/Xilinx/Downloads/vivadoIPLib/ip"/>
     <Option Name="IPOutputRepo" Val="$PCACHEDIR/ip"/>
     <Option Name="IPCachePermission" Val="read"/>
@@ -63,23 +63,23 @@
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
-        <CompFileExtendedInfo CompFileName="RoverClient_FPGA_BD.bd" FileRelPathName="ip/RoverClient_FPGA_BD_auto_pc_0/RoverClient_FPGA_BD_auto_pc_0.xci">
-          <Proxy FileSetName="RoverClient_FPGA_BD_auto_pc_0"/>
+        <CompFileExtendedInfo CompFileName="RoverClient_FPGA_BD.bd" FileRelPathName="ip/RoverClient_FPGA_BD_axi_uartlite_0_1/RoverClient_FPGA_BD_axi_uartlite_0_1.xci">
+          <Proxy FileSetName="RoverClient_FPGA_BD_axi_uartlite_0_1"/>
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="RoverClient_FPGA_BD.bd" FileRelPathName="ip/RoverClient_FPGA_BD_processing_system7_0_0/RoverClient_FPGA_BD_processing_system7_0_0.xci">
           <Proxy FileSetName="RoverClient_FPGA_BD_processing_system7_0_0"/>
         </CompFileExtendedInfo>
-        <CompFileExtendedInfo CompFileName="RoverClient_FPGA_BD.bd" FileRelPathName="ip/RoverClient_FPGA_BD_axi_uartlite_0_1/RoverClient_FPGA_BD_axi_uartlite_0_1.xci">
-          <Proxy FileSetName="RoverClient_FPGA_BD_axi_uartlite_0_1"/>
-        </CompFileExtendedInfo>
-        <CompFileExtendedInfo CompFileName="RoverClient_FPGA_BD.bd" FileRelPathName="ip/RoverClient_FPGA_BD_axi_uartlite_1_0/RoverClient_FPGA_BD_axi_uartlite_1_0.xci">
-          <Proxy FileSetName="RoverClient_FPGA_BD_axi_uartlite_1_0"/>
+        <CompFileExtendedInfo CompFileName="RoverClient_FPGA_BD.bd" FileRelPathName="ip/RoverClient_FPGA_BD_xbar_1/RoverClient_FPGA_BD_xbar_1.xci">
+          <Proxy FileSetName="RoverClient_FPGA_BD_xbar_1"/>
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="RoverClient_FPGA_BD.bd" FileRelPathName="ip/RoverClient_FPGA_BD_rst_ps7_0_100M_2/RoverClient_FPGA_BD_rst_ps7_0_100M_2.xci">
           <Proxy FileSetName="RoverClient_FPGA_BD_rst_ps7_0_100M_2"/>
         </CompFileExtendedInfo>
-        <CompFileExtendedInfo CompFileName="RoverClient_FPGA_BD.bd" FileRelPathName="ip/RoverClient_FPGA_BD_xbar_1/RoverClient_FPGA_BD_xbar_1.xci">
-          <Proxy FileSetName="RoverClient_FPGA_BD_xbar_1"/>
+        <CompFileExtendedInfo CompFileName="RoverClient_FPGA_BD.bd" FileRelPathName="ip/RoverClient_FPGA_BD_auto_pc_0/RoverClient_FPGA_BD_auto_pc_0.xci">
+          <Proxy FileSetName="RoverClient_FPGA_BD_auto_pc_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="RoverClient_FPGA_BD.bd" FileRelPathName="ip/RoverClient_FPGA_BD_axi_uartlite_1_0/RoverClient_FPGA_BD_axi_uartlite_1_0.xci">
+          <Proxy FileSetName="RoverClient_FPGA_BD_axi_uartlite_1_0"/>
         </CompFileExtendedInfo>
       </File>
       <File Path="$PSRCDIR/sources_1/bd/RoverClient_FPGA_BD/hdl/RoverClient_FPGA_BD_wrapper.v">
@@ -92,7 +92,7 @@
       <File Path="$PSRCDIR/sources_1/imports/Library/util.vh">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="ImportPath" Val="H:/MITCHELL STUFF 2/Work/Berkeley/Berkeley_AIAA/Code_F2017/FPGA/Quartus/Library/util.vh"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../../../../../../MITCHELL STUFF 2/Work/Berkeley/Berkeley_AIAA/Code_F2017/FPGA/Quartus/Library/util.vh"/>
           <Attr Name="ImportTime" Val="1508205946"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -288,9 +288,7 @@
     </Run>
     <Run Id="RoverClient_FPGA_BD_auto_pc_0_synth_1" Type="Ft3:Synth" SrcSet="RoverClient_FPGA_BD_auto_pc_0" Part="xc7z020clg400-1" ConstrsSet="RoverClient_FPGA_BD_auto_pc_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/RoverClient_FPGA_BD_auto_pc_0_synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2017">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2017"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
@@ -932,9 +930,7 @@
     </Run>
     <Run Id="RoverClient_FPGA_BD_auto_pc_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="RoverClient_FPGA_BD_auto_pc_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="RoverClient_FPGA_BD_auto_pc_0_synth_1" IncludeInArchive="false">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2017">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2017"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
