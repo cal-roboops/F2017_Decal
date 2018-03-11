@@ -1,0 +1,7 @@
+//arch = zynq; split = false; format = BIN
+the_ROM_image:
+{
+	[bootloader]H:\MITCHELL_STUFF_2\Work\Berkeley\Berkeley_AIAA\Code_F2017\FPGA\Xilinx\RoverClient\RoverClient_FPGA.sdk\RoverClient_FSBL\Debug\RoverClient_FSBL.elf
+	H:\MITCHELL_STUFF_2\Work\Berkeley\Berkeley_AIAA\Code_F2017\FPGA\Xilinx\RoverClient\RoverClient_FPGA.sdk\RoverClient_FPGA_BD_wrapper_hw_platform_0\RoverClient_FPGA_BD_wrapper.bit
+	H:\MITCHELL_STUFF_2\Work\Berkeley\Berkeley_AIAA\Code_F2017\FPGA\Xilinx\RoverClient\RoverClient_FPGA.sdk\RoverClient_ConnManager_Core_0\Debug\RoverClient_ConnManager_Core_0.elf
+}

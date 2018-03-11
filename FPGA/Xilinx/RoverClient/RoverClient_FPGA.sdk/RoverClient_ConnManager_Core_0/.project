@@ -3,7 +3,7 @@
 	<name>RoverClient_ConnManager_Core_0</name>
 	<comment>Created by SDK v2017.3. RoverClient_ConnManager_bsp - ps7_cortexa9_0</comment>
 	<projects>
-		<project>RoverClient_ConnManager_bsp</project>
+		<project>RoverClient_ConnManager_Core_0_bsp</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

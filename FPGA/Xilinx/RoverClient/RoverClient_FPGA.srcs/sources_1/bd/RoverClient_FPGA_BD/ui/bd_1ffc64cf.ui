@@ -2,30 +2,36 @@
    ExpandedHierarchyInLayout: "",
    guistr: "# # String gsaved with Nlview 6.6.11  2017-06-12 bk=1.3860 VDI=40 GEI=35 GUI=JA:1.6
 #  -string -flagsOSRD
-preplace port DDR -pg 1 -y 320 -defaultsOSRD
-preplace port FIXED_IO -pg 1 -y 340 -defaultsOSRD
-preplace inst ARM_UART_AXI -pg 1 -lvl 3 -y 60 -defaultsOSRD
-preplace inst ps7_0_axi_periph -pg 1 -lvl 2 -y 170 -defaultsOSRD
-preplace inst DRIVE_UART_AXI -pg 1 -lvl 3 -y 230 -defaultsOSRD
-preplace inst rst_ps7_0_100M -pg 1 -lvl 1 -y 110 -defaultsOSRD
-preplace inst processing_system7_0 -pg 1 -lvl 1 -y 370 -defaultsOSRD
-preplace netloc processing_system7_0_DDR 1 1 3 NJ 320 NJ 320 NJ
-preplace netloc ARM_UART_AXI_tx 1 3 1 960
-preplace netloc processing_system7_0_M_AXI_GP0 1 1 1 450
-preplace netloc rst_ps7_0_100M_peripheral_aresetn 1 1 2 430 30 710
-preplace netloc processing_system7_0_FCLK_RESET0_N 1 0 2 10 0 420
-preplace netloc ps7_0_axi_periph_M01_AXI 1 2 1 720
-preplace netloc processing_system7_0_FIXED_IO 1 1 3 NJ 340 NJ 340 NJ
-preplace netloc DRIVE_UART_AXI_tx 1 3 1 970
-preplace netloc processing_system7_0_FCLK_CLK0 1 0 3 20 20 440 20 730
+preplace port DDR -pg 1 -y 400 -defaultsOSRD
+preplace port DRIVE_TX -pg 1 -y 260 -defaultsOSRD
+preplace port ARM_RX -pg 1 -y 20 -defaultsOSRD
+preplace port DRIVE_RX -pg 1 -y 550 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -y 420 -defaultsOSRD
+preplace port ARM_TX -pg 1 -y 110 -defaultsOSRD
+preplace inst ARM_UART_AXI -pg 1 -lvl 3 -y 100 -defaultsOSRD
+preplace inst ps7_0_axi_periph -pg 1 -lvl 2 -y 230 -defaultsOSRD
+preplace inst DRIVE_UART_AXI -pg 1 -lvl 3 -y 250 -defaultsOSRD
+preplace inst rst_ps7_0_100M -pg 1 -lvl 1 -y 150 -defaultsOSRD
+preplace inst processing_system7_0 -pg 1 -lvl 1 -y 450 -defaultsOSRD
+preplace netloc processing_system7_0_DDR 1 1 3 NJ 400 NJ 400 NJ
+preplace netloc ARM_UART_AXI_tx 1 3 1 NJ
+preplace netloc processing_system7_0_M_AXI_GP0 1 1 1 440
+preplace netloc rst_ps7_0_100M_peripheral_aresetn 1 1 2 450 390 740
+preplace netloc processing_system7_0_FCLK_RESET0_N 1 0 2 30 340 430
+preplace netloc ps7_0_axi_periph_M01_AXI 1 2 1 N
+preplace netloc rx_0_1 1 0 4 NJ 20 NJ 20 NJ 20 960
+preplace netloc processing_system7_0_FIXED_IO 1 1 3 NJ 420 NJ 420 NJ
+preplace netloc DRIVE_UART_AXI_tx 1 3 1 NJ
+preplace netloc rx_1_1 1 0 4 NJ 550 NJ 550 NJ 550 960
+preplace netloc processing_system7_0_FCLK_CLK0 1 0 3 20 350 460 430 730
 preplace netloc ps7_0_axi_periph_M00_AXI 1 2 1 720
 preplace netloc rst_ps7_0_100M_interconnect_aresetn 1 1 1 N
-levelinfo -pg 1 -10 220 580 850 990 -top -20 -bot 470
+levelinfo -pg 1 0 230 590 850 980 -top 0 -bot 570
 ",
 }
 {
-   da_axi4_cnt: "3",
-   da_board_cnt: "6",
+   da_axi4_cnt: "5",
+   da_board_cnt: "9",
    da_clkrst_cnt: "14",
    da_ps7_cnt: "1",
 }

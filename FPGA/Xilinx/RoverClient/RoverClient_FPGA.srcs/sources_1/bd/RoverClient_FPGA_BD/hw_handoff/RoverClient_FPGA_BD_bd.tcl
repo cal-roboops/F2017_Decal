@@ -160,6 +160,10 @@ proc create_root_design { parentCell } {
   set FIXED_IO [ create_bd_intf_port -mode Master -vlnv xilinx.com:display_processing_system7:fixedio_rtl:1.0 FIXED_IO ]
 
   # Create ports
+  set ARM_RX [ create_bd_port -dir I ARM_RX ]
+  set ARM_TX [ create_bd_port -dir O ARM_TX ]
+  set DRIVE_RX [ create_bd_port -dir I DRIVE_RX ]
+  set DRIVE_TX [ create_bd_port -dir O DRIVE_TX ]
 
   # Create instance: ARM_UART_AXI, and set properties
   set ARM_UART_AXI [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uartlite:2.0 ARM_UART_AXI ]
@@ -949,7 +953,7 @@ proc create_root_design { parentCell } {
   # Create instance: ps7_0_axi_periph, and set properties
   set ps7_0_axi_periph [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 ps7_0_axi_periph ]
   set_property -dict [ list \
-   CONFIG.NUM_MI {2} \
+   CONFIG.NUM_MI {3} \
  ] $ps7_0_axi_periph
 
   # Create instance: rst_ps7_0_100M, and set properties
@@ -963,12 +967,14 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net ps7_0_axi_periph_M01_AXI [get_bd_intf_pins DRIVE_UART_AXI/S_AXI] [get_bd_intf_pins ps7_0_axi_periph/M01_AXI]
 
   # Create port connections
-  connect_bd_net -net ARM_UART_AXI_tx [get_bd_pins ARM_UART_AXI/tx] [get_bd_pins DRIVE_UART_AXI/rx]
-  connect_bd_net -net DRIVE_UART_AXI_tx [get_bd_pins ARM_UART_AXI/rx] [get_bd_pins DRIVE_UART_AXI/tx]
-  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins ARM_UART_AXI/s_axi_aclk] [get_bd_pins DRIVE_UART_AXI/s_axi_aclk] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/M01_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins rst_ps7_0_100M/slowest_sync_clk]
+  connect_bd_net -net ARM_UART_AXI_tx [get_bd_ports ARM_TX] [get_bd_pins ARM_UART_AXI/tx]
+  connect_bd_net -net DRIVE_UART_AXI_tx [get_bd_ports DRIVE_TX] [get_bd_pins DRIVE_UART_AXI/tx]
+  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins ARM_UART_AXI/s_axi_aclk] [get_bd_pins DRIVE_UART_AXI/s_axi_aclk] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/M01_ACLK] [get_bd_pins ps7_0_axi_periph/M02_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins rst_ps7_0_100M/slowest_sync_clk]
   connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins processing_system7_0/FCLK_RESET0_N] [get_bd_pins rst_ps7_0_100M/ext_reset_in]
   connect_bd_net -net rst_ps7_0_100M_interconnect_aresetn [get_bd_pins ps7_0_axi_periph/ARESETN] [get_bd_pins rst_ps7_0_100M/interconnect_aresetn]
-  connect_bd_net -net rst_ps7_0_100M_peripheral_aresetn [get_bd_pins ARM_UART_AXI/s_axi_aresetn] [get_bd_pins DRIVE_UART_AXI/s_axi_aresetn] [get_bd_pins ps7_0_axi_periph/M00_ARESETN] [get_bd_pins ps7_0_axi_periph/M01_ARESETN] [get_bd_pins ps7_0_axi_periph/S00_ARESETN] [get_bd_pins rst_ps7_0_100M/peripheral_aresetn]
+  connect_bd_net -net rst_ps7_0_100M_peripheral_aresetn [get_bd_pins ARM_UART_AXI/s_axi_aresetn] [get_bd_pins DRIVE_UART_AXI/s_axi_aresetn] [get_bd_pins ps7_0_axi_periph/M00_ARESETN] [get_bd_pins ps7_0_axi_periph/M01_ARESETN] [get_bd_pins ps7_0_axi_periph/M02_ARESETN] [get_bd_pins ps7_0_axi_periph/S00_ARESETN] [get_bd_pins rst_ps7_0_100M/peripheral_aresetn]
+  connect_bd_net -net rx_0_1 [get_bd_ports ARM_RX] [get_bd_pins ARM_UART_AXI/rx]
+  connect_bd_net -net rx_1_1 [get_bd_ports DRIVE_RX] [get_bd_pins DRIVE_UART_AXI/rx]
 
   # Create address segments
   create_bd_addr_seg -range 0x00010000 -offset 0x42C00000 [get_bd_addr_spaces processing_system7_0/Data] [get_bd_addr_segs ARM_UART_AXI/S_AXI/Reg] SEG_axi_uartlite_0_Reg

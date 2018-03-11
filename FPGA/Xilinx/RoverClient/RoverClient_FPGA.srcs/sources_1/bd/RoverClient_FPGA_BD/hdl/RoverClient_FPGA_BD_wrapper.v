@@ -1,7 +1,7 @@
 //Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2017.3.1 (win64) Build 2035080 Fri Oct 20 14:20:01 MDT 2017
-//Date        : Fri Mar  9 15:39:22 2018
+//Date        : Sat Mar 10 22:58:05 2018
 //Host        : DESKTOP-M5L7GPO running 64-bit major release  (build 9200)
 //Command     : generate_target RoverClient_FPGA_BD_wrapper.bd
 //Design      : RoverClient_FPGA_BD_wrapper
@@ -10,7 +10,9 @@
 `timescale 1 ps / 1 ps
 
 module RoverClient_FPGA_BD_wrapper
-   (DDR_addr,
+   (ARM_RX,
+    ARM_TX,
+    DDR_addr,
     DDR_ba,
     DDR_cas_n,
     DDR_ck_n,
@@ -25,12 +27,16 @@ module RoverClient_FPGA_BD_wrapper
     DDR_ras_n,
     DDR_reset_n,
     DDR_we_n,
+    DRIVE_RX,
+    DRIVE_TX,
     FIXED_IO_ddr_vrn,
     FIXED_IO_ddr_vrp,
     FIXED_IO_mio,
     FIXED_IO_ps_clk,
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb);
+  input ARM_RX;
+  output ARM_TX;
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -46,6 +52,8 @@ module RoverClient_FPGA_BD_wrapper
   inout DDR_ras_n;
   inout DDR_reset_n;
   inout DDR_we_n;
+  input DRIVE_RX;
+  output DRIVE_TX;
   inout FIXED_IO_ddr_vrn;
   inout FIXED_IO_ddr_vrp;
   inout [53:0]FIXED_IO_mio;
@@ -53,6 +61,8 @@ module RoverClient_FPGA_BD_wrapper
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
 
+  wire ARM_RX;
+  wire ARM_TX;
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
   wire DDR_cas_n;
@@ -68,6 +78,8 @@ module RoverClient_FPGA_BD_wrapper
   wire DDR_ras_n;
   wire DDR_reset_n;
   wire DDR_we_n;
+  wire DRIVE_RX;
+  wire DRIVE_TX;
   wire FIXED_IO_ddr_vrn;
   wire FIXED_IO_ddr_vrp;
   wire [53:0]FIXED_IO_mio;
@@ -76,7 +88,9 @@ module RoverClient_FPGA_BD_wrapper
   wire FIXED_IO_ps_srstb;
 
   RoverClient_FPGA_BD RoverClient_FPGA_BD_i
-       (.DDR_addr(DDR_addr),
+       (.ARM_RX(ARM_RX),
+        .ARM_TX(ARM_TX),
+        .DDR_addr(DDR_addr),
         .DDR_ba(DDR_ba),
         .DDR_cas_n(DDR_cas_n),
         .DDR_ck_n(DDR_ck_n),
@@ -91,6 +105,8 @@ module RoverClient_FPGA_BD_wrapper
         .DDR_ras_n(DDR_ras_n),
         .DDR_reset_n(DDR_reset_n),
         .DDR_we_n(DDR_we_n),
+        .DRIVE_RX(DRIVE_RX),
+        .DRIVE_TX(DRIVE_TX),
         .FIXED_IO_ddr_vrn(FIXED_IO_ddr_vrn),
         .FIXED_IO_ddr_vrp(FIXED_IO_ddr_vrp),
         .FIXED_IO_mio(FIXED_IO_mio),

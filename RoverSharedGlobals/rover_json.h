@@ -8,7 +8,9 @@
 
 // Keys enum
 typedef enum {
-    DT_M_Speed = 0,
+    // Start of DRIVE controls
+    DRIVE_START = 0,
+    DT_M_Speed,
 
     DT_M_LD,
     DT_M_RD,
@@ -27,7 +29,13 @@ typedef enum {
 
     DT_S_RF,
     DT_S_RM,
-    DT_S_RB
+    DT_S_RB,
+
+    // Start of ARM controls
+    ARM_START,
+
+    // START of OTHER controls
+    OTHER_START
 } rover_keys;
 
 // Dynamic JSON creation
@@ -43,7 +51,6 @@ public:
 
     static uint8_t servo_zero;
     static uint8_t servo_fourfive;
-    static uint8_t servo_negfourfive;
     static uint8_t servo_ninezero;
 
     static std::list<uint8_t> zeroAll;

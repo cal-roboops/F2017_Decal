@@ -1,10 +1,10 @@
 // Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2017.3.1 (win64) Build 2035080 Fri Oct 20 14:20:01 MDT 2017
-// Date        : Fri Mar  9 15:41:34 2018
+// Date        : Fri Mar  9 15:41:33 2018
 // Host        : DESKTOP-M5L7GPO running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode synth_stub
-//               g:/XILINX/RoverClient/RoverClient_FPGA.srcs/sources_1/bd/RoverClient_FPGA_BD/ip/RoverClient_FPGA_BD_auto_pc_0/RoverClient_FPGA_BD_auto_pc_0_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top RoverClient_FPGA_BD_auto_pc_0 -prefix
+//               RoverClient_FPGA_BD_auto_pc_0_ RoverClient_FPGA_BD_auto_pc_0_stub.v
 // Design      : RoverClient_FPGA_BD_auto_pc_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z020clg400-1

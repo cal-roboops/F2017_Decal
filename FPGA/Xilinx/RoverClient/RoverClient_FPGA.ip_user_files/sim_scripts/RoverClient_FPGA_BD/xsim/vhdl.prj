@@ -1,0 +1,6 @@
+vhdl xil_defaultlib  \
+"../../../bd/RoverClient_FPGA_BD/ip/RoverClient_FPGA_BD_axi_uartlite_0_1/sim/RoverClient_FPGA_BD_axi_uartlite_0_1.vhd" \
+"../../../bd/RoverClient_FPGA_BD/ip/RoverClient_FPGA_BD_axi_uartlite_1_0/sim/RoverClient_FPGA_BD_axi_uartlite_1_0.vhd" \
+"../../../bd/RoverClient_FPGA_BD/ip/RoverClient_FPGA_BD_rst_ps7_0_100M_2/sim/RoverClient_FPGA_BD_rst_ps7_0_100M_2.vhd" \
+
+nosort

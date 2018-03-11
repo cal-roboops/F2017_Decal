@@ -11,13 +11,8 @@ uint8_t Rover_JSON::servo_negfourfive = servo_zero-45;
 uint8_t Rover_JSON::servo_ninezero = servo_zero+90;
 
 std::list<uint8_t> Rover_JSON::zeroAll {
-                                            rover_keys::DT_M_LF, Rover_JSON::motor_stop,
-                                            rover_keys::DT_M_LM, Rover_JSON::motor_stop,
-                                            rover_keys::DT_M_LB, Rover_JSON::motor_stop,
-
-                                            rover_keys::DT_M_RF, Rover_JSON::motor_stop,
-                                            rover_keys::DT_M_RM, Rover_JSON::motor_stop,
-                                            rover_keys::DT_M_RB, Rover_JSON::motor_stop,
+                                            rover_keys::DT_M_LD, Rover_JSON::motor_stop,
+                                            rover_keys::DT_M_RD, Rover_JSON::motor_stop,
 
                                             rover_keys::DT_S_LF, Rover_JSON::servo_zero,
                                             rover_keys::DT_S_LM, Rover_JSON::servo_zero,
