@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ControlPanel</class>
- <widget class="QMainWindow" name="ControlPanel">
+ <class>DriveControlPanel</class>
+ <widget class="QMainWindow" name="DriveControlPanel">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>629</width>
-    <height>478</height>
+    <height>491</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="regular">
      <widget class="QPushButton" name="regularDriveUp_button">
@@ -392,66 +392,6 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QTextEdit" name="customServoLeftFront_edit">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>70</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="customServoLeftMiddle_edit">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>120</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="customServoLeftBack_edit">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>170</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="customServoRightBack_edit">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>170</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="customServoRightFront_edit">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>70</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="customServoRightMiddle_edit">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>120</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QPushButton" name="customLeftUp_button">
       <property name="geometry">
        <rect>
@@ -656,6 +596,66 @@
        <string>Set</string>
       </property>
      </widget>
+     <widget class="QLineEdit" name="customServoLeftFront_edit">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>70</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="customServoLeftMiddle_edit">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>120</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="customServoLeftBack_edit">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>170</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="customServoRightMiddle_edit">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>120</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="customServoRightBack_edit">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>170</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="customServoRightFront_edit">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>70</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QRadioButton" name="regularDrive_radio">
@@ -800,7 +800,7 @@
       <x>190</x>
       <y>0</y>
       <width>20</width>
-      <height>481</height>
+      <height>501</height>
      </rect>
     </property>
     <property name="orientation">

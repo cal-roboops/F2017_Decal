@@ -26,17 +26,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    controlpanel.cpp \
     ../RoverSharedGlobals/rover_json.cpp \
-    armcontrolpanel.cpp
+    armcontrolpanel.cpp \
+    drivecontrolpanel.cpp
 
 HEADERS += \
         mainwindow.h \
-    controlpanel.h \
     ../RoverSharedGlobals/rover_json.h \
-    armcontrolpanel.h
+    armcontrolpanel.h \
+    drivecontrolpanel.h
 
 FORMS += \
         mainwindow.ui \
-    controlpanel.ui \
-    armcontrolpanel.ui
+    armcontrolpanel.ui \
+    drivecontrolpanel.ui

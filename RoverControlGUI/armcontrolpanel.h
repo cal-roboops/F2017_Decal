@@ -15,7 +15,11 @@ public:
     explicit ArmControlPanel(QWidget *parent = 0);
     ~ArmControlPanel();
 
+signals:
+    void send_data(std::list<uint8_t> data);
+
 public slots:
+    void enableArmControl(bool en);
     void showArmControl(bool en);
 
 private slots:
@@ -25,6 +29,8 @@ private slots:
 
 private:
     Ui::ArmControlPanel *ui;
+
+    void transmit_command(std::list<uint8_t> kv);
 };
 
 #endif // ARMCONTROLPANEL_H

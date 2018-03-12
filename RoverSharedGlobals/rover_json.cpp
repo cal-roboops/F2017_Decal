@@ -5,7 +5,7 @@ uint8_t Rover_JSON::motor_stop = 0;
 uint8_t Rover_JSON::motor_forward = 1;
 uint8_t Rover_JSON::motor_backward = 2;
 
-uint8_t Rover_JSON::servo_zero = 45;
+uint8_t Rover_JSON::servo_zero = 90;
 uint8_t Rover_JSON::servo_fourfive = servo_zero+45;
 uint8_t Rover_JSON::servo_negfourfive = servo_zero-45;
 uint8_t Rover_JSON::servo_ninezero = servo_zero+90;
@@ -38,7 +38,7 @@ std::list<uint8_t> Rover_JSON::backwardDrive {
                                             rover_keys::DT_M_RD, Rover_JSON::motor_backward
                                       };
 
-std::list<uint8_t> Rover_JSON::zeroServo {
+std::list<uint8_t> Rover_JSON::straightServo {
                                             rover_keys::DT_S_LF, Rover_JSON::servo_zero,
                                             rover_keys::DT_S_LM, Rover_JSON::servo_zero,
                                             rover_keys::DT_S_LB, Rover_JSON::servo_zero,
@@ -48,17 +48,17 @@ std::list<uint8_t> Rover_JSON::zeroServo {
                                             rover_keys::DT_S_RB, Rover_JSON::servo_zero
                                       };
 
-std::list<uint8_t> Rover_JSON::fourfiveServo {
+std::list<uint8_t> Rover_JSON::spinCenterServo {
                                             rover_keys::DT_S_LF, Rover_JSON::servo_fourfive,
                                             rover_keys::DT_S_LM, Rover_JSON::servo_zero,
                                             rover_keys::DT_S_LB, Rover_JSON::servo_negfourfive,
 
-                                            rover_keys::DT_S_RF, Rover_JSON::servo_negfourfive,
+                                            rover_keys::DT_S_RF, Rover_JSON::servo_fourfive,
                                             rover_keys::DT_S_RM, Rover_JSON::servo_zero,
-                                            rover_keys::DT_S_RB, Rover_JSON::servo_fourfive
+                                            rover_keys::DT_S_RB, Rover_JSON::servo_negfourfive
                                       };
 
-std::list<uint8_t> Rover_JSON::ninezeroServo {
+std::list<uint8_t> Rover_JSON::sidewinderServo {
                                             rover_keys::DT_S_LF, Rover_JSON::servo_ninezero,
                                             rover_keys::DT_S_LM, Rover_JSON::servo_ninezero,
                                             rover_keys::DT_S_LB, Rover_JSON::servo_ninezero,

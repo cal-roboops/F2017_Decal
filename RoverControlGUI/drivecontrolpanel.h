@@ -1,22 +1,22 @@
-#ifndef CONTROLPANEL_H
-#define CONTROLPANEL_H
+#ifndef DRIVECONTROLPANEL_H
+#define DRIVECONTROLPANEL_H
 
 #include <QMainWindow>
 
 namespace Ui {
-class ControlPanel;
+class DriveControlPanel;
 }
 
-class ControlPanel : public QMainWindow
+class DriveControlPanel : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    ControlPanel(QWidget *parent = 0);
-    ~ControlPanel();
+    DriveControlPanel(QWidget *parent = 0);
+    ~DriveControlPanel();
 
 signals:
-    void send_data(QByteArray data);
+    void send_data(std::list<uint8_t> data);
 
 public slots:
     void enableDriveControl(bool en);
@@ -81,9 +81,9 @@ private slots:
 
 
 private:
-    Ui::ControlPanel *ui;
+    Ui::DriveControlPanel *ui;
 
     void transmit_command(std::list<uint8_t> kv);
 };
 
-#endif // CONTROLPANEL_H
+#endif // DRIVECONTROLPANEL_H

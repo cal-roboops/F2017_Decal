@@ -8,34 +8,39 @@
 
 // Keys enum
 typedef enum {
+    // Critical Controls
+    EMERGENCY_STOP = 0,
+    SHUT_DOWN,
+
     // Start of DRIVE controls
-    DRIVE_START = 0,
     DT_M_Speed,
 
     DT_M_LD,
     DT_M_RD,
 
-    DT_M_LF,
-    DT_M_LM,
-    DT_M_LB,
-
-    DT_M_RF,
-    DT_M_RM,
-    DT_M_RB,
-
+    // MUST REMAIN IN ORDER
+    // ----------------
     DT_S_LF,
     DT_S_LM,
     DT_S_LB,
-
     DT_S_RF,
     DT_S_RM,
     DT_S_RB,
+    // ----------------
 
+    DRIVE_END,
     // Start of ARM controls
-    ARM_START,
+    ARM_BASE_ANGLE,
+    ARM_BIFORM_ANGLE,
+    ARM_ELBOW_ANGLE,
 
+    ARM_END,
     // START of OTHER controls
-    OTHER_START
+    CAMERA_PAN,
+    CAMERA_TILT,
+    DRAWER_OPEN,
+
+    ENUM_END
 } rover_keys;
 
 // Dynamic JSON creation
@@ -51,6 +56,7 @@ public:
 
     static uint8_t servo_zero;
     static uint8_t servo_fourfive;
+    static uint8_t servo_negfourfive;
     static uint8_t servo_ninezero;
 
     static std::list<uint8_t> zeroAll;
@@ -59,9 +65,9 @@ public:
     static std::list<uint8_t> forwardDrive;
     static std::list<uint8_t> backwardDrive;
 
-    static std::list<uint8_t> zeroServo;
-    static std::list<uint8_t> fourfiveServo;
-    static std::list<uint8_t> ninezeroServo;
+    static std::list<uint8_t> straightServo;
+    static std::list<uint8_t> spinCenterServo;
+    static std::list<uint8_t> sidewinderServo;
 
     static bool isValid(std::list<uint8_t> jsonVEC);
 };

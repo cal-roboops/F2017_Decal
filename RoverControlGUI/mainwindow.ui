@@ -46,8 +46,8 @@
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8.25pt;&quot;&gt;127.0.0.1&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;127.0.0.1&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="serv_ip_Label">
@@ -121,8 +121,8 @@ p, li { white-space: pre-wrap; }
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8.25pt;&quot;&gt;8088&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;8088&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="serv_port_Label">
@@ -196,8 +196,8 @@ p, li { white-space: pre-wrap; }
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8.25pt;&quot;&gt;9001&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;9001&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="st_ipEdit">
@@ -213,8 +213,8 @@ p, li { white-space: pre-wrap; }
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8.25pt;&quot;&gt;239.0.0.1&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;239.0.0.1&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="st_port_Label">
@@ -520,10 +520,10 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="geometry">
      <rect>
-      <x>710</x>
+      <x>670</x>
       <y>180</y>
-      <width>91</width>
-      <height>61</height>
+      <width>171</width>
+      <height>91</height>
      </rect>
     </property>
     <property name="text">
@@ -536,7 +536,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QDial" name="cameraMast_dial">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>50</x>
       <y>230</y>
       <width>221</width>
       <height>101</height>
@@ -573,7 +573,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="cameraMast_label">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>50</x>
       <y>190</y>
       <width>221</width>
       <height>20</height>
@@ -596,7 +596,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>30</x>
       <y>450</y>
-      <width>251</width>
+      <width>261</width>
       <height>20</height>
      </rect>
     </property>
@@ -617,7 +617,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>40</x>
       <y>490</y>
-      <width>191</width>
+      <width>201</width>
       <height>22</height>
      </rect>
     </property>
@@ -628,28 +628,10 @@ p, li { white-space: pre-wrap; }
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="drawerSetValue_button">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>540</y>
-      <width>71</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>10</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Set</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="drawerValue_label">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>260</x>
       <y>490</y>
       <width>51</width>
       <height>16</height>
@@ -667,9 +649,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QLineEdit" name="drawer_LineEdit">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>540</y>
-      <width>71</width>
+      <x>50</x>
+      <y>530</y>
+      <width>101</width>
       <height>27</height>
      </rect>
     </property>
@@ -677,9 +659,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="eStopButton">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>40</x>
       <y>120</y>
-      <width>141</width>
+      <width>121</width>
       <height>31</height>
      </rect>
     </property>
@@ -701,9 +683,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="shutdownBtn">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>180</x>
       <y>120</y>
-      <width>101</width>
+      <width>121</width>
       <height>31</height>
      </rect>
     </property>
@@ -716,13 +698,13 @@ p, li { white-space: pre-wrap; }
      <string>Shutdown</string>
     </property>
    </widget>
-   <widget class="QLabel" name="cameraDialLabel">
+   <widget class="QLabel" name="cameraDial_Label">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>110</x>
       <y>330</y>
-      <width>41</width>
-      <height>16</height>
+      <width>101</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="font">
@@ -733,42 +715,27 @@ p, li { white-space: pre-wrap; }
     <property name="text">
      <string>0°</string>
     </property>
-   </widget>
-   <widget class="QLineEdit" name="cameraLineEdit">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>370</y>
-      <width>71</width>
-      <height>27</height>
-     </rect>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="cameraSetButton">
+   <widget class="QLineEdit" name="camera_LineEdit">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>50</x>
       <y>370</y>
-      <width>71</width>
+      <width>101</width>
       <height>27</height>
      </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>10</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Set</string>
     </property>
    </widget>
    <widget class="QPushButton" name="cameraSubmitBtn">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>370</y>
-      <width>75</width>
-      <height>27</height>
+      <x>190</x>
+      <y>368</y>
+      <width>81</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -783,10 +750,10 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="drawerSubmitBtn">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>540</y>
-      <width>75</width>
-      <height>27</height>
+      <x>190</x>
+      <y>530</y>
+      <width>81</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">

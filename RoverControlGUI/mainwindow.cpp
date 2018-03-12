@@ -1,12 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "controlpanel.h"
 
 #include <QFile>
 #include <QProcess>
 #include <QHostAddress>
 #include <QMainWindow>
 #include <QDebug>
+
+#include "../RoverSharedGlobals/rover_json.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -23,22 +24,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->armMode_NonControl_Radio->setChecked(true);
     on_driveMode_NonControl_Radio_clicked();
 
-    ui->infoLabel->setVisible(false);
-    ui->drawer_LineEdit->setText("0");
     ui->drawer_LineEdit->setValidator(new QIntValidator(0, 100, this));
-    ui->cameraLineEdit->setValidator(new QIntValidator(0, 100, this));
-    ui->cameraDialLabel->setText("0°");
-    ui->cameraLineEdit->setText("180");
+    ui->camera_LineEdit->setValidator(new QIntValidator(0, 360, this));
+
+    ui->drawer_LineEdit->setText("0");
+    ui->drawerValue_label->setText("0%");
+    ui->cameraDial_Label->setText("180°");
+    ui->camera_LineEdit->setText("180");
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::on_eStopButton_clicked()
-{
-    // Mitch - Send Emergency Stop JSON values
 }
 
 void MainWindow::on_connect_clicked()
@@ -115,10 +112,18 @@ void MainWindow::on_clearRECV_clicked()
 }
 
 
-void MainWindow::send_data(QByteArray data)
+void MainWindow::send_data(std::list<uint8_t> data)
 {
-    socket->write(data);
-    qDebug() << data;
+    if (Rover_JSON::isValid(data))
+    {
+        QByteArray byte_data;
+        for (auto it = data.begin(); it != data.end(); it++) byte_data.append((char) *it);
+        socket->write(byte_data);
+        qDebug() << byte_data;
+    } else
+    {
+        qDebug() << "Invalid JSON";
+    }
 }
 
 void MainWindow::on_openStream_clicked()
@@ -161,18 +166,6 @@ void MainWindow::on_disconnect()
     }
 }
 
-
-void MainWindow::on_showArmControl_Check_clicked()
-{
-    if (ui->showArmControl_Check->isChecked()) {
-//        qDebug()
-        emit showArmControl(true);
-    } else {
-        emit showArmControl(false);
-    }
-}
-
-
 void MainWindow::on_showDriveControl_Check_clicked() // Show Control Panel Checkbox clicked
 {
     if(ui->showDriveControl_Check->isChecked()){
@@ -183,71 +176,98 @@ void MainWindow::on_showDriveControl_Check_clicked() // Show Control Panel Check
     }
 }
 
-void MainWindow::on_driveMode_NonControl_Radio_clicked() //radio button disables control panel
-{
-    emit enableDriveControl(false);
-    if (ui->showDriveControl_Check->isChecked()) {
-        emit showDriveControl(true);
-    }
-}
-
-void MainWindow::on_driveMode_Control_Radio_clicked() //radio button enables control panel
+void MainWindow::on_driveMode_Control_Radio_clicked()
 {
     emit enableDriveControl(true);
 }
 
-void MainWindow::on_cameraMast_dial_valueChanged(int position)
+void MainWindow::on_driveMode_NonControl_Radio_clicked()
 {
-    qDebug() << position;
-    QString s = QString::number(position);
-    ui->cameraLineEdit->setText(s);
-    ui->cameraDialLabel->setText(s + "°");
+    emit enableDriveControl(false);
 }
 
-void MainWindow::on_cameraSetButton_clicked()
+void MainWindow::on_showArmControl_Check_clicked()
 {
-    if (ui->cameraLineEdit->text().isEmpty()) {
-        qDebug() << "Nothing to set";
+    if (ui->showArmControl_Check->isChecked()) {
+        emit showArmControl(true);
     } else {
-        ui->cameraDialLabel->setText(ui->cameraLineEdit->text());
-        ui->cameraMast_dial->setValue(ui->cameraLineEdit->text().toInt());
+        emit showArmControl(false);
+    }
+}
+
+void MainWindow::on_armMode_Control_Radio_clicked()
+{
+    emit enableArmControl(true);
+}
+
+void MainWindow::on_armMode_NonControl_Radio_clicked()
+{
+    emit enableArmControl(false);
+}
+
+void MainWindow::on_cameraMast_dial_valueChanged(int position)
+{
+    QString s = QString::number(position);
+    ui->camera_LineEdit->setText(s);
+    ui->cameraDial_Label->setText(s + "°");
+}
+
+void MainWindow::on_camera_LineEdit_textChanged(QString text)
+{
+    if (!text.isEmpty())
+    {
+        ui->cameraDial_Label->setText(text + "°");
+        ui->cameraMast_dial->setValue(text.toInt());
     }
 }
 
 void MainWindow::on_cameraSubmitBtn_clicked()
 {
-    qDebug() << "Camera value transmitted.";
     int value = ui->cameraMast_dial->value();
-    // Mitch - SEND DRAWER JSON VALUE TO SERVER
+
+    send_data({
+                 rover_keys::CAMERA_PAN, (uint8_t) (value / 2)
+             });
 }
 
 void MainWindow::on_drawerValue_slider_valueChanged(int x)
 {
     QString s = QString::number(x);
     ui->drawer_LineEdit->setText(s);
-    ui->drawerValue_label->setText(s + " %");
+    ui->drawerValue_label->setText(s + "%");
 }
 
-void MainWindow::on_drawerSetValue_button_clicked() {
-    if (ui->drawer_LineEdit->text().isEmpty()) {
-        qDebug() << "Nothing to set";
-    } else {
-        ui->drawerValue_label->setText(ui->drawer_LineEdit->text());
-        ui->drawerValue_slider->setSliderPosition(ui->drawer_LineEdit->text().toInt());
+void MainWindow::on_drawer_LineEdit_textChanged(QString text) {
+    if (!text.isEmpty())
+    {
+        ui->drawerValue_label->setText(text + "%");
+        ui->drawerValue_slider->setSliderPosition(text.toInt());
     }
 }
 
 void MainWindow::on_drawerSubmitBtn_clicked()
 {
-    qDebug() << "Drawer value transmitted.";
     int value = ui->drawerValue_slider->value();
-    // Mitch - SEND DRAWER JSON VALUE TO SERVER
+
+    send_data({
+                 rover_keys::DRAWER_OPEN, (uint8_t) value
+             });
+}
+
+void MainWindow::on_eStopButton_clicked()
+{
+    send_data({
+                 rover_keys::EMERGENCY_STOP, 1
+             });
 }
 
 void MainWindow::on_shutdownBtn_clicked()
 {
     // Need to have pop up dialog say "restart? Shutdown?"
-    // Mitch - send shutdown button signal
+
+    send_data({
+                 rover_keys::SHUT_DOWN, 1
+             });
 }
 
 
