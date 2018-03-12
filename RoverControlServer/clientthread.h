@@ -9,24 +9,24 @@
 class ClientThread : public QThread {
     Q_OBJECT
 public:
-    explicit ClientThread(QTcpSocket *clientSocket, QObject *parent = nullptr);
+    explicit ClientThread(QTcpSocket *clientSocket, bool roverReady, QObject *parent = nullptr);
     void run();
-    void add_rover_connection(RoverThread *roverThread);
-    void remove_rover_connection();
-
-private:
-    QTcpSocket *clientSocket;
-    RoverThread *roverThread;
-    bool isBusy;
-    QString error(QString message);
 
 signals:
     void send_command(int clientSocketDescriptor, QByteArray command);
 
 public slots:
-    void read_and_send_command();
-    void receive_response(int clientSocketDescriptor, QByteArray response);
     void disconnect_client();
+    void rover_ready(bool en);
+    void read_and_send_command();
+
+    void receive_response(int clientSocketDescriptor, QByteArray response);
+
+private:
+    bool isBusy;
+    bool roverReady;
+    QTcpSocket *clientSocket;
+    QString error(QString message);
 };
 
 #endif // CLIENTTHREAD_H

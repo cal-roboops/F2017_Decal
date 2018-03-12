@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "server.h"
 
 namespace Ui {
 class MainWindow;
@@ -16,14 +15,20 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+signals:
+    void server_start();
+    void server_terminate();
+
+public slots:
+    void update_client_count(int val);
+    void rover_connected(bool en);
+
 private slots:
     void on_serverOn_clicked();
-
     void on_serverOff_clicked();
 
 private:
     Ui::MainWindow *ui;
-    Server *server;
 };
 
 #endif // MAINWINDOW_H

@@ -1,15 +1,11 @@
 #ifndef SERVER_H
 #define SERVER_H
 
+#include <QList>
 #include <QObject>
 #include <QTcpServer>
 #include <QTcpSocket>
-#include <QLinkedList>
-#include <QLCDNumber>
-#include <QProgressBar>
 #include <QHostAddress>
-#include <QMutex>
-#include <QDebug>
 
 #include "clientthread.h"
 #include "roverthread.h"
@@ -18,25 +14,26 @@ class Server : public QTcpServer
 {
     Q_OBJECT
 public:
-    explicit Server(QLCDNumber *client_count, QProgressBar *roverConnected, QObject *parent = nullptr);
+    Server(QObject *parent = nullptr);
+    ~Server();
+
+signals:
+    void client_count_update(int val);
+    void rover_connected(bool en);
+
+public slots:
     void start();
     void terminate();
 
-signals:
-
-public slots:
-    void update_client_count();
     void remove_client();
-    void rover_disconnected();
+    void update_client_count();
+    void rover_ready(bool rdy);
 
 private:
-    QLinkedList<ClientThread*> clientThreads;
+    QList<ClientThread*> clientThreads;
     RoverThread *roverThread;
-    QLCDNumber *client_count;
-    QProgressBar *roverConnected;
     QHostAddress *roverIP;
-
-
+    bool roverReady;
 
 protected:
     void incomingConnection(qintptr socket_descriptor);
