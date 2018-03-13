@@ -55,8 +55,8 @@ typedef enum {
     CAMERA_PAN,
     CAMERA_TILT,
     DRAWER_OPEN,
-    COMM_CONN,
-    EMERG_CONN,
+    COMM_CONN, // Value: 0 - Disconnect, 1 - Connect
+    EMERG_CONN, // Value: 0 - Disconnect, 1 - Connect
     COMMAND_STATUS, // Value: 0 - Success, 1 - Failed, 2 - Dropped
 
     // MUST REMAIN AT END OF ENUM

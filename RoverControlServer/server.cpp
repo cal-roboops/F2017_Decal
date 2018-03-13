@@ -35,13 +35,11 @@ void Server::terminate() {
         if (this->roverThread->isRunning())
         {
             this->roverThread->disconnect_rover();
-            this->roverThread->deleteLater();
         }
 
         for (auto i = this->clientThreads.begin(); i != this->clientThreads.end(); i++)
         {
             (*i)->disconnect_client();
-            (*i)->deleteLater();
         }
 
         this->clientThreads.clear();
@@ -63,6 +61,7 @@ void Server::incomingConnection(qintptr socket_descriptor)
             this->roverThread->add_connection(socket);
         } else
         {
+            socket->disconnectFromHost();
             qDebug() << "Error too many rover connections";
         }
     } else
