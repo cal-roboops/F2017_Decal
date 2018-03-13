@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QThread>
 #include <QTcpSocket>
-#include "roverthread.h"
 
 class ClientThread : public QThread {
     Q_OBJECT

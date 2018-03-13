@@ -21,10 +21,12 @@ int main(int argc, char *argv[])
     // Connect drive enable/show signals and slots
     QObject::connect(&w, SIGNAL(enableDriveControl(bool)), &dc, SLOT(enableDriveControl(bool)));
     QObject::connect(&w, SIGNAL(showDriveControl(bool)), &dc, SLOT(showDriveControl(bool)));
+    QObject::connect(&dc, SIGNAL(closed()), &w, SLOT(drive_closed()));
 
     // Connect arm enable/show signals and slots
     QObject::connect(&w, SIGNAL(enableArmControl(bool)), &ac, SLOT(enableArmControl(bool)));
     QObject::connect(&w, SIGNAL(showArmControl(bool)), &ac, SLOT(showArmControl(bool)));
+    QObject::connect(&ac, SIGNAL(closed()), &w, SLOT(arm_closed()));
 
     return a.exec();
 }

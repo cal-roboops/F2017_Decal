@@ -14,8 +14,10 @@ class DriveControlPanel : public QMainWindow
 public:
     DriveControlPanel(QWidget *parent = 0);
     ~DriveControlPanel();
+    virtual void closeEvent(QCloseEvent *event);
 
 signals:
+    void closed();
     void send_data(std::list<uint8_t> data);
 
 public slots:
@@ -32,8 +34,9 @@ private slots:
     void keyReleaseEvent(QKeyEvent * event);
 
     // Regular Drive
+    void on_regularServoValue_edit_textChanged(QString text);
     void on_regularServo_slider_valueChanged(int value);
-    void on_regularServoSet_button_clicked();
+    void on_regularServoSubmit_button_clicked();
 
     void on_regularDriveUp_button_pressed();
     void on_regularDriveUp_button_released();
@@ -53,7 +56,7 @@ private slots:
     void on_tankDown_button_released();
 
     // Custom Drive
-    void on_customServoSet_button_clicked();
+    void on_customServoSubmit_button_clicked();
 
     void on_customLeftUp_button_pressed();
     void on_customLeftUp_button_released();
@@ -75,9 +78,9 @@ private slots:
     void on_customDownDown_button_released();
 
     // Speed Setting
+    void on_speed_lineEdit_textChanged(QString text);
     void on_speedValue_slider_valueChanged(int x);
     void on_speedSubmit_button_clicked();
-    void on_speed_setBtn_clicked();
 
 
 private:

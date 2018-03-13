@@ -1,54 +1,51 @@
 #include "roverthread.h"
 
+#include "../RoverSharedGlobals/rover_json.h"
+
 RoverThread::RoverThread(QObject *parent) :
     QThread(parent)
 {
     this->roverComm = nullptr;
     this->roverEmerg = nullptr;
     this->isBusy = false;
+    this->currClientSocketDescriptor = 0;
+    emitState();
 }
 
 RoverThread::~RoverThread()
 {
-    if (roverComm)
+    if (this->roverComm)
     {
-        roverComm->disconnect();
-        roverComm->deleteLater();
+        this->roverComm->disconnect();
+        this->roverComm->deleteLater();
     }
 
-    if (roverEmerg)
+    if (this->roverEmerg)
     {
-        roverEmerg->disconnect();
-        roverEmerg->deleteLater();
+        this->roverEmerg->disconnect();
+        this->roverEmerg->deleteLater();
     }
 }
 
 void RoverThread::run()
 {
-    if (!roverComm || !roverEmerg) return;
-
-    emit rover_ready(true);
     exec();
 }
 
-bool RoverThread::commConnected()
+bool RoverThread::connected()
 {
-    return (roverComm != nullptr);
+    return (this->roverComm && this->roverEmerg);
 }
 
-void RoverThread::add_emerg_connection(QTcpSocket *roverEmerg)
+void RoverThread::add_connection(QTcpSocket *socket)
 {
-    this->roverEmerg = roverEmerg;
+    if (!this->roverComm || !this->roverEmerg)
+    {
+        connect(socket, SIGNAL(readyRead()), this, SLOT(setup_socket()));
+        connect(socket, SIGNAL(disconnected()), this, SLOT(cleanUp_socket()));
+    }
 
-    connect(this->roverEmerg, SIGNAL(readyRead()), this, SLOT(analyze_response()));
-    connect(this->roverEmerg, SIGNAL(disconnected()), this, SLOT(disconnect_rover()));
-}
-
-void RoverThread::add_comm_connection(QTcpSocket *roverComm)
-{
-    this->roverComm = roverComm;
-    connect(this->roverComm, SIGNAL(readyRead()), this, SLOT(analyze_response()));
-    connect(this->roverComm, SIGNAL(disconnected()), this, SLOT(disconnect_rover()));
+    emitState();
 }
 
 void RoverThread::analyze_response()
@@ -61,44 +58,80 @@ void RoverThread::analyze_response()
         emit respond_to_client(this->currClientSocketDescriptor, buf);
     }
 
+    this->currClientSocketDescriptor = 0;
     this->isBusy = false;
+}
+
+void RoverThread::disconnect_rover()
+{
+    if (this->roverComm) this->roverComm->disconnect();
+    if (this->roverEmerg) this->roverEmerg->disconnect();
+
+    emitState();
 }
 
 void RoverThread::receive_command(int clientSocketDescriptor, QByteArray command)
 {
     if (this->isBusy)
     {
-        if (this->currClientSocketDescriptor != clientSocketDescriptor)
-        {
-            connect(this, SIGNAL(respond_to_client(int, QByteArray)), sender(), SLOT(receive_response(int, QByteArray)), Qt::QueuedConnection);
-        }
-
-//        emit respond_to_client(clientSocketDescriptor, *err);
+        emit respond_to_client(clientSocketDescriptor, {rover_keys::COMMAND_STATUS, 2});
         return;
     }
 
-    connect(this, SIGNAL(respond_to_client(int, QByteArray)), sender(), SLOT(receive_response(int, QByteArray)), Qt::QueuedConnection);
-
-    this->currClientSocketDescriptor = clientSocketDescriptor;
-    this->roverComm->write(command);
     this->isBusy = true;
+    this->currClientSocketDescriptor = clientSocketDescriptor;
+    connect(this, SIGNAL(respond_to_client(int, QByteArray)), sender(), SLOT(receive_response(int, QByteArray)));
+
+    this->roverComm->write(command);
 }
 
-void RoverThread::disconnect_rover()
+void RoverThread::setup_socket()
 {
-    if (!this->isRunning()) return;
+    QByteArray buf;
+    QTcpSocket *socket = (QTcpSocket*) sender();
+    buf = socket->readAll();
 
-    emit rover_ready(false);
+    if ((buf.size() != 2) || (buf[1] != 1)) return;
 
-    if (roverComm)
+    bool success = false;
+    if ((buf[0] == rover_keys::COMM_CONN) && !this->roverComm)
     {
-        roverComm->disconnect();
-        roverComm->deleteLater();
+        success = true;
+        this->roverComm = socket;
+        qDebug() << "Rover Comm Connected";
+    } else if ((buf[0] == rover_keys::EMERG_CONN) && !this->roverEmerg)
+    {
+        success = true;
+        this->roverEmerg = socket;
+        qDebug() << "Rover Emerg Connected";
+    } else
+    {
+        success = false;
+        qDebug() << "Rover has command and emergency connections";
     }
 
-    if (roverEmerg)
+    if (success)
     {
-        roverEmerg->disconnect();
-        roverEmerg->deleteLater();
+        disconnect(socket, SIGNAL(readyRead()), this, SLOT(setup_tempSocket()));
+        connect(socket, SIGNAL(readyRead()), this, SLOT(analyze_response()));
     }
+
+    emitState();
+}
+
+void RoverThread::cleanUp_socket()
+{
+    QTcpSocket *socket = (QTcpSocket*) sender();
+    socket->deleteLater();
+
+    if (socket == this->roverComm) this->roverComm = nullptr;
+    else if (socket == this->roverEmerg) this->roverEmerg = nullptr;
+
+    emitState();
+}
+
+void RoverThread::emitState()
+{
+    if (this->roverComm && this->roverEmerg) emit rover_ready(true);
+    else emit rover_ready(false);
 }

@@ -12,13 +12,12 @@ public:
     ~RoverThread();
 
     void run();
-    bool commConnected();
+    bool connected();
 
-    void add_comm_connection(QTcpSocket *roverComm);
-    void add_emerg_connection(QTcpSocket *roverEmerg);
+    void add_connection(QTcpSocket *socket);
 
 signals:
-    void respond_to_client(int, QByteArray);
+    void respond_to_client(int sock_fd, QByteArray res);
     void rover_ready(bool rdy);
 
 public slots:
@@ -26,11 +25,16 @@ public slots:
     void disconnect_rover();
     void receive_command(int clientSocketDescriptor, QByteArray command);
 
+    void setup_socket();
+    void cleanUp_socket();
+
 private:
     QTcpSocket *roverComm;
     QTcpSocket *roverEmerg;
     int currClientSocketDescriptor;
     bool isBusy;
+
+    void emitState();
 };
 
 #endif // ROVERTHREAD_H

@@ -3,7 +3,6 @@
 
 #include <QKeyEvent>
 #include <QMessageBox>
-#include <QDebug>
 
 #include "../RoverSharedGlobals/rover_json.h"
 
@@ -35,6 +34,12 @@ DriveControlPanel::~DriveControlPanel()
     delete ui;
 }
 
+void DriveControlPanel::closeEvent(QCloseEvent *event)
+{
+    emit closed();
+    event->accept();
+}
+
 void DriveControlPanel::enableDriveControl(bool en)
 {
     this->setEnabled(en);
@@ -64,6 +69,7 @@ void DriveControlPanel::on_regularDrive_radio_clicked() //set controls to regula
 {
     ui->stackedWidget->setCurrentIndex(0);
     ui->regularServo_slider->setValue(0);
+    ui->regularServoValue_edit->setText("0");
 
     transmit_command(Rover_JSON::zeroAll);
 }
@@ -94,18 +100,26 @@ void DriveControlPanel::on_customDrive_radio_clicked() //set controls to custom
  * Regular Page
  * */
 
+void DriveControlPanel::on_regularServoValue_edit_textChanged(QString text)
+{
+    if (!text.isEmpty())
+    {
+        ui->regularServo_slider->setSliderPosition(text.toInt());
+    }
+}
+
 void DriveControlPanel::on_regularServo_slider_valueChanged(int value)
 {
     ui->regularServoValue_edit->setText(QString::number(value));
 }
 
-void DriveControlPanel::on_regularServoSet_button_clicked() //slider button
+void DriveControlPanel::on_regularServoSubmit_button_clicked() //slider button
 {
     int slider_value = ui->regularServoValue_edit->text().toInt();
     ui->regularServo_slider->setValue(slider_value);
     transmit_command({
-                         rover_keys::DT_S_LF, (uint8_t) (Rover_JSON::servo_zero + slider_value),
-                         rover_keys::DT_S_RF, (uint8_t) (Rover_JSON::servo_zero + slider_value)
+                         rover_keys::DT_S_LF, (uint8_t) (servo_dirs::servo_zero + slider_value),
+                         rover_keys::DT_S_RF, (uint8_t) (servo_dirs::servo_zero + slider_value)
                      });
 }
 
@@ -133,14 +147,14 @@ void DriveControlPanel::on_regularDriveRight_button_clicked()
 {
     int slider_value = ui->regularServo_slider->value() + 5;
     ui->regularServo_slider->setValue(slider_value);
-    on_regularServoSet_button_clicked();
+    on_regularServoSubmit_button_clicked();
 }
 
 void DriveControlPanel::on_regularDriveLeft_button_clicked()
 {
     int slider_value = ui->regularServo_slider->value() - 5;
     ui->regularServo_slider->setValue(slider_value);
-    on_regularServoSet_button_clicked();
+    on_regularServoSubmit_button_clicked();
 }
 
 /*
@@ -225,7 +239,7 @@ void DriveControlPanel::keyReleaseEvent(QKeyEvent * event)
  *
  * */
 
-void DriveControlPanel::on_customServoSet_button_clicked()
+void DriveControlPanel::on_customServoSubmit_button_clicked()
 {
     QList<int> servo_values;
     servo_values.push_back(ui->customServoLeftFront_edit->text().toInt());
@@ -239,7 +253,7 @@ void DriveControlPanel::on_customServoSet_button_clicked()
     for (int i = 0; i < servo_values.length(); i++)
     {
         command.push_back(rover_keys::DT_S_LF + i);
-        command.push_back(Rover_JSON::servo_zero + servo_values[i]);
+        command.push_back(servo_dirs::servo_zero + servo_values[i]);
     }
 
     transmit_command(command);
@@ -248,8 +262,8 @@ void DriveControlPanel::on_customServoSet_button_clicked()
 void DriveControlPanel::on_customLeftUp_button_pressed()
 {
     transmit_command({
-                         rover_keys::DT_M_LD, Rover_JSON::motor_forward,
-                         rover_keys::DT_M_RD, Rover_JSON::motor_stop
+                         rover_keys::DT_M_LD, motor_dirs::motor_forward,
+                         rover_keys::DT_M_RD, motor_dirs::motor_stop
                     });
 }
 
@@ -261,8 +275,8 @@ void DriveControlPanel::on_customLeftUp_button_released()
 void DriveControlPanel::on_customUpDown_button_pressed()
 {
     transmit_command({
-                         rover_keys::DT_M_LD, Rover_JSON::motor_forward,
-                         rover_keys::DT_M_RD, Rover_JSON::motor_backward
+                         rover_keys::DT_M_LD, motor_dirs::motor_forward,
+                         rover_keys::DT_M_RD, motor_dirs::motor_backward
                     });
 }
 
@@ -274,8 +288,8 @@ void DriveControlPanel::on_customUpDown_button_released()
 void DriveControlPanel::on_customLeftDown_button_pressed()
 {
     transmit_command({
-                         rover_keys::DT_M_LD, Rover_JSON::motor_backward,
-                         rover_keys::DT_M_RD, Rover_JSON::motor_stop
+                         rover_keys::DT_M_LD, motor_dirs::motor_backward,
+                         rover_keys::DT_M_RD, motor_dirs::motor_stop
                     });
 }
 
@@ -287,8 +301,8 @@ void DriveControlPanel::on_customLeftDown_button_released()
 void DriveControlPanel::on_customRightUp_button_pressed()
 {
     transmit_command({
-                         rover_keys::DT_M_LD, Rover_JSON::motor_stop,
-                         rover_keys::DT_M_RD, Rover_JSON::motor_forward
+                         rover_keys::DT_M_LD, motor_dirs::motor_stop,
+                         rover_keys::DT_M_RD, motor_dirs::motor_forward
                     });
 }
 
@@ -300,8 +314,8 @@ void DriveControlPanel::on_customRightUp_button_released()
 void DriveControlPanel::on_customDownUp_button_pressed()
 {
     transmit_command({
-                         rover_keys::DT_M_LD, Rover_JSON::motor_backward,
-                         rover_keys::DT_M_RD, Rover_JSON::motor_forward
+                         rover_keys::DT_M_LD, motor_dirs::motor_backward,
+                         rover_keys::DT_M_RD, motor_dirs::motor_forward
                     });
 }
 
@@ -313,8 +327,8 @@ void DriveControlPanel::on_customDownUp_button_released()
 void DriveControlPanel::on_customRightDown_button_pressed()
 {
     transmit_command({
-                         rover_keys::DT_M_LD, Rover_JSON::motor_stop,
-                         rover_keys::DT_M_RD, Rover_JSON::motor_backward
+                         rover_keys::DT_M_LD, motor_dirs::motor_stop,
+                         rover_keys::DT_M_RD, motor_dirs::motor_backward
                     });
 }
 
@@ -349,18 +363,20 @@ void DriveControlPanel::on_customDownDown_button_released()
  *
  * */
 
+void DriveControlPanel::on_speed_lineEdit_textChanged(QString text)
+{
+    if (!text.isEmpty())
+    {
+        ui->speedValue_label->setText(text);
+        ui->speedValue_slider->setSliderPosition(text.toInt());
+    }
+}
+
 void DriveControlPanel::on_speedValue_slider_valueChanged(int x)
 {
     QString s = QString::number(x);
     ui->speedValue_label->setText(s);
     ui->speed_lineEdit->setText(s);
-}
-
-void DriveControlPanel::on_speed_setBtn_clicked()
-{
-    QString value = ui->speed_lineEdit->text();
-    ui->speedValue_label->setText(value);
-    ui->speedValue_slider->setValue(value.toInt());
 }
 
 void DriveControlPanel::on_speedSubmit_button_clicked()

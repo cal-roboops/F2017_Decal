@@ -1,6 +1,7 @@
 #include "armcontrolpanel.h"
 #include "ui_armcontrolpanel.h"
 
+#include <QCloseEvent>
 #include "../RoverSharedGlobals/rover_json.h"
 
 ArmControlPanel::ArmControlPanel(QWidget *parent) :
@@ -25,6 +26,12 @@ ArmControlPanel::~ArmControlPanel()
     delete ui;
 }
 
+void ArmControlPanel::closeEvent(QCloseEvent *event)
+{
+    emit closed();
+    event->accept();
+}
+
 void ArmControlPanel::enableArmControl(bool en)
 {
     this->setEnabled(en);
@@ -41,18 +48,13 @@ void ArmControlPanel::showArmControl(bool en)
     }
 }
 
-void ArmControlPanel::transmit_command(std::list<uint8_t> kv)
-{
-    emit send_data(kv);
-}
-
-
 void ArmControlPanel::on_setBaseAngleBtn_clicked()
 {
     int value = ui->baseAngleLineEdit->text().toInt();
 
     transmit_command({
-                         rover_keys::ARM_BASE_ANGLE, (uint8_t) value
+                         rover_keys::ARM_BASE_ANGLE_UPPER, (uint8_t) ((value >> 8) & 0xFF),
+                         rover_keys::ARM_BASE_ANGLE_LOWER, (uint8_t) (value & 0xFF)
                      });
 }
 
@@ -61,7 +63,8 @@ void ArmControlPanel::on_setBiformAngleBtn_clicked()
     int value = ui->biformAngleLineEdit->text().toInt();
 
     transmit_command({
-                         rover_keys::ARM_BIFORM_ANGLE, (uint8_t) value
+                         rover_keys::ARM_BIFORM_ANGLE_UPPER, (uint8_t) ((value >> 8) & 0xFF),
+                         rover_keys::ARM_BIFORM_ANGLE_LOWER, (uint8_t) (value & 0xFF)
                      });
 }
 
@@ -70,7 +73,12 @@ void ArmControlPanel::on_setElbowAngleBtn_clicked()
     int value = ui->elbowAngleLineEdit->text().toInt();
 
     transmit_command({
-                         rover_keys::ARM_ELBOW_ANGLE, (uint8_t) value
+                         rover_keys::ARM_ELBOW_ANGLE_UPPER, (uint8_t) ((value >> 8) & 0xFF),
+                         rover_keys::ARM_ELBOW_ANGLE_LOWER, (uint8_t) (value & 0xFF)
                      });
 }
 
+void ArmControlPanel::transmit_command(std::list<uint8_t> kv)
+{
+    emit send_data(kv);
+}

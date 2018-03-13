@@ -38,6 +38,30 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::send_data(std::list<uint8_t> data)
+{
+    if (Rover_JSON::isValid(data))
+    {
+        QByteArray byte_data;
+        for (auto it = data.begin(); it != data.end(); it++) byte_data.append((char) *it);
+        socket->write(byte_data);
+        qDebug() << byte_data;
+    } else
+    {
+        qDebug() << "Invalid JSON";
+    }
+}
+
+void MainWindow::drive_closed()
+{
+    ui->showDriveControl_Check->setChecked(false);
+}
+
+void MainWindow::arm_closed()
+{
+    ui->showArmControl_Check->setChecked(false);
+}
+
 void MainWindow::on_connect_clicked()
 {
     // Disconnect from existing socket
@@ -111,21 +135,6 @@ void MainWindow::on_clearRECV_clicked()
     ui->recvData->clear();
 }
 
-
-void MainWindow::send_data(std::list<uint8_t> data)
-{
-    if (Rover_JSON::isValid(data))
-    {
-        QByteArray byte_data;
-        for (auto it = data.begin(); it != data.end(); it++) byte_data.append((char) *it);
-        socket->write(byte_data);
-        qDebug() << byte_data;
-    } else
-    {
-        qDebug() << "Invalid JSON";
-    }
-}
-
 void MainWindow::on_openStream_clicked()
 {
     QString command;
@@ -166,7 +175,7 @@ void MainWindow::on_disconnect()
     }
 }
 
-void MainWindow::on_showDriveControl_Check_clicked() // Show Control Panel Checkbox clicked
+void MainWindow::on_showDriveControl_Check_clicked()
 {
     if(ui->showDriveControl_Check->isChecked()){
         emit showDriveControl(true);

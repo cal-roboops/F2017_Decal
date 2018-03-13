@@ -8,15 +8,20 @@
 
 // Keys enum
 typedef enum {
-    // Critical Controls
+    // Critical/General Controls
     EMERGENCY_STOP = 0,
     SHUT_DOWN,
 
-    // Start of DRIVE controls
+    // MUST REMAIN AT END OF CRITICAL SEGMENT
+    // ----------------
+    CRITICAL_END,
+    // ----------------
+
+    // START of DRIVE controls
     DT_M_Speed,
 
-    DT_M_LD,
-    DT_M_RD,
+    DT_M_LD, // Value: 0 - Stop, 1 - Forward, 2 - Backward
+    DT_M_RD, // Value: 0 - Stop, 1 - Forward, 2 - Backward
 
     // MUST REMAIN IN ORDER
     // ----------------
@@ -28,20 +33,50 @@ typedef enum {
     DT_S_RB,
     // ----------------
 
+    // MUST REMAIN AT END OF DRIVE SEGMENT
+    // ----------------
     DRIVE_END,
-    // Start of ARM controls
-    ARM_BASE_ANGLE,
-    ARM_BIFORM_ANGLE,
-    ARM_ELBOW_ANGLE,
+    // ----------------
 
+    // START of ARM controls
+    ARM_BASE_ANGLE_UPPER,
+    ARM_BASE_ANGLE_LOWER,
+    ARM_BIFORM_ANGLE_UPPER,
+    ARM_BIFORM_ANGLE_LOWER,
+    ARM_ELBOW_ANGLE_UPPER,
+    ARM_ELBOW_ANGLE_LOWER,
+
+    // MUST REMAIN AT END OF ARM SEGMENT
+    // ----------------
     ARM_END,
+    // ----------------
+
     // START of OTHER controls
     CAMERA_PAN,
     CAMERA_TILT,
     DRAWER_OPEN,
+    COMM_CONN,
+    EMERG_CONN,
+    COMMAND_STATUS, // Value: 0 - Success, 1 - Failed, 2 - Dropped
 
+    // MUST REMAIN AT END OF ENUM
+    // ----------------
     ENUM_END
+    // ----------------
 } rover_keys;
+
+typedef enum {
+    motor_stop = 0,
+    motor_forward,
+    motor_backward
+} motor_dirs;
+
+typedef enum {
+    servo_zero = 90,
+    servo_fourfive = servo_zero+45,
+    servo_negfourfive = servo_zero-45,
+    servo_ninezero = servo_zero+90,
+} servo_dirs;
 
 // Dynamic JSON creation
 class Rover_JSON
@@ -49,15 +84,6 @@ class Rover_JSON
 public:
     Rover_JSON() { return; }
     ~Rover_JSON() { return; }
-
-    static uint8_t motor_stop;
-    static uint8_t motor_forward;
-    static uint8_t motor_backward;
-
-    static uint8_t servo_zero;
-    static uint8_t servo_fourfive;
-    static uint8_t servo_negfourfive;
-    static uint8_t servo_ninezero;
 
     static std::list<uint8_t> zeroAll;
 
@@ -71,8 +97,6 @@ public:
 
     static bool isValid(std::list<uint8_t> jsonVEC);
 };
-
-// Precompiled JSONs for custom positions/targets
 
 
 #endif // ROVER_JSON_H

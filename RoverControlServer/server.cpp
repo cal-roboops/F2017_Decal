@@ -10,6 +10,7 @@ Server::Server(QObject *parent) :
     this->roverReady = false;
 
     connect(this->roverThread, SIGNAL(rover_ready(bool)), this, SLOT(rover_ready(bool)));
+    this->roverThread->start();
 }
 
 Server::~Server()
@@ -57,27 +58,34 @@ void Server::incomingConnection(qintptr socket_descriptor)
 
     if (socket->peerAddress().isEqual(*(this->roverIP)))
     {
-        if (this->roverThread->commConnected())
+        if (!this->roverThread->connected())
         {
-            this->roverThread->add_emerg_connection(socket);            
-            this->roverThread->start();
+            this->roverThread->add_connection(socket);
         } else
         {
-            this->roverThread->add_comm_connection(socket);
+            qDebug() << "Error too many rover connections";
         }
     } else
     {
+        // Create new client thread
         ClientThread *clientThread = new ClientThread(socket, this->roverReady, this);
         this->clientThreads.append(clientThread);
 
+        // Client to Rover Connections
         connect(clientThread, SIGNAL(send_command(int, QByteArray)), this->roverThread,
                 SLOT(receive_command(int, QByteArray)), Qt::QueuedConnection);
+
+        // Rover to Client Connections
+        connect(clientThread, SIGNAL(receive_response(int, QByteArray)), this->roverThread,
+                SLOT(respond_to_client(int, QByteArray)));
         connect(this->roverThread, SIGNAL(rover_ready(bool)), clientThread,
                 SLOT(rover_ready(bool)));
 
+        // Client to delete connections
         connect(clientThread, SIGNAL(finished()), clientThread, SLOT(deleteLater()));
         connect(clientThread, SIGNAL(finished()), this, SLOT(remove_client()));
 
+        // Start Client Thread
         clientThread->start();
         update_client_count();
     }

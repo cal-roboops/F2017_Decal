@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>629</width>
-    <height>491</height>
+    <width>618</width>
+    <height>462</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <rect>
       <x>210</x>
       <y>10</y>
-      <width>441</width>
+      <width>411</width>
       <height>451</height>
      </rect>
     </property>
@@ -80,7 +80,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QPushButton" name="regularServoSet_button">
+     <widget class="QPushButton" name="regularServoSubmit_button">
       <property name="geometry">
        <rect>
         <x>240</x>
@@ -95,7 +95,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Set</string>
+       <string>Submit</string>
       </property>
      </widget>
      <widget class="QPushButton" name="regularDriveRight_button">
@@ -578,7 +578,7 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QPushButton" name="customServoSet_button">
+     <widget class="QPushButton" name="customServoSubmit_button">
       <property name="geometry">
        <rect>
         <x>169</x>
@@ -593,7 +593,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Set</string>
+       <string>Submit</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="customServoLeftFront_edit">
@@ -743,8 +743,8 @@
    <widget class="QPushButton" name="speedSubmit_button">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>440</y>
+      <x>120</x>
+      <y>400</y>
       <width>71</width>
       <height>31</height>
      </rect>
@@ -798,9 +798,9 @@
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>0</y>
+      <y>-10</y>
       <width>20</width>
-      <height>501</height>
+      <height>481</height>
      </rect>
     </property>
     <property name="orientation">
@@ -813,21 +813,8 @@
       <x>20</x>
       <y>400</y>
       <width>81</width>
-      <height>22</height>
+      <height>31</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="speed_setBtn">
-    <property name="geometry">
-     <rect>
-      <x>124</x>
-      <y>400</y>
-      <width>61</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Set</string>
     </property>
    </widget>
    <zorder>customDrive_radio</zorder>
@@ -840,7 +827,6 @@
    <zorder>speedValue_label</zorder>
    <zorder>line</zorder>
    <zorder>speed_lineEdit</zorder>
-   <zorder>speed_setBtn</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

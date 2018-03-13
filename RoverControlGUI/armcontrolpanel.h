@@ -14,8 +14,10 @@ class ArmControlPanel : public QMainWindow
 public:
     explicit ArmControlPanel(QWidget *parent = 0);
     ~ArmControlPanel();
+    virtual void closeEvent(QCloseEvent *event);
 
 signals:
+    void closed();
     void send_data(std::list<uint8_t> data);
 
 public slots:

@@ -25,6 +25,8 @@ signals:
 
 public slots:
     void send_data(std::list<uint8_t> data);
+    void drive_closed();
+    void arm_closed();
 
 private slots:
     void on_connect_clicked();
