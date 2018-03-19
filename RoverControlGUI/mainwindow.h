@@ -23,10 +23,13 @@ signals:
     void enableArmControl(bool en);
     void showArmControl(bool en);
 
+    void showDataVisualizer(bool en);
+
 public slots:
     void send_data(std::list<uint8_t> data);
     void drive_closed();
     void arm_closed();
+    void dataVisualizer_closed();
 
 private slots:
     void on_connect_clicked();
@@ -62,6 +65,8 @@ private slots:
 
     void on_shutdownBtn_clicked();
     void on_eStopButton_clicked();
+
+    void on_dataVisualCheckBox_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "drivecontrolpanel.h"
 #include "armcontrolpanel.h"
+#include "datavisualizer.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +14,7 @@ int main(int argc, char *argv[])
     dc.hide();
     ArmControlPanel ac;
     ac.hide();
+    DataVisualizer dv;
 
     // Connect send data signals and slots
     QObject::connect(&dc, SIGNAL(send_data(std::list<uint8_t>)), &w, SLOT(send_data(std::list<uint8_t>)));
@@ -27,6 +29,10 @@ int main(int argc, char *argv[])
     QObject::connect(&w, SIGNAL(enableArmControl(bool)), &ac, SLOT(enableArmControl(bool)));
     QObject::connect(&w, SIGNAL(showArmControl(bool)), &ac, SLOT(showArmControl(bool)));
     QObject::connect(&ac, SIGNAL(closed()), &w, SLOT(arm_closed()));
+
+    // Connect data visualizer show/hide signals and slots
+    QObject::connect(&w, SIGNAL(showDataVisualizer(bool)), &dv, SLOT(showDataVisualizer(bool)));
+    QObject::connect(&dv, SIGNAL(closed()), &w, SLOT(dataVisualizer_closed()));
 
     return a.exec();
 }

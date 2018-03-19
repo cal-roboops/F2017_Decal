@@ -6,7 +6,7 @@
 
 QT       += core gui network
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets charts
 
 TARGET = RoverControlGUI
 TEMPLATE = app
@@ -28,15 +28,18 @@ SOURCES += \
         mainwindow.cpp \
     ../RoverSharedGlobals/rover_json.cpp \
     armcontrolpanel.cpp \
-    drivecontrolpanel.cpp
+    drivecontrolpanel.cpp \
+    datavisualizer.cpp
 
 HEADERS += \
         mainwindow.h \
     ../RoverSharedGlobals/rover_json.h \
     armcontrolpanel.h \
-    drivecontrolpanel.h
+    drivecontrolpanel.h \
+    datavisualizer.h
 
 FORMS += \
         mainwindow.ui \
     armcontrolpanel.ui \
-    drivecontrolpanel.ui
+    drivecontrolpanel.ui \
+    datavisualizer.ui

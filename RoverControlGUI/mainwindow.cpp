@@ -62,6 +62,11 @@ void MainWindow::arm_closed()
     ui->showArmControl_Check->setChecked(false);
 }
 
+void MainWindow::dataVisualizer_closed()
+{
+    ui->dataVisualCheckBox->setChecked(false);
+}
+
 void MainWindow::on_connect_clicked()
 {
     // Disconnect from existing socket
@@ -277,6 +282,17 @@ void MainWindow::on_shutdownBtn_clicked()
     send_data({
                  rover_keys::SHUT_DOWN, 1
              });
+}
+
+void MainWindow::on_dataVisualCheckBox_clicked()
+{
+    qDebug() << "Data visualizer selected.";
+    if (ui->dataVisualCheckBox->isChecked()) {
+        emit showDataVisualizer(true);
+    }
+    else {
+        emit showDataVisualizer(false);
+    }
 }
 
 
