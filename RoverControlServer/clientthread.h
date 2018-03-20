@@ -22,10 +22,9 @@ public slots:
     void receive_response(int clientSocketDescriptor, QByteArray response);
 
 private:
-    bool isBusy;
     bool roverReady;
+    int threadSocketDescriptor;
     QTcpSocket *clientSocket;
-    QString error(QString message);
 };
 
 #endif // CLIENTTHREAD_H

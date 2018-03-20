@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTcpSocket>
+#include <QCloseEvent>
 
 namespace Ui {
 class MainWindow;
@@ -15,6 +16,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    virtual void closeEvent(QCloseEvent *event);
 
 signals:
     void enableDriveControl(bool en);
@@ -73,6 +75,9 @@ private:
 
     QTcpSocket *socket;
     bool disconnectPressed;
+
+    bool connected();
+    bool unconnected();
 };
 
 #endif // MAINWINDOW_H

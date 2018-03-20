@@ -7,14 +7,24 @@
 
 int main(int argc, char *argv[])
 {
+    // Create main application instance
     QApplication a(argc, argv);
+
+    // Create the main control window
     MainWindow w;
     w.show();
-    DriveControlPanel dc;
+
+    // Create the drive control window
+    DriveControlPanel dc(&w);
     dc.hide();
-    ArmControlPanel ac;
+
+    // Create the arm control window
+    ArmControlPanel ac(&w);
     ac.hide();
-    DataVisualizer dv;
+
+    // Create the data visualizer window
+    DataVisualizer dv(&w);
+    dv.hide();
 
     // Connect send data signals and slots
     QObject::connect(&dc, SIGNAL(send_data(std::list<uint8_t>)), &w, SLOT(send_data(std::list<uint8_t>)));
@@ -34,5 +44,6 @@ int main(int argc, char *argv[])
     QObject::connect(&w, SIGNAL(showDataVisualizer(bool)), &dv, SLOT(showDataVisualizer(bool)));
     QObject::connect(&dv, SIGNAL(closed()), &w, SLOT(dataVisualizer_closed()));
 
+    // Start execution
     return a.exec();
 }

@@ -14,23 +14,27 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// Tell server to start
 void MainWindow::on_serverOn_clicked()
 {
     emit server_start();
     ui->serverStatus->setText("Online");
 }
 
+// Tell server to stop
 void MainWindow::on_serverOff_clicked()
 {
     emit server_terminate();
     ui->serverStatus->setText("Offline");
 }
 
+// Update client count display
 void MainWindow::update_client_count(int val)
 {
     ui->clientCount->display(val);
 }
 
+// Update rover connected display
 void MainWindow::rover_connected(bool en)
 {
     ui->roverConnected->setValue(en);

@@ -2,6 +2,7 @@
 #define ARMCONTROLPANEL_H
 
 #include <QMainWindow>
+#include <QCloseEvent>
 
 namespace Ui {
 class ArmControlPanel;
@@ -31,6 +32,7 @@ private slots:
 
 private:
     Ui::ArmControlPanel *ui;
+    bool isEnabled;
 
     void transmit_command(std::list<uint8_t> kv);
 };

@@ -4,12 +4,13 @@
 #include <QCloseEvent>
 #include <QtCharts>
 
-
 DataVisualizer::DataVisualizer(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::DataVisualizer)
 {
     ui->setupUi(this);
+
+    // Setup combo box
     QStringList encoders = (QStringList()<<"Encoder A"<<"Encoder B"<<"Encoder C");
     ui->encodersSpinner->addItems(encoders);
 
@@ -25,12 +26,14 @@ DataVisualizer::~DataVisualizer()
     delete ui;
 }
 
+// Used to uncheck box on main GUI if X button pressed on window
 void DataVisualizer::closeEvent(QCloseEvent *event)
 {
     emit closed();
     event->accept();
 }
 
+// Shows/hides the window
 void DataVisualizer::showDataVisualizer(bool en)
 {
     if (en)
@@ -41,6 +44,7 @@ void DataVisualizer::showDataVisualizer(bool en)
     }
 }
 
+// Initialize the graph object (add comments to section when finished)
 void DataVisualizer::setupGraph() {
 
     series = new QSplineSeries();
@@ -152,6 +156,7 @@ void DataVisualizer::setupGraph() {
 
 }
 
+// Adds data set to the graph display
 void DataVisualizer::on_addDataPointsBtn_clicked()
 {
     QString addedEncoder = ui->encodersSpinner->itemText(ui->encodersSpinner->currentIndex());
@@ -162,6 +167,7 @@ void DataVisualizer::on_addDataPointsBtn_clicked()
 
 }
 
+// Removes data set from the graph display
 void DataVisualizer::on_removeActiveEncoderBtn_clicked()
 {
     QString removedEncoder = ui->activeEncodersSpinner->itemText(ui->activeEncodersSpinner->currentIndex());
@@ -172,11 +178,13 @@ void DataVisualizer::on_removeActiveEncoderBtn_clicked()
 
 }
 
+// Removes all data sets from the graph display
 void DataVisualizer::on_removeAllEncodersBtn_clicked()
 {
     ui->activeEncodersSpinner->clear();
 }
 
+// Sorts the data drop downs
 void DataVisualizer::sortEncodersSpinner()
 {
     QSortFilterProxyModel* proxy = new QSortFilterProxyModel(ui->encodersSpinner);
@@ -186,6 +194,7 @@ void DataVisualizer::sortEncodersSpinner()
     ui->encodersSpinner->model()->sort(0);
 }
 
+// Sorts the data drop downs
 void DataVisualizer::sortActiveEncoderSpinner()
 {
     QSortFilterProxyModel* proxy = new QSortFilterProxyModel(ui->activeEncodersSpinner);
@@ -195,6 +204,7 @@ void DataVisualizer::sortActiveEncoderSpinner()
     ui->activeEncodersSpinner->model()->sort(0);
 }
 
+// Resets the X-axis of the graph to the new length (comment func when finished)
 void DataVisualizer::on_setNumPreviousDataPntsBtn_clicked()
 {
     chart->removeSeries(series);

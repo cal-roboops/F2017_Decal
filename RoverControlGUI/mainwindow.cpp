@@ -18,11 +18,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     socket = new QTcpSocket();
     disconnectPressed = false;
-    connect(socket, SIGNAL(readyRead()), this, SLOT(on_recvMSG()));
+    connect(socket, SIGNAL(readyRead()), this, SLOT(on_recvMSG()), Qt::QueuedConnection);
+    connect(socket, SIGNAL(disconnected()), this, SLOT(on_disconnect()));
 
     ui->driveMode_NonControl_Radio->setChecked(true);
     ui->armMode_NonControl_Radio->setChecked(true);
-    on_driveMode_NonControl_Radio_clicked();
 
     ui->drawer_LineEdit->setValidator(new QIntValidator(0, 100, this));
     ui->camera_LineEdit->setValidator(new QIntValidator(0, 360, this));
@@ -38,12 +38,23 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// Handles if X button pressed on window
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    on_disconnect_clicked();
+    event->accept();
+}
+
 void MainWindow::send_data(std::list<uint8_t> data)
 {
     if (Rover_JSON::isValid(data))
     {
         QByteArray byte_data;
-        for (auto it = data.begin(); it != data.end(); it++) byte_data.append((char) *it);
+        for (auto it = data.begin(); it != data.end(); it++)
+        {
+            byte_data.append((char) *it);
+        }
+
         socket->write(byte_data);
         qDebug() << byte_data;
     } else
@@ -90,6 +101,7 @@ void MainWindow::on_connect_clicked()
     } else
     {
         msg += "Connected to " + newPeer;
+        socket->readAll();
     }
 
     // Update info label
@@ -106,14 +118,13 @@ void MainWindow::on_disconnect_clicked()
     conPeer += QString::number(socket->peerPort()) + "! ";
 
     // Disconnect if connected
-    if (socket->state() == QTcpSocket::ConnectedState)
+    if (connected())
     {
         socket->disconnectFromHost();
     }
 
     // Need to wait for disconnection
-    if (socket->state() != QTcpSocket::UnconnectedState
-            && !socket->waitForDisconnected(5000))
+    if (!unconnected() && !socket->waitForDisconnected(5000))
     {
         disMsg = "Failed to disconnect from " + conPeer;
     } else
@@ -128,10 +139,28 @@ void MainWindow::on_disconnect_clicked()
 void MainWindow::on_recvMSG()
 {
     QByteArray data;
-    while (!socket->atEnd())
+    data = socket->readAll();
+    ui->recvData->append(data.data());
+
+    qDebug() << data;
+
+    if ((data.length() == 2) && ((char) data[0] == rover_keys::TAKE_CONTROL))
     {
-        data = socket->readAll();
-        ui->recvData->append(data.data());
+        switch ((char) data[1])
+        {
+            case rover_modes::drive:
+                emit enableDriveControl(true);
+                emit enableArmControl(false);
+                break;
+            case rover_modes::arm:
+                emit enableDriveControl(false);
+                emit enableArmControl(true);
+                break;
+            default:
+                emit enableDriveControl(false);
+                emit enableArmControl(false);
+                break;
+        }
     }
 }
 
@@ -178,45 +207,80 @@ void MainWindow::on_disconnect()
     {
         ui->infoLabel->setText("Connection Lost!");
     }
+
+    ui->driveMode_NonControl_Radio->setChecked(true);
+    emit enableDriveControl(false);
+
+    ui->armMode_NonControl_Radio->setChecked(true);
+    emit enableArmControl(false);
 }
 
 void MainWindow::on_showDriveControl_Check_clicked()
 {
-    if(ui->showDriveControl_Check->isChecked()){
+    if(ui->showDriveControl_Check->isChecked())
+    {
         emit showDriveControl(true);
-    }
-    else{
+    } else
+    {
        emit showDriveControl(false);
     }
 }
 
 void MainWindow::on_driveMode_Control_Radio_clicked()
 {
-    emit enableDriveControl(true);
+    // Only enter drive control if connected and arm control not enabled
+    if (connected() && !ui->armMode_Control_Radio->isChecked())
+    {
+        send_data({
+                      rover_keys::TAKE_CONTROL,
+                      rover_modes::drive
+                  });
+    } else
+    {
+        ui->driveMode_NonControl_Radio->setChecked(true);
+    }
 }
 
 void MainWindow::on_driveMode_NonControl_Radio_clicked()
 {
-    emit enableDriveControl(false);
+    send_data({
+                  rover_keys::TAKE_CONTROL,
+                  rover_modes::none
+              });
 }
 
 void MainWindow::on_showArmControl_Check_clicked()
 {
-    if (ui->showArmControl_Check->isChecked()) {
+    if (ui->showArmControl_Check->isChecked())
+    {
         emit showArmControl(true);
-    } else {
+    } else
+    {
         emit showArmControl(false);
     }
 }
 
 void MainWindow::on_armMode_Control_Radio_clicked()
 {
-    emit enableArmControl(true);
+    // Only enter arm control if connected and drive control not enabled
+    if (connected() && !ui->driveMode_Control_Radio->isChecked())
+    {
+        send_data({
+                      rover_keys::TAKE_CONTROL,
+                      rover_modes::arm
+                  });
+    } else
+    {
+        ui->armMode_NonControl_Radio->setChecked(true);
+    }
 }
 
 void MainWindow::on_armMode_NonControl_Radio_clicked()
 {
-    emit enableArmControl(false);
+    send_data({
+                  rover_keys::TAKE_CONTROL,
+                  rover_modes::none
+              });
 }
 
 void MainWindow::on_cameraMast_dial_valueChanged(int position)
@@ -295,4 +359,13 @@ void MainWindow::on_dataVisualCheckBox_clicked()
     }
 }
 
+bool MainWindow::connected()
+{
+    return (socket->state() == QTcpSocket::ConnectedState);
+}
+
+bool MainWindow::unconnected()
+{
+    return (socket->state() == QTcpSocket::UnconnectedState);
+}
 

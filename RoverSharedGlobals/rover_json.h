@@ -57,7 +57,8 @@ typedef enum {
     DRAWER_OPEN,
     COMM_CONN, // Value: 0 - Disconnect, 1 - Connect
     EMERG_CONN, // Value: 0 - Disconnect, 1 - Connect
-    COMMAND_STATUS, // Value: 0 - Success, 1 - Failed, 2 - Dropped
+    COMMAND_STATUS, // See command_status enum
+    TAKE_CONTROL,
 
     // MUST REMAIN AT END OF ENUM
     // ----------------
@@ -77,6 +78,21 @@ typedef enum {
     servo_negfourfive = servo_zero-45,
     servo_ninezero = servo_zero+90,
 } servo_dirs;
+
+typedef enum {
+    none = 0,
+    drive,
+    arm
+} rover_modes;
+
+typedef enum {
+    success = 0,
+    failed,
+    busy,
+    invalid,
+    not_controller,
+    rover_not_ready
+} command_status;
 
 // Dynamic JSON creation
 class Rover_JSON

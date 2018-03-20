@@ -61,5 +61,5 @@ std::list<uint8_t> Rover_JSON::sidewinderServo {
 
 bool Rover_JSON::isValid(std::list<uint8_t> jsonVEC)
 {
-    return ((jsonVEC.size() % 2) == 0);
+    return ((jsonVEC.size() != 0) && !(jsonVEC.size() & 1));
 }

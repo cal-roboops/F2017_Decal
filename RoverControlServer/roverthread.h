@@ -4,6 +4,9 @@
 #include <QObject>
 #include <QThread>
 #include <QTcpSocket>
+#include <QMutex>
+
+#include "../RoverSharedGlobals/rover_json.h"
 
 class RoverThread : public QThread {
     Q_OBJECT
@@ -23,6 +26,7 @@ signals:
 public slots:
     void analyze_response();
     void disconnect_rover();
+    void disconnect_controller();
     void receive_command(int clientSocketDescriptor, QByteArray command);
 
     void setup_socket();
@@ -31,8 +35,11 @@ public slots:
 private:
     QTcpSocket *roverComm;
     QTcpSocket *roverEmerg;
+
     int currClientSocketDescriptor;
-    bool isBusy;
+    QMutex isControlled;
+    QMutex isBusy;
+    rover_modes mode;
 
     void emitState();
 };

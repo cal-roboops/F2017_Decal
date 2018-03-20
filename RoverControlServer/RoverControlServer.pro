@@ -30,7 +30,7 @@ SOURCES += \
     clientthread.cpp \
     roverthread.cpp \
     ../RoverSharedGlobals/rover_json.cpp \
-    serverthread.cpp
+    datathread.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,7 +38,7 @@ HEADERS += \
     clientthread.h \
     roverthread.h \
     ../RoverSharedGlobals/rover_json.h \
-    serverthread.h
+    datathread.h
 
 FORMS += \
         mainwindow.ui

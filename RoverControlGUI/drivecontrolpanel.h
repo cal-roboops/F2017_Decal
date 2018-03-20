@@ -2,6 +2,7 @@
 #define DRIVECONTROLPANEL_H
 
 #include <QMainWindow>
+#include <QCloseEvent>
 
 namespace Ui {
 class DriveControlPanel;
@@ -29,9 +30,6 @@ private slots:
     void on_regularDrive_radio_clicked();
     void on_tankDrive_radio_clicked();
     void on_customDrive_radio_clicked();
-
-    void keyPressEvent(QKeyEvent * event);
-    void keyReleaseEvent(QKeyEvent * event);
 
     // Regular Drive
     void on_regularServoValue_edit_textChanged(QString text);
@@ -82,9 +80,13 @@ private slots:
     void on_speedValue_slider_valueChanged(int x);
     void on_speedSubmit_button_clicked();
 
+    // Key handlers
+    void keyPressEvent(QKeyEvent * event);
+    void keyReleaseEvent(QKeyEvent * event);
 
 private:
     Ui::DriveControlPanel *ui;
+    bool isEnabled;
 
     void transmit_command(std::list<uint8_t> kv);
 };

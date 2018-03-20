@@ -1,11 +1,13 @@
 #include "clientthread.h"
 
+#include "../RoverSharedGlobals/rover_json.h"
+
 ClientThread::ClientThread(QTcpSocket *clientSocket, bool roverReady, QObject *parent) :
     QThread(parent)
 {
+    this->threadSocketDescriptor = clientSocket->socketDescriptor();
     this->clientSocket = clientSocket;
     this->roverReady = roverReady;
-    this->isBusy = false;
 }
 
 void ClientThread::run()
@@ -17,8 +19,17 @@ void ClientThread::run()
 
 void ClientThread::disconnect_client()
 {
-    this->clientSocket->deleteLater();
-    exit(0);
+    QByteArray a;
+    a.append((char) rover_keys::TAKE_CONTROL);
+    a.append((char) rover_modes::none);
+    emit send_command(this->threadSocketDescriptor, a);
+
+    if (this->clientSocket->state() == QTcpSocket::ConnectedState)
+    {
+        this->clientSocket->disconnectFromHost();
+    }
+
+    this->exit();
 }
 
 void ClientThread::rover_ready(bool en)
@@ -33,43 +44,28 @@ void ClientThread::read_and_send_command()
 
     if (buf.isEmpty())
     {
-//        QString err = error("ERROR: not a valid command");
-//        this->clientSocket->write(err.toStdString().c_str());
         return;
     }
 
-    /*if (command.begin().key().toInt() == -1)
-     * {
-        //EMERGENCY
-    } else*/ if (!this->isBusy && this->roverReady)
+    if (this->roverReady)
     {
-        emit send_command(this->clientSocket->socketDescriptor(), buf);
-        this->isBusy = true;
+        emit send_command(this->threadSocketDescriptor, buf);
     } else
     {
-        QString err = error("ERROR: rover busy or disconnected");
-        this->clientSocket->write(buf);
+        emit send_command(this->threadSocketDescriptor, buf);
+//        this->clientSocket->write({
+//                                      rover_keys::COMMAND_STATUS,
+//                                      command_status::rover_not_ready
+//                                  });
     }
 }
 
 void ClientThread::receive_response(int clientSocketDescriptor, QByteArray response)
 {
-    if (this->clientSocket->socketDescriptor() != clientSocketDescriptor)
+    if ((clientSocketDescriptor != 0) && (this->threadSocketDescriptor != clientSocketDescriptor))
     {
         return;
     }
 
-    QString *strJson = new QString(response);
-
-    this->clientSocket->write(strJson->toStdString().c_str());
-    this->isBusy = false;
-
-    disconnect(sender(), SIGNAL(respond_to_client(int, QByteArray)), this, SLOT(receive_response(int, QByteArray)));
-
-    //update other clients if needed
-}
-
-QString ClientThread::error(QString message)
-{
-    return message + "\n";
+    this->clientSocket->write(response);
 }
