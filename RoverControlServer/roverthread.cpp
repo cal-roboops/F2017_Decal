@@ -90,6 +90,8 @@ void RoverThread::disconnect_controller()
 // Gets a command from the client and passes it to the rover
 void RoverThread::receive_command(int clientSocketDescriptor, QByteArray command)
 {
+    QByteArray resp;
+
     // Check valid JSON
     std::list<uint8_t> comm;
     for (auto i = command.cbegin(); i != command.cend(); i++)
@@ -98,71 +100,78 @@ void RoverThread::receive_command(int clientSocketDescriptor, QByteArray command
     }
     if (!Rover_JSON::isValid(comm))
     {
-        emit respond_to_client(clientSocketDescriptor, {rover_keys::COMMAND_STATUS, command_status::invalid});
+        resp.append((char) rover_keys::COMMAND_STATUS);
+        resp.append((char) command_status::invalid);
+        emit respond_to_client(clientSocketDescriptor, resp);
         return;
     }
 
     // Check if emergency command
     char key = (char) command[0];
-    if ((command.length() == 2)
-               && ((key == rover_keys::EMERGENCY_STOP)
-                   || (key == rover_keys::SHUT_DOWN)))
+    switch (key)
     {
-        this->roverEmerg->write(command);
+        case rover_keys::EMERGENCY_STOP:
+        case rover_keys::SHUT_DOWN:
+            this->roverEmerg->write(command);
+            return;
     }
 
     // Verify controller thread & valid command
     if ((currClientSocketDescriptor != 0) && (currClientSocketDescriptor != clientSocketDescriptor))
     {
-        emit respond_to_client(clientSocketDescriptor, {rover_keys::COMMAND_STATUS, command_status::not_controller});
+        resp.append((char) rover_keys::COMMAND_STATUS);
+        resp.append((char) command_status::not_controller);
+        emit respond_to_client(clientSocketDescriptor, resp);
         return;
     }
 
-    // Check if requested to be controller or to send message
-    if ((command.length() == 2) && (key == rover_keys::TAKE_CONTROL))
+    // Check if request to be controller or to send message
+    char value = (char) command[1];
+    switch (key)
     {
-        char value = (char) command[1];
-        if ((value == rover_modes::drive) || (value == rover_modes::arm))
-        {
-            if (isControlled.tryLock())
+        case rover_keys::TAKE_CONTROL:
+            resp.append(key);
+            switch (value)
             {
-                emit respond_to_client(clientSocketDescriptor, command);
-                this->currClientSocketDescriptor = clientSocketDescriptor;
-                this->mode = (rover_modes) (char) command[1];
-                return;
+                case rover_modes::mode_1:
+                case rover_modes::mode_2:
+                    if (isControlled.tryLock())
+                    {
+                        resp.append(value+1);
+                        currClientSocketDescriptor = clientSocketDescriptor;
+                    } else
+                    {
+                        resp.append(value+2);
+                    }
+                    break;
+                case rover_modes::no_mode:
+                    if (currClientSocketDescriptor == clientSocketDescriptor)
+                    {
+                        resp.append(value);
+                        currClientSocketDescriptor = 0;
+                        isControlled.tryLock();
+                        isControlled.unlock();
+                    }
+                    break;
+                default:
+                    resp.append(value);
+                    break;
+            }
+            break;
+        default:
+            resp.append((char) rover_keys::COMMAND_STATUS);
+            if (isBusy.tryLock())
+            {
+                roverComm->write(command);
+                resp.append((char) command_status::sent);
             } else
             {
-                emit respond_to_client(clientSocketDescriptor, {rover_keys::COMMAND_STATUS, command_status::failed});
-                return;
+                resp.append((char) command_status::busy);
             }
-        } else if ((value == rover_modes::none)
-                   && (this->currClientSocketDescriptor == clientSocketDescriptor))
-        {
-            emit respond_to_client(clientSocketDescriptor, command);
-            this->currClientSocketDescriptor = 0;
-            isControlled.tryLock();
-            isControlled.unlock();
-            return;
-        } else
-        {
-            emit respond_to_client(clientSocketDescriptor, {rover_keys::COMMAND_STATUS, command_status::not_controller});
-            return;
-        }
-    } else if (currClientSocketDescriptor == clientSocketDescriptor)
-    {
-        if (this->isBusy.tryLock())
-        {
-            this->roverComm->write(command);
-        } else
-        {
-            emit respond_to_client(clientSocketDescriptor, {rover_keys::COMMAND_STATUS, command_status::busy});
-            return;
-        }
-    } else
-    {
-        emit respond_to_client(clientSocketDescriptor, {rover_keys::COMMAND_STATUS, command_status::not_controller});
-        return;
+            break;
     }
+
+    emit respond_to_client(clientSocketDescriptor, resp);
 }
 
 // Setup rover socket when first data recieved
@@ -172,37 +181,56 @@ void RoverThread::setup_socket()
     QTcpSocket *socket = (QTcpSocket*) sender();
     buf = socket->readAll();
 
-    if ((buf.length() != 2) || (((char) buf[1]) != 1)) return;
+    std::list<uint8_t> comm;
+    for (auto i = buf.cbegin(); i != buf.cend(); i++)
+    {
+        comm.push_back((char) (*i));
+    }
+    if (!Rover_JSON::isValid(comm)) return;
 
-    char key = (char) buf[0];
     bool success = false;
-    if ((key == rover_keys::COMM_CONN) && !this->roverComm)
+    char key = (char) buf[0];
+    char value = (char) buf[1];
+    switch (key)
     {
-        success = true;
-        this->roverComm = socket;
-        qDebug() << "Rover Comm Connected";
-    } else if ((key == rover_keys::EMERG_CONN) && !this->roverEmerg)
+        case rover_keys::COMM_CONN:
+            if (!this->roverComm && (value == command_status::connect))
+            {
+                success = true;
+                this->roverComm = socket;
+                qDebug() << "Rover Comm Connected";
+            }
+            break;
+        case rover_keys::EMERG_CONN:
+            if (!this->roverEmerg && (value == command_status::connect))
+            {
+                success = true;
+                this->roverEmerg = socket;
+                qDebug() << "Rover Emerg Connected";
+            }
+            break;
+    }
+
+    QByteArray resp;
+    resp.append(key);
+    if (success)
     {
-        success = true;
-        this->roverEmerg = socket;
-        qDebug() << "Rover Emerg Connected";
+        resp.append((char) command_status::success);
+        disconnect(socket, SIGNAL(readyRead()), this, SLOT(setup_socket()));
+        connect(socket, SIGNAL(readyRead()), this, SLOT(analyze_response()));
     } else if (this->roverComm && this->roverEmerg)
     {
         success = false;
         socket->disconnectFromHost();
+        resp.append((char) command_status::already_connected);
         qDebug() << "Connection(s) already establised!";
     } else
     {
-        success = false;
-        qDebug() << "JSON Key error!";
+        resp.append((char) command_status::invalid);
+        qDebug() << "Rover JSON Key error!";
     }
 
-    if (success)
-    {
-        disconnect(socket, SIGNAL(readyRead()), this, SLOT(setup_socket()));
-        connect(socket, SIGNAL(readyRead()), this, SLOT(analyze_response()));
-    }
-
+    socket->write(resp);
     emitState();
 }
 

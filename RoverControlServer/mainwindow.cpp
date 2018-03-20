@@ -14,6 +14,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// Handles if X button pressed on window
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    on_serverOff_clicked();
+    event->accept();
+}
+
 // Tell server to start
 void MainWindow::on_serverOn_clicked()
 {

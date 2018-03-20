@@ -55,8 +55,8 @@ typedef enum {
     CAMERA_PAN,
     CAMERA_TILT,
     DRAWER_OPEN,
-    COMM_CONN, // Value: 0 - Disconnect, 1 - Connect
-    EMERG_CONN, // Value: 0 - Disconnect, 1 - Connect
+    COMM_CONN, // See command_status enum
+    EMERG_CONN, // See command_status enum
     COMMAND_STATUS, // See command_status enum
     TAKE_CONTROL,
 
@@ -79,19 +79,43 @@ typedef enum {
     servo_ninezero = servo_zero+90,
 } servo_dirs;
 
+// Keep modes in order
+// i.e. m -> m_succ -> m_fail
 typedef enum {
-    none = 0,
-    drive,
-    arm
+    no_mode = 0,
+
+    mode_1,
+    mode_1_success,
+    mode_1_fail,
+
+    mode_2,
+    mode_2_success,
+    mode_2_fail,
+
+    mode_3,
+    mode_3_success,
+    mode_3_fail,
+
+    mode_4,
+    mode_4_success,
+    mode_4_fail,
+
+    mode_5,
+    mode_5_success,
+    mode_5_fail
 } rover_modes;
 
 typedef enum {
     success = 0,
     failed,
+    sent,
     busy,
     invalid,
     not_controller,
-    rover_not_ready
+    rover_not_ready,
+    already_connected,
+    connect,
+    disconnect
 } command_status;
 
 // Dynamic JSON creation

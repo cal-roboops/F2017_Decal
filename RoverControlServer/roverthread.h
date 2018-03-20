@@ -39,7 +39,6 @@ private:
     int currClientSocketDescriptor;
     QMutex isControlled;
     QMutex isBusy;
-    rover_modes mode;
 
     void emitState();
 };

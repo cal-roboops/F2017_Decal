@@ -140,28 +140,68 @@ void MainWindow::on_recvMSG()
 {
     QByteArray data;
     data = socket->readAll();
-    ui->recvData->append(data.data());
-
     qDebug() << data;
 
-    if ((data.length() == 2) && ((char) data[0] == rover_keys::TAKE_CONTROL))
+    // Check valid JSON
+    std::list<uint8_t> data_lst;
+    for (auto i = data.cbegin(); i != data.cend(); i++)
     {
-        switch ((char) data[1])
+        data_lst.push_back((char) (*i));
+    }
+    if (!Rover_JSON::isValid(data_lst))
+    {
+        ui->recvData->append("Bad server JSON");
+        return;
+    }
+
+    // Parse received data pair by pair
+    char key;
+    char value;
+    QString servResp = "Server: ";
+    for (auto i = data.cbegin(); i != data.cend(); i++)
+    {
+        key = (char) (*i);
+        value = (char) (*(++i));
+
+        switch (key)
         {
-            case rover_modes::drive:
-                emit enableDriveControl(true);
-                emit enableArmControl(false);
-                break;
-            case rover_modes::arm:
-                emit enableDriveControl(false);
-                emit enableArmControl(true);
+            case rover_keys::TAKE_CONTROL:
+                switch (value)
+                {
+                    case rover_modes::mode_1_success:
+                        servResp += "Drive Control Enabled.";
+                        ui->driveMode_Control_Radio->setChecked(true);
+                        ui->armMode_NonControl_Radio->setChecked(true);
+
+                        emit enableDriveControl(true);
+                        emit enableArmControl(false);
+
+                        break;
+                    case rover_modes::mode_2_success:
+                        servResp += "Arm Control Enabled.";
+                        ui->driveMode_NonControl_Radio->setChecked(true);
+                        ui->armMode_Control_Radio->setChecked(true);
+
+                        emit enableDriveControl(false);
+                        emit enableArmControl(true);
+                        break;
+                    default:
+                        servResp += "Control Disabled.";
+                        ui->driveMode_NonControl_Radio->setChecked(true);
+                        ui->armMode_NonControl_Radio->setChecked(true);
+
+                        emit enableDriveControl(false);
+                        emit enableArmControl(false);
+                        break;
+                }
                 break;
             default:
-                emit enableDriveControl(false);
-                emit enableArmControl(false);
+                servResp += "Unkown response!";
                 break;
         }
     }
+
+    ui->recvData->append(servResp);
 }
 
 void MainWindow::on_clearRECV_clicked()
@@ -233,7 +273,7 @@ void MainWindow::on_driveMode_Control_Radio_clicked()
     {
         send_data({
                       rover_keys::TAKE_CONTROL,
-                      rover_modes::drive
+                      rover_modes::mode_1
                   });
     } else
     {
@@ -245,7 +285,7 @@ void MainWindow::on_driveMode_NonControl_Radio_clicked()
 {
     send_data({
                   rover_keys::TAKE_CONTROL,
-                  rover_modes::none
+                  rover_modes::no_mode
               });
 }
 
@@ -267,7 +307,7 @@ void MainWindow::on_armMode_Control_Radio_clicked()
     {
         send_data({
                       rover_keys::TAKE_CONTROL,
-                      rover_modes::arm
+                      rover_modes::mode_2
                   });
     } else
     {
@@ -279,7 +319,7 @@ void MainWindow::on_armMode_NonControl_Radio_clicked()
 {
     send_data({
                   rover_keys::TAKE_CONTROL,
-                  rover_modes::none
+                  rover_modes::no_mode
               });
 }
 

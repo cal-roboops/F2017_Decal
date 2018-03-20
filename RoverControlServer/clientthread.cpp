@@ -19,10 +19,10 @@ void ClientThread::run()
 
 void ClientThread::disconnect_client()
 {
-    QByteArray a;
-    a.append((char) rover_keys::TAKE_CONTROL);
-    a.append((char) rover_modes::none);
-    emit send_command(this->threadSocketDescriptor, a);
+    QByteArray close_ctrl;
+    close_ctrl.append((char) rover_keys::TAKE_CONTROL);
+    close_ctrl.append((char) rover_modes::no_mode);
+    emit send_command(this->threadSocketDescriptor, close_ctrl);
 
     if (this->clientSocket->state() == QTcpSocket::ConnectedState)
     {
