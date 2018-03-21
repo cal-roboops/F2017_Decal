@@ -94,19 +94,19 @@ Qt3DCore::QEntity *createScene()
 
 
     // Load the end ***
-    int endlength = 2;
+    //int endlength = 2;
     Qt3DRender::QMesh *end = new Qt3DRender::QMesh(rootEntity);
     end->setSource(QUrl("qrc:/ENDPART.obj"));
     // Position the end so that it is extended straight and pieced with the middle arm piece ***
     Qt3DCore::QTransform *transformend = new Qt3DCore::QTransform;
     //play around with coordinates to line up with middle arm piece
     transformend->setTranslation(QVector3D(0, -1.095, -1.0871));
-    double angle3 = 40;
-    double angleCos3 = qCos(qDegreesToRadians(angle3));
-    double angleSin3 = qSin(qDegreesToRadians(angle3));
-    // rotate arm ***
+    double angle3 = 23;
+    //double angleCos3 = qCos(qDegreesToRadians(angle3));
+    //double angleSin3 = qSin(qDegreesToRadians(angle3));
+    //rotate arm ***
     transformend->setRotationX(angle3);
-    transformend->setTranslation(QVector3D(0, -endlength*angleCos3, -endlength*angleSin3));
+    //transformend->setTranslation(QVector3D(0, -endlength*angleCos3, -endlength*angleSin3));
 
 
     // Add all the components to each entity ***
