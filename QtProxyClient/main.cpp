@@ -30,50 +30,99 @@
 #include <Qt3DExtras/QForwardRenderer>
 #include <Qt3DExtras/qfirstpersoncameracontroller.h>
 
+
+
 Qt3DCore::QEntity *createScene()
 {
+    /* when a user types in a certain angle for a specific joint of the arm
+    it should rotate to that position. need to figure out how make it so the joints are still
+    in contact when rotating. combination of rotating the arm and translating it back to its originally position
+    there are 4 joint that we are concerned with */
+
+
+
+
     // Root entity
     Qt3DCore::QEntity *rootEntity = new Qt3DCore::QEntity;
 
-    // Shapes entity (we create two entities because we have two shapes) ***
-    Qt3DCore::QEntity *shapesEntity = new Qt3DCore::QEntity(rootEntity);
+    // Shapes entity (we create two entities because we have two objects) ***
+    Qt3DCore::QEntity *shapesEntity1 = new Qt3DCore::QEntity(rootEntity);
     Qt3DCore::QEntity *shapesEntity2 = new Qt3DCore::QEntity(rootEntity);
+    Qt3DCore::QEntity *shapesEntity3 = new Qt3DCore::QEntity(rootEntity);
+    Qt3DCore::QEntity *shapesEntity4 = new Qt3DCore::QEntity(rootEntity);
 
     // Material
     Qt3DRender::QMaterial *material = new Qt3DExtras::QPhongMaterial(rootEntity);
 
-    // Load the box object file ***
-    Qt3DRender::QMesh *box = new Qt3DRender::QMesh(rootEntity);
-    box->setSource(QUrl("qrc:/box2.obj"));
+    // Load the front ***
+    Qt3DRender::QMesh *base = new Qt3DRender::QMesh(rootEntity);
+    base->setSource(QUrl("qrc:/BASE.obj"));
+    // Position the front so that it is extended straight and pieced with the middle arm piece ***
+    Qt3DCore::QTransform *transformbase = new Qt3DCore::QTransform;
+    //play around with coordinates to line up with middle arm piece
+    transformbase->setTranslation(QVector3D(0, .58, .35));
+    double angle = 0;
+    // rotate arm ***
+    transformbase->setRotationX(angle);
 
-    // Position the box at the origin ***
-    Qt3DCore::QTransform *transformBox = new Qt3DCore::QTransform;
-    transformBox->setTranslation(QVector3D(0, 0, 0));
+    // Load the front ***
+    Qt3DRender::QMesh *front = new Qt3DRender::QMesh(rootEntity);
+    front->setSource(QUrl("qrc:/FRONTPART.obj"));
+    // Position the front so that it is extended straight and pieced with the middle arm piece ***
+    Qt3DCore::QTransform *transformfront = new Qt3DCore::QTransform;
+    //play around with coordinates to line up with middle arm piece
+    transformfront->setTranslation(QVector3D(0, 0.35, 0.9));
+    double angle1 = -14;
+    // rotate arm ***
+    transformfront->setRotationX(angle1);
 
-    // Load the rectangle object file ***
-    Qt3DRender::QMesh *rectangle = new Qt3DRender::QMesh(rootEntity);
-    rectangle->setSource(QUrl("qrc:/rectangle.obj"));
+    // Load the MIDDLE PIECE object file ***
+    Qt3DRender::QMesh *middle = new Qt3DRender::QMesh(rootEntity);
+    middle->setSource(QUrl("qrc:/MIDDLEPART.obj"));
+    // Position the MIDDLE PIECE at the origin and straight ***
+    Qt3DCore::QTransform *transformmiddle = new Qt3DCore::QTransform;
+    transformmiddle->setTranslation(QVector3D(0, 0, 0));
+        //straighten out the arm ***
+        double angle2 = 5;
+        // rotate the arm now ***
+        transformmiddle->setRotationX(angle2);
+    //double angleCos = qCos(qDegreesToRadians(angle));
+    //double angleSin = qSin(qDegreesToRadians(angle));
+    //transformmiddle->setTranslation(QVector3D(2*angleCos, 2*angleSin, 0));
+    //transformmiddle->setRotationX(90);
+    //transformmiddle->setTranslation(QVector3D(0, 0, 0));
 
-    // Position the rectangle +6 on the x axis (so the box isn't covering it) ***
-    Qt3DCore::QTransform *transformRect = new Qt3DCore::QTransform;
-    transformRect->setTranslation(QVector3D(6, 0, 0));
 
-    // Angle at which you want to rotate the rectangle about the box ***
-    double angle = 135;
+    // Load the end ***
+    //int endlength = 2;
+    Qt3DRender::QMesh *end = new Qt3DRender::QMesh(rootEntity);
+    end->setSource(QUrl("qrc:/ENDPART.obj"));
+    // Position the end so that it is extended straight and pieced with the middle arm piece ***
+    Qt3DCore::QTransform *transformend = new Qt3DCore::QTransform;
+    //play around with coordinates to line up with middle arm piece
+    transformend->setTranslation(QVector3D(0, -1.095, -1.0871));
+    double angle3 = 23;
+    //double angleCos3 = qCos(qDegreesToRadians(angle3));
+    //double angleSin3 = qSin(qDegreesToRadians(angle3));
+    //rotate arm ***
+    transformend->setRotationX(angle3);
+    //transformend->setTranslation(QVector3D(0, -endlength*angleCos3, -endlength*angleSin3));
 
-    // Operations to perform the rotation of the rectangle about the box ***
-    transformRect->setRotationZ(angle);
-    double angleCos = qCos(qDegreesToRadians(angle));
-    double angleSin = qSin(qDegreesToRadians(angle));
-    transformRect->setTranslation(QVector3D((6*angleCos), (6*angleSin), 0));
 
     // Add all the components to each entity ***
-    shapesEntity->addComponent(box);
-    shapesEntity->addComponent(transformBox);
-    shapesEntity2->addComponent(rectangle);
-    shapesEntity2->addComponent(transformRect);
-    shapesEntity->addComponent(material);
+    shapesEntity1->addComponent(middle);
+    shapesEntity1->addComponent(transformmiddle);
+    shapesEntity2->addComponent(end);
+    shapesEntity2->addComponent(transformend);
+    shapesEntity3->addComponent(front);
+    shapesEntity3->addComponent(transformfront);
+    shapesEntity4->addComponent(base);
+    shapesEntity4->addComponent(transformbase);
+
+    shapesEntity1->addComponent(material);
     shapesEntity2->addComponent(material);
+    shapesEntity3->addComponent(material);
+    shapesEntity4->addComponent(material);
 
     return rootEntity;
 }
@@ -90,9 +139,9 @@ int main(int argc, char *argv[])
 
     // Camera
     Qt3DRender::QCamera *camera = view.camera();
-    camera->lens()->setPerspectiveProjection(45.0f, 16.0f/9.0f, 0.1f, 1000.0f);
+    camera->lens()->setPerspectiveProjection(90.0f, 16.0f/9.0f, 0.1f, 1000.0f);
     // Positions the camera on the axis
-    camera->setPosition(QVector3D(0, 0, 20));
+    camera->setPosition(QVector3D(3, 0, 0));
     // Sets the camera to face the origin
     camera->setViewCenter(QVector3D(0, 0, 0));
 

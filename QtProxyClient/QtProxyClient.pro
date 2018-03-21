@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui network qml quick 3dcore 3drender 3dquick 3dextras 3danimation
+QT += core gui network qml quick 3dcore 3drender 3dquick 3dextras 3danimation 3dlogic 3dinput
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -41,7 +41,8 @@ FORMS += \
     controlpanel.ui \
     armgraphic.ui
 
-DISTFILES +=
+DISTFILES += \
+
 
 RESOURCES += \
     arm.qrc
