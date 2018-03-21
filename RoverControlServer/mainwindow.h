@@ -20,10 +20,12 @@ public:
 signals:
     void server_start();
     void server_terminate();
+    void server_exit();
 
 public slots:
     void update_client_count(int val);
     void rover_connected(bool en);
+    void server_on(bool on);
 
 private slots:
     void on_serverOn_clicked();

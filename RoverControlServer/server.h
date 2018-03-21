@@ -7,6 +7,7 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 
+#include "datathread.h"
 #include "clientthread.h"
 #include "roverthread.h"
 
@@ -20,16 +21,20 @@ public:
 signals:
     void client_count_update(int val);
     void rover_connected(bool en);
+    void server_on(bool on);
 
 public slots:
     void start();
     void terminate();
+    void server_exit();
 
     void remove_client();
     void update_client_count();
     void rover_ready(bool rdy);
 
 private:
+    DataThread *dataThread;
+
     QList<ClientThread*> clientThreads;
     RoverThread *roverThread;
     QHostAddress *roverIP;

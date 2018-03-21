@@ -17,6 +17,11 @@ void DataThread::run()
     exec();
 }
 
+void DataThread::terminate()
+{
+    // Write to log and close everything
+}
+
 // Analyze and respond to each request
 void DataThread::receive_command(int clientSocketDescriptor, QByteArray command)
 {
@@ -26,7 +31,7 @@ void DataThread::receive_command(int clientSocketDescriptor, QByteArray command)
 }
 
 // Parse and log the recieved data
-void DataThread::receive_data(QByteArray data)
+void DataThread::receive_data(int clientSocketDescriptor, QByteArray data)
 {
     // Parse and log data here
 }

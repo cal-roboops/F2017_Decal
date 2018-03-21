@@ -38,7 +38,6 @@ private:
 
     int currClientSocketDescriptor;
     QMutex isControlled;
-    QMutex isBusy;
 
     void emitState();
 };

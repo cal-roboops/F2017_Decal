@@ -7,12 +7,27 @@
 Server::Server(QObject *parent) :
     QTcpServer(parent)
 {
-    // Setup and start rover management
-    this->roverIP = new QHostAddress("127.0.0.1");
-    this->roverThread = new RoverThread();
-    this->roverReady = false;
+    // Setup data management thread
+    this->dataThread = new DataThread(this);
+
+    // Setup rover management thread
+    this->roverIP = new QHostAddress(rover_ip);
+    this->roverThread = new RoverThread(this);
+
+    // Connect Rover signals to server slots
     connect(this->roverThread, SIGNAL(rover_ready(bool)), this, SLOT(rover_ready(bool)));
+
+    // Connect Rover signals to data slots
+    connect(this->roverThread, SIGNAL(respond_to_client(int,QByteArray)),
+            this->dataThread, SLOT(receive_data(int,QByteArray)), Qt::QueuedConnection);
+
+    // Start threads
+    this->dataThread->start();
     this->roverThread->start();
+
+    // Start server (in non-listening)
+    if (this->listen(QHostAddress::Any, 8088)) this->pauseAccepting();
+    else qDebug() << "Failed to bind socket";
 }
 
 Server::~Server()
@@ -24,33 +39,57 @@ Server::~Server()
 // Start server execution
 void Server::start()
 {
-    if (this->isListening()) return;
-
-    if (!this->listen(QHostAddress::Any, 8088))
+    if (this->isListening() || this->listen(QHostAddress::Any, 8088))
     {
+        emit server_on(true);
+        this->resumeAccepting();
+    } else
+    {
+        emit server_on(false);
         qDebug() << "Failed to bind socket";
     }
 }
 
 // Terminate server execution
 void Server::terminate() {
-    if (this->isListening())
+    // Stop accepting connections
+    this->pauseAccepting();
+
+    // Disconnect rover
+    if (this->roverThread->isRunning())
     {
-        // Disconnect rover
-        if (this->roverThread->isRunning())
-        {
-            this->roverThread->disconnect_rover();
-        }
-
-        // Disconnect all clients
-        for (auto i = this->clientThreads.begin(); i != this->clientThreads.end(); i++)
-        {
-            (*i)->disconnect_client();
-        }
-
-        // Update main gui client count
-        update_client_count();
+        this->roverThread->disconnect_rover();
     }
+
+    // Stop data logger
+    if (this->dataThread->isRunning())
+    {
+        this->dataThread->terminate();
+    }
+
+    // Disconnect all clients
+    for (auto i = this->clientThreads.begin(); i != this->clientThreads.end(); i++)
+    {
+        (*i)->disconnect_client();
+    }
+
+    // Update main gui client count
+    update_client_count();
+
+    // Emit off state
+    emit server_on(false);
+}
+
+// Handles killing all threads
+void Server::server_exit()
+{
+    this->terminate();
+
+    this->roverThread->exit();
+    this->dataThread->exit();
+
+    this->roverThread->deleteLater();
+    this->dataThread->deleteLater();
 }
 
 // Handle all incoming connection requests

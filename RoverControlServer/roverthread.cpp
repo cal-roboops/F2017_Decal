@@ -17,18 +17,21 @@ RoverThread::~RoverThread()
     {
         this->roverComm->disconnectFromHost();
         this->roverComm->deleteLater();
+        this->roverComm = nullptr;
     }
 
     if (this->roverEmerg)
     {
         this->roverEmerg->disconnectFromHost();
         this->roverEmerg->deleteLater();
+        this->roverEmerg = nullptr;
     }
 }
 
 // Start thread execution
 void RoverThread::run()
 {
+    emitState();
     exec();
 }
 
@@ -56,12 +59,29 @@ void RoverThread::analyze_response()
     QByteArray buf;
     buf = this->roverComm->readAll();
 
-    // buf not empty and busy mutex locked (add checks for response type here)
-    if (!buf.isEmpty() && !this->isBusy.tryLock())
+    // Verify Valid JSON
+    std::list<uint8_t> comm;
+    comm.insert(comm.end(), buf.begin(), buf.end());
+    if (!Rover_JSON::isValid(comm))
     {
-        emit respond_to_client(this->currClientSocketDescriptor, buf);
-        isBusy.tryLock();
-        isBusy.unlock();
+        qDebug() << "Bad JSON from Rover";
+        return;
+    }
+
+    // Get first key and value
+    char key = (char) buf[0];
+    char value = (char) buf[1];
+
+    switch (key)
+    {
+        case rover_keys::DATA_LOG:
+            // Verify correct length & emit to all clients for updates
+            if (value == buf.length()) emit respond_to_client(0, buf);
+            break;
+        default:
+            // Emit response to specific client for feedback
+            emit respond_to_client(this->currClientSocketDescriptor, buf);
+            break;
     }
 }
 
@@ -74,6 +94,7 @@ void RoverThread::disconnect_rover()
     disconnect_controller();
 
     emitState();
+    this->exit();
 }
 
 // Forcefully disconnect the controller thread
@@ -83,8 +104,6 @@ void RoverThread::disconnect_controller()
 
     isControlled.tryLock();
     isControlled.unlock();
-    isBusy.tryLock();
-    isBusy.unlock();
 }
 
 // Gets a command from the client and passes it to the rover
@@ -94,10 +113,7 @@ void RoverThread::receive_command(int clientSocketDescriptor, QByteArray command
 
     // Check valid JSON
     std::list<uint8_t> comm;
-    for (auto i = command.cbegin(); i != command.cend(); i++)
-    {
-        comm.push_back((char) (*i));
-    }
+    comm.insert(comm.end(), command.begin(), command.end());
     if (!Rover_JSON::isValid(comm))
     {
         resp.append((char) rover_keys::COMMAND_STATUS);
@@ -160,14 +176,8 @@ void RoverThread::receive_command(int clientSocketDescriptor, QByteArray command
             break;
         default:
             resp.append((char) rover_keys::COMMAND_STATUS);
-            if (isBusy.tryLock())
-            {
-                roverComm->write(command);
-                resp.append((char) command_status::sent);
-            } else
-            {
-                resp.append((char) command_status::busy);
-            }
+            roverComm->write(command);
+            resp.append((char) command_status::sent);
             break;
     }
 
@@ -182,10 +192,7 @@ void RoverThread::setup_socket()
     buf = socket->readAll();
 
     std::list<uint8_t> comm;
-    for (auto i = buf.cbegin(); i != buf.cend(); i++)
-    {
-        comm.push_back((char) (*i));
-    }
+    comm.insert(comm.end(), buf.begin(), buf.end());
     if (!Rover_JSON::isValid(comm)) return;
 
     bool success = false;
@@ -257,6 +264,5 @@ void RoverThread::cleanUp_socket()
 // Send update about rover connection state
 void RoverThread::emitState()
 {
-    if (this->roverComm && this->roverEmerg) emit rover_ready(true);
-    else emit rover_ready(false);
+    emit rover_ready(this->roverComm && this->roverEmerg);
 }

@@ -42,21 +42,19 @@ void ClientThread::read_and_send_command()
     QByteArray buf;
     buf = this->clientSocket->readAll();
 
-    if (buf.isEmpty())
-    {
-        return;
-    }
+    std::list<uint8_t> comm;
+    comm.insert(comm.end(), buf.begin(), buf.end());
+    if (!Rover_JSON::isValid(comm)) return;
 
     if (this->roverReady)
     {
         emit send_command(this->threadSocketDescriptor, buf);
     } else
     {
-        emit send_command(this->threadSocketDescriptor, buf);
-//        this->clientSocket->write({
-//                                      rover_keys::COMMAND_STATUS,
-//                                      command_status::rover_not_ready
-//                                  });
+        QByteArray err;
+        err.append((char) rover_keys::COMMAND_STATUS);
+        err.append((char) command_status::rover_not_ready);
+        this->clientSocket->write(err);
     }
 }
 

@@ -17,8 +17,9 @@ signals:
     void respond_to_client(int, QByteArray);
 
 public slots:
+    void terminate();
+    void receive_data(int clientSocketDescriptor, QByteArray data);
     void receive_command(int clientSocketDescriptor, QByteArray command);
-    void receive_data(QByteArray data);
 
 private:
     int currClientSocketDescriptor;

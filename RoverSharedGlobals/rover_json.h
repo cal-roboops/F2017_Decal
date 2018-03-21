@@ -59,6 +59,7 @@ typedef enum {
     EMERG_CONN, // See command_status enum
     COMMAND_STATUS, // See command_status enum
     TAKE_CONTROL,
+    DATA_LOG,
 
     // MUST REMAIN AT END OF ENUM
     // ----------------
@@ -113,9 +114,9 @@ typedef enum {
     invalid,
     not_controller,
     rover_not_ready,
-    already_connected,
     connect,
-    disconnect
+    disconnect,
+    already_connected
 } command_status;
 
 // Dynamic JSON creation

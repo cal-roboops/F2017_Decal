@@ -38,7 +38,8 @@ HEADERS += \
     clientthread.h \
     roverthread.h \
     ../RoverSharedGlobals/rover_json.h \
-    datathread.h
+    datathread.h \
+    ../RoverSharedGlobals/rover_general.h
 
 FORMS += \
         mainwindow.ui

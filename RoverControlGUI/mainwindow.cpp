@@ -144,13 +144,10 @@ void MainWindow::on_recvMSG()
 
     // Check valid JSON
     std::list<uint8_t> data_lst;
-    for (auto i = data.cbegin(); i != data.cend(); i++)
-    {
-        data_lst.push_back((char) (*i));
-    }
+    data_lst.insert(data_lst.end(), data.begin(), data.end());
     if (!Rover_JSON::isValid(data_lst))
     {
-        ui->recvData->append("Bad server JSON");
+        ui->recvData->append("Bad JSON received from server");
         return;
     }
 
@@ -192,6 +189,47 @@ void MainWindow::on_recvMSG()
 
                         emit enableDriveControl(false);
                         emit enableArmControl(false);
+                        break;
+                }
+                break;
+            case rover_keys::DATA_LOG:
+                servResp += "Data Update Received. Length: " + QString::number(value) + ".";
+                break;
+            case rover_keys::COMMAND_STATUS:
+                switch (value)
+                {
+                    case command_status::success:
+                        servResp += "Command success";
+                        break;
+                    case command_status::failed:
+                        servResp += "Command failed";
+                        break;
+                    case command_status::sent:
+                        servResp += "Command Sent";
+                        break;
+                    case command_status::busy:
+                        servResp += "Rover busy";
+                        break;
+                    case command_status::invalid:
+                        servResp += "Command invalid";
+                        break;
+                    case command_status::not_controller:
+                        servResp += "You're not controller";
+                        break;
+                    case command_status::rover_not_ready:
+                        servResp += "Rover not ready";
+                        break;
+                    case command_status::connect:
+                        servResp += "Command connect";
+                        break;
+                    case command_status::disconnect:
+                        servResp += "Command disconnect";
+                        break;
+                    case command_status::already_connected:
+                        servResp += "Already connected";
+                        break;
+                    default:
+                        servResp += "Unkown response!";
                         break;
                 }
                 break;
