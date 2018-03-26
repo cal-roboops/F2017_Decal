@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>380</width>
-    <height>213</height>
+    <height>252</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -164,6 +164,45 @@
     </property>
     <property name="textVisible">
      <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="serverLogLoc_Edit">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>210</y>
+      <width>231</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>C:/RoverServerLog/</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="serverLogLoc_Label">
+    <property name="geometry">
+     <rect>
+      <x>35</x>
+      <y>187</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Log Location</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="serverLogLoc_button">
+    <property name="geometry">
+     <rect>
+      <x>269</x>
+      <y>209</y>
+      <width>81</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Select Folder</string>
     </property>
    </widget>
   </widget>

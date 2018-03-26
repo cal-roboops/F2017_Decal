@@ -27,6 +27,7 @@ public slots:
     void start();
     void terminate();
     void server_exit();
+    void setLogLoc(QString logLoc);
 
     void remove_client();
     void update_client_count();

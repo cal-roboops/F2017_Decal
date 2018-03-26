@@ -21,6 +21,7 @@ signals:
     void server_start();
     void server_terminate();
     void server_exit();
+    void setLogLoc(QString logLoc);
 
 public slots:
     void update_client_count(int val);
@@ -30,6 +31,7 @@ public slots:
 private slots:
     void on_serverOn_clicked();
     void on_serverOff_clicked();
+    void on_serverLogLoc_button_clicked();
 
 private:
     Ui::MainWindow *ui;

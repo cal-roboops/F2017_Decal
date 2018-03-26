@@ -25,5 +25,7 @@ int main(int argc, char *argv[])
     QObject::connect(&w, SIGNAL(server_terminate()), &server, SLOT(terminate()));
     QObject::connect(&w, SIGNAL(server_exit()), &server, SLOT(server_exit()));
 
+    QObject::connect(&w, SIGNAL(setLogLoc(QString)), &server, SLOT(setLogLoc(QString)));
+
     return a.exec();
 }

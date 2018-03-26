@@ -41,6 +41,7 @@ void Server::start()
 {
     if (this->isListening() || this->listen(QHostAddress::Any, 8088))
     {
+        dataThread->start();
         emit server_on(true);
         this->resumeAccepting();
     } else
@@ -90,6 +91,12 @@ void Server::server_exit()
 
     this->roverThread->deleteLater();
     this->dataThread->deleteLater();
+}
+
+// Set the log location in datathread
+void Server::setLogLoc(QString logLoc)
+{
+    this->dataThread->setLogLoc(logLoc);
 }
 
 // Handle all incoming connection requests
