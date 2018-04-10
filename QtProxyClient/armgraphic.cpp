@@ -12,3 +12,6 @@ ArmGraphic::~ArmGraphic()
 {
     delete ui;
 }
+
+/** code for rendering the main.cpp visualization into the graphicsView widget
+void ArmGraphic:: ........... **/

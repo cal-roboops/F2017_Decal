@@ -30,17 +30,12 @@
 #include <Qt3DExtras/QForwardRenderer>
 #include <Qt3DExtras/qfirstpersoncameracontroller.h>
 
-
-
 Qt3DCore::QEntity *createScene()
 {
     /* when a user types in a certain angle for a specific joint of the arm
     it should rotate to that position. need to figure out how make it so the joints are still
     in contact when rotating. combination of rotating the arm and translating it back to its originally position
     there are 4 joint that we are concerned with */
-
-
-
 
     // Root entity
     Qt3DCore::QEntity *rootEntity = new Qt3DCore::QEntity;
@@ -54,15 +49,14 @@ Qt3DCore::QEntity *createScene()
     // Material
     Qt3DRender::QMaterial *material = new Qt3DExtras::QPhongMaterial(rootEntity);
 
-    // Load the front ***
+    // Load the base ***
     Qt3DRender::QMesh *base = new Qt3DRender::QMesh(rootEntity);
     base->setSource(QUrl("qrc:/BASE.obj"));
     // Position the front so that it is extended straight and pieced with the middle arm piece ***
     Qt3DCore::QTransform *transformbase = new Qt3DCore::QTransform;
     //play around with coordinates to line up with middle arm piece
-    transformbase->setTranslation(QVector3D(0, .58, .35));
+    transformbase->setTranslation(QVector3D(0, -1.42, 1.35));
     double angle = 0;
-    // rotate arm ***
     transformbase->setRotationX(angle);
 
     // Load the front ***
@@ -71,9 +65,8 @@ Qt3DCore::QEntity *createScene()
     // Position the front so that it is extended straight and pieced with the middle arm piece ***
     Qt3DCore::QTransform *transformfront = new Qt3DCore::QTransform;
     //play around with coordinates to line up with middle arm piece
-    transformfront->setTranslation(QVector3D(0, 0.35, 0.9));
+    transformfront->setTranslation(QVector3D(0, -1.65, 1.9));
     double angle1 = -14;
-    // rotate arm ***
     transformfront->setRotationX(angle1);
 
     // Load the MIDDLE PIECE object file ***
@@ -81,11 +74,9 @@ Qt3DCore::QEntity *createScene()
     middle->setSource(QUrl("qrc:/MIDDLEPART.obj"));
     // Position the MIDDLE PIECE at the origin and straight ***
     Qt3DCore::QTransform *transformmiddle = new Qt3DCore::QTransform;
-    transformmiddle->setTranslation(QVector3D(0, 0, 0));
-        //straighten out the arm ***
-        double angle2 = 5;
-        // rotate the arm now ***
-        transformmiddle->setRotationX(angle2);
+    transformmiddle->setTranslation(QVector3D(0, -2, 1));
+    double angle2 = 5;
+    transformmiddle->setRotationX(angle2);
     //double angleCos = qCos(qDegreesToRadians(angle));
     //double angleSin = qSin(qDegreesToRadians(angle));
     //transformmiddle->setTranslation(QVector3D(2*angleCos, 2*angleSin, 0));
@@ -94,17 +85,16 @@ Qt3DCore::QEntity *createScene()
 
 
     // Load the end ***
-    //int endlength = 2;
+    int endlength = 2;
     Qt3DRender::QMesh *end = new Qt3DRender::QMesh(rootEntity);
     end->setSource(QUrl("qrc:/ENDPART.obj"));
     // Position the end so that it is extended straight and pieced with the middle arm piece ***
     Qt3DCore::QTransform *transformend = new Qt3DCore::QTransform;
     //play around with coordinates to line up with middle arm piece
-    transformend->setTranslation(QVector3D(0, -1.095, -1.0871));
+    transformend->setTranslation(QVector3D(0, -3.095, 0.0871));
     double angle3 = 23;
     //double angleCos3 = qCos(qDegreesToRadians(angle3));
     //double angleSin3 = qSin(qDegreesToRadians(angle3));
-    //rotate arm ***
     transformend->setRotationX(angle3);
     //transformend->setTranslation(QVector3D(0, -endlength*angleCos3, -endlength*angleSin3));
 
@@ -141,7 +131,7 @@ int main(int argc, char *argv[])
     Qt3DRender::QCamera *camera = view.camera();
     camera->lens()->setPerspectiveProjection(90.0f, 16.0f/9.0f, 0.1f, 1000.0f);
     // Positions the camera on the axis
-    camera->setPosition(QVector3D(3, 0, 0));
+    camera->setPosition(QVector3D(3.5, .5, 0));
     // Sets the camera to face the origin
     camera->setViewCenter(QVector3D(0, 0, 0));
 
@@ -150,6 +140,9 @@ int main(int argc, char *argv[])
     camController->setLinearSpeed( 10.0f );
     camController->setLookSpeed( 180.0f );
     camController->setCamera(camera);
+
+    /** SET THE UI IN ARMGRAPHIC TO BE THIS SCENE **************************************************/
+
 
     view.setRootEntity(scene);
     view.show();

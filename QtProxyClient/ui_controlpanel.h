@@ -87,12 +87,12 @@ public:
     {
         if (ControlPanel->objectName().isEmpty())
             ControlPanel->setObjectName(QStringLiteral("ControlPanel"));
-        ControlPanel->resize(629, 543);
+        ControlPanel->resize(754, 543);
         centralWidget = new QWidget(ControlPanel);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         stackedWidget = new QStackedWidget(centralWidget);
         stackedWidget->setObjectName(QStringLiteral("stackedWidget"));
-        stackedWidget->setGeometry(QRect(210, 10, 441, 451));
+        stackedWidget->setGeometry(QRect(250, 40, 481, 411));
         regular = new QWidget();
         regular->setObjectName(QStringLiteral("regular"));
         pushButton_up = new QPushButton(regular);
@@ -223,22 +223,6 @@ public:
         button_middle_up_up->setGeometry(QRect(180, 230, 41, 31));
         button_middle_up_up->setFont(font2);
         stackedWidget->addWidget(custom);
-        label_3->raise();
-        front_left_servo_box->raise();
-        middle_left_servo_box->raise();
-        back_left_servo_box->raise();
-        back_right_servo_box->raise();
-        front_right_servo_box->raise();
-        middle_right_servo_box->raise();
-        button_submit_servo->raise();
-        button_left_up->raise();
-        button_left_up_down->raise();
-        button_left_down->raise();
-        button_middle_down_down->raise();
-        button_right_down->raise();
-        button_right_down_up->raise();
-        button_right_up->raise();
-        button_middle_up_up->raise();
         radioButton = new QRadioButton(centralWidget);
         radioButton->setObjectName(QStringLiteral("radioButton"));
         radioButton->setGeometry(QRect(40, 40, 101, 31));
@@ -294,7 +278,7 @@ public:
         line_2->raise();
         menuBar = new QMenuBar(ControlPanel);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 629, 26));
+        menuBar->setGeometry(QRect(0, 0, 754, 21));
         menuControls = new QMenu(menuBar);
         menuControls->setObjectName(QStringLiteral("menuControls"));
         ControlPanel->setMenuBar(menuBar);
