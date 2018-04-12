@@ -11,6 +11,7 @@ int pollWaitMS = 100;
  
 // Definitions for variables
 unsigned long reading;
+int delay_us = 5;
 
 void setup()
 {
@@ -52,15 +53,15 @@ void ReadSSI(void)
   mask = 0x0200;
   
   digitalWrite(NCS, LOW);
-  delayMicroseconds(1);
+  delayMicroseconds(delay_us);
   
   digitalWrite(SSI_CLK, LOW);
-  delayMicroseconds(1);
+  delayMicroseconds(delay_us);
  
   for (i = (Res-1); i > 0; i--)
   {
     digitalWrite(SSI_CLK, HIGH);
-    delayMicroseconds(1);
+    delayMicroseconds(delay_us);
     
     if (digitalRead(DataIN))
     {
@@ -68,7 +69,7 @@ void ReadSSI(void)
     }
     
     digitalWrite(SSI_CLK, LOW);
-    delayMicroseconds(1);
+    delayMicroseconds(delay_us);
     
     mask = mask >> 1;
   }

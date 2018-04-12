@@ -14,17 +14,19 @@ int resetPIN = 9;
 int writeVAL, resetVAL;
 
 // Global storage variables
-unsigned long progVal;
+uint32_t progVal;
+uint8_t progBits, evenPar, i;
 unsigned long Mode_Lo, Mode_Hi;
 unsigned long Zero_Lo, Zero_Hi;
-unsigned int progBits, RW;
-int i;
+unsigned int RW;
 bool notProg;
+int delay_us = 2; // US delay
+int progWaitMS = 10;
  
 void setup()
 {  
   Serial.begin(9600);
-  Serial.print("Setting up...");
+  Serial.println("Setting up...");
   
   // Initialize the pins
   pinMode(NCS, OUTPUT);   // Chip select
@@ -37,21 +39,10 @@ void setup()
   pinMode(writePIN, INPUT); // Start Programming Button
   pinMode(resetPIN, INPUT); // Reset Programmibng Button
 
+  RESET_SSI();
+  
   digitalWrite(ProgPin, HIGH);
   digitalWrite(SSI_CLK, HIGH);
-
-  // Program settings
-  RW = 1; // 0: Read, 1:Write
-  Mode_Lo = 0b00011110; // Set Inc Resolutions and
-  Mode_Hi = 0b01101011; // Set Mode & Abs Resolution
-  Zero_Lo = 0b00000000; // Programmable Zero Position
-  Zero_Hi = 0b00000000; // Programmable Zero Position
-  progVal = (Zero_Hi << 24) | (Zero_Lo << 16) | (Mode_Hi << 8) | (Mode_Lo);
-  progBits = 32;
-
-  notProg = true;
-  Serial.print("Ready to Program: 0x");
-  Serial.println(progVal, HEX);
 }
 
 void loop()
@@ -59,18 +50,15 @@ void loop()
   writeVAL = digitalRead(writePIN);
   resetVAL = digitalRead(resetPIN);
 
-  if (writeVAL & notProg)
+  if (true) //writeVAL & notProg)
   {
-    Serial.print("Programming: 0x");
-    Serial.println(progVal, HEX);
+    Serial.println("Programming...");
+    
     WriteSSI();
-    delay(1);
     notProg = false;
   } else if (resetVAL & !notProg)
   {
-    notProg = true;
-    Serial.print("Ready to Program: 0x");
-    Serial.println(progVal, HEX);
+    RESET_SSI ();
   }
 
   progError = digitalRead(ProgStatus);
@@ -78,50 +66,95 @@ void loop()
   Serial.print(progError);
   Serial.print(progComplete);
   Serial.println("");
+
+  RESET_SSI ();
   
-  delay(1000);
+  delay(progWaitMS);
+}
+
+uint32_t reverseOrder (uint32_t val)
+{
+  uint32_t val_rev = 0;
+  uint32_t val_cp = val;
+
+  for (i = 0; i < progBits; i++)
+  {
+    val_rev = (val_rev << 1) | (val_cp & 1);
+    val_cp = val_cp >> 1;
+  }
+
+  return val_rev;
 }
 
 void WriteSSI(void)
 {
-  unsigned long mask;
-  unsigned long evenPar;
-  unsigned long progVal;
+  // Setup local vars
+  uint32_t progVal_rev = reverseOrder (progVal);
   
-  // Setup variables
-  progVal = 0x6B1E;
-  evenPar = 1;
-  mask = 0x80000000;
-
-  // Setup clocking
+  // Setup NCS, clocking, & first bit
+  digitalWrite(DataOUT, RW);
   digitalWrite(NCS, LOW);
-  delayMicroseconds(1);
   digitalWrite(SSI_CLK, LOW);
-  delayMicroseconds(1);
+  delayMicroseconds(delay_us);
 
   // Write the read/write signal
   digitalWrite(SSI_CLK, HIGH);
-  digitalWrite(DataOUT, 1);
-  delayMicroseconds(1);
-  digitalWrite(SSI_CLK, LOW);
+  delayMicroseconds(delay_us);
 
   // Write the 32 bits of data
-  for (i = progBits; 0 < i; i--)
+  for (i = 0; i < progBits; i++)
   {
-    digitalWrite(SSI_CLK, HIGH);    
-    digitalWrite(DataOUT, mask & progVal);
-    delayMicroseconds(1);
-    
     digitalWrite(SSI_CLK, LOW);
-    mask = mask >> 1;
+    digitalWrite(DataOUT, 0 < (progVal_rev & 0x1));
+    delayMicroseconds(delay_us);
+
+    digitalWrite(SSI_CLK, HIGH);
+    progVal_rev = progVal_rev >> 1;
+    delayMicroseconds(delay_us);
   }
 
   // Write Parity Bit
-  digitalWrite(SSI_CLK, HIGH);
-  digitalWrite(DataOUT, evenPar);
-  delayMicroseconds(1);
   digitalWrite(SSI_CLK, LOW);
+  digitalWrite(DataOUT, evenPar);
+  delayMicroseconds(delay_us);
+  
+  digitalWrite(SSI_CLK, HIGH);
+  delayMicroseconds(delay_us);
 
   // End communication
   digitalWrite(NCS, HIGH);
+  digitalWrite(DataOUT, LOW);
 }
+
+uint8_t computeParity (uint32_t val)
+{
+  uint8_t p = 0;
+  uint32_t val_cp = val;
+  for (i = 0; i < progBits; i++)
+  {
+    p = p ^ (val_cp & 0x1);
+    val_cp = val_cp >> 1;
+  }
+  return p & 0x1;
+}
+
+void RESET_SSI ()
+{
+  // Reset key vars
+  progBits = 32; // Number of bits in program
+  notProg = true;
+  
+  // Reset program settings
+  RW = 1; // 0: Read, 1:Write
+  Mode_Lo = 0b00011110; // Set Inc Resolutions and
+  Mode_Hi = 0b01101011; // Set Mode & Abs Resolution
+  Zero_Lo = 0b00000000; // Programmable Zero Position
+  Zero_Hi = 0b00000000; // Programmable Zero Position
+  progVal = (Zero_Hi << 24) | (Zero_Lo << 16) | (Mode_Hi << 8) | (Mode_Lo);
+  evenPar = computeParity (progVal); // Get parity
+
+  // Output and reverse order
+  Serial.print("Ready to Program: 0x");
+  Serial.println(progVal, HEX);
+}
+
