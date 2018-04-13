@@ -90,6 +90,7 @@ void WriteSSI(void)
 {
   // Setup local vars
   uint32_t progVal_rev = reverseOrder (progVal);
+  uint32_t v = progVal_rev & 0x1;
   
   // Setup NCS, clocking, & first bit
   digitalWrite(DataOUT, RW);
@@ -105,18 +106,19 @@ void WriteSSI(void)
   for (i = 0; i < progBits; i++)
   {
     digitalWrite(SSI_CLK, LOW);
-    digitalWrite(DataOUT, 0 < (progVal_rev & 0x1));
-    delayMicroseconds(delay_us);
+    digitalWrite(DataOUT, v);
+//    delayMicroseconds(delay_us);
 
     digitalWrite(SSI_CLK, HIGH);
     progVal_rev = progVal_rev >> 1;
-    delayMicroseconds(delay_us);
+    v = progVal_rev & 0x1;
+//    delayMicroseconds(delay_us);
   }
 
   // Write Parity Bit
   digitalWrite(SSI_CLK, LOW);
   digitalWrite(DataOUT, evenPar);
-  delayMicroseconds(delay_us);
+//  delayMicroseconds(delay_us);
   
   digitalWrite(SSI_CLK, HIGH);
   delayMicroseconds(delay_us);
