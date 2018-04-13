@@ -86,6 +86,7 @@ Qt3DCore::QEntity *createScene()
 
     // Load the end ***
     int endlength = 2;
+    int extraAngle = 24;
     Qt3DRender::QMesh *end = new Qt3DRender::QMesh(rootEntity);
     end->setSource(QUrl("qrc:/ENDPART.obj"));
     // Position the end so that it is extended straight and pieced with the middle arm piece ***
@@ -96,6 +97,8 @@ Qt3DCore::QEntity *createScene()
     //double angleCos3 = qCos(qDegreesToRadians(angle3));
     //double angleSin3 = qSin(qDegreesToRadians(angle3));
     transformend->setRotationX(angle3);
+    transformend->setRotationX(90 + extraAngle);
+    transformend->setTranslation(QVector3D(0, -2.3, -7.2));
     //transformend->setTranslation(QVector3D(0, -endlength*angleCos3, -endlength*angleSin3));
 
 
