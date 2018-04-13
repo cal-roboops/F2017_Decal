@@ -6,12 +6,11 @@ int  DataIN = 6;
 int magHIGH = 3;
 int magLOW = 2;
 int valHIGH, valLOW;
-
-int pollWaitMS = 100;
  
 // Definitions for variables
 unsigned long reading;
-int delay_us = 5;
+uint8_t delay_us = 1;
+int pollWaitMS = 100;
 
 void setup()
 {
@@ -45,9 +44,10 @@ void loop()
 
 void ReadSSI(void)
 {
-  int i;
-  int Res = 10;
+  uint8_t i;
+  uint8_t Res = 10;
   unsigned long mask;
+  uint8_t rd;
   
   reading = 0;
   mask = 0x0200;
@@ -57,28 +57,31 @@ void ReadSSI(void)
   
   digitalWrite(SSI_CLK, LOW);
   delayMicroseconds(delay_us);
+
+//  digitalWrite(SSI_CLK, HIGH);
+//  delayMicroseconds(delay_us);
  
-  for (i = (Res-1); i > 0; i--)
+  for (i = 0; i < Res; i++)
   {
+
     digitalWrite(SSI_CLK, HIGH);
-    delayMicroseconds(delay_us);
-    
-    if (digitalRead(DataIN))
-    {
-      reading |= mask;
-    }
+    rd = digitalRead(DataIN);
+//    delayMicroseconds(delay_us);
     
     digitalWrite(SSI_CLK, LOW);
-    delayMicroseconds(delay_us);
-    
-    mask = mask >> 1;
+    reading = (reading << 1) | rd;
+//    delayMicroseconds(delay_us);
   }
   
   digitalWrite(SSI_CLK, HIGH);
-  if (digitalRead(DataIN))
-  {
-    reading |= mask; 
-  }
+  rd = digitalRead(DataIN);
+//  delayMicroseconds(delay_us);
   
+  digitalWrite(SSI_CLK, LOW);
+  reading = (reading << 1) | rd;
+//  delayMicroseconds(delay_us);
+
   digitalWrite(NCS, HIGH);
+  digitalWrite(SSI_CLK, HIGH);
+  delayMicroseconds(delay_us);
 }
