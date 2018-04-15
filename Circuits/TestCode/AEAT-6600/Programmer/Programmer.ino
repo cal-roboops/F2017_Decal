@@ -3,8 +3,8 @@ int NCS = 4;
 int SSI_CLK = 5;
 int DataOUT = 6;
 int ProgPin = 7;
-int ProgStatus = 2;
-int ProgSuccess = 3;
+int ProgStatus = 11;
+int ProgSuccess = 12;
 
 int progError, progComplete;
 
@@ -16,12 +16,12 @@ int writeVAL, resetVAL;
 // Global storage variables
 uint32_t progVal;
 uint8_t progBits, evenPar, i;
-unsigned long Mode_Lo, Mode_Hi;
-unsigned long Zero_Lo, Zero_Hi;
+uint32_t Mode_Lo, Mode_Hi;
+uint32_t Zero_Lo, Zero_Hi;
 unsigned int RW;
 bool notProg;
 int delay_us = 2; // US delay
-int progWaitMS = 10;
+int progWaitMS = 500;
  
 void setup()
 {  
@@ -48,14 +48,19 @@ void setup()
 void loop()
 {
   writeVAL = digitalRead(writePIN);
-  resetVAL = digitalRead(resetPIN);
+  resetVAL = 0; //digitalRead(resetPIN);
 
-  if (true) //writeVAL & notProg)
+  if (writeVAL & notProg)
   {
     Serial.println("Programming...");
+
+    digitalWrite(10, HIGH);
     
     WriteSSI();
     notProg = false;
+
+    digitalWrite(10, LOW);
+
   } else if (resetVAL & !notProg)
   {
     RESET_SSI ();
@@ -66,8 +71,6 @@ void loop()
   Serial.print(progError);
   Serial.print(progComplete);
   Serial.println("");
-
-  RESET_SSI ();
   
   delay(progWaitMS);
 }
@@ -137,7 +140,7 @@ uint8_t computeParity (uint32_t val)
     p = p ^ (val_cp & 0x1);
     val_cp = val_cp >> 1;
   }
-  return p & 0x1;
+  return !(p & 0x1);
 }
 
 void RESET_SSI ()

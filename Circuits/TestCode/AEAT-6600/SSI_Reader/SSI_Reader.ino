@@ -3,8 +3,8 @@ int  NCS = 4;
 int SSI_CLK = 5;
 int  DataIN = 6;
 
-int magHIGH = 3;
-int magLOW = 2;
+int magHIGH = 11;
+int magLOW = 12;
 int valHIGH, valLOW;
  
 // Definitions for variables
@@ -23,6 +23,8 @@ void setup()
 
   pinMode(magHIGH, INPUT);
   pinMode(magLOW, INPUT);
+
+  digitalWrite(10, LOW);
  
   digitalWrite(SSI_CLK, HIGH);
 }
