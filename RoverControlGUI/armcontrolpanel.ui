@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>579</width>
+    <width>585</width>
     <height>636</height>
    </rect>
   </property>
@@ -14,136 +14,28 @@
    <string>Arm Control</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLineEdit" name="baseAngleLineEdit">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>530</y>
-      <width>121</width>
-      <height>33</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="biformAngleLineEdit">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>530</y>
-      <width>121</width>
-      <height>33</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="elbowAngleLineEdit">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>530</y>
-      <width>121</width>
-      <height>33</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="baseAngleLabel">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>500</y>
-      <width>71</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Base Angle</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="biformAngleLabel">
-    <property name="geometry">
-     <rect>
-      <x>260</x>
-      <y>500</y>
-      <width>81</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Biform Angle</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="elbowAngleLabel">
-    <property name="geometry">
-     <rect>
-      <x>440</x>
-      <y>500</y>
-      <width>81</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Elbow Angle</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="setBaseAngleBtn">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>580</y>
-      <width>121</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Set Base Angle</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="setBiformAngleBtn">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>580</y>
-      <width>121</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Set Biform Angle</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="setElbowAngleBtn">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>580</y>
-      <width>121</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Set Elbow Angle</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>20</x>
       <y>20</y>
-      <width>521</width>
-      <height>461</height>
+      <width>541</width>
+      <height>541</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="armLayout"/>
    </widget>
-   <widget class="QPushButton" name="pollQML">
+   <widget class="QPushButton" name="setArm_button">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>530</y>
-      <width>41</width>
-      <height>30</height>
+      <x>240</x>
+      <y>580</y>
+      <width>101</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Poll</string>
+     <string>Set Arm</string>
     </property>
    </widget>
   </widget>

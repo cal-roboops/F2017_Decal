@@ -16,22 +16,13 @@ ArmControlPanel::ArmControlPanel(QWidget *parent) :
     ui->setupUi(this);
     enableArmControl(false);
 
-    // Set arm model
+    // Set arm model QML
     arm_qml = new QQuickView();
     QWidget *container = QWidget::createWindowContainer(arm_qml, this);
     arm_qml->setResizeMode(QQuickView::SizeRootObjectToView);
     arm_qml->setSource(QUrl("qrc:/main.qml"));
     ui->armLayout->addWidget(container);
-
-    // Setup input validators for the text boxes
-    ui->baseAngleLineEdit->setValidator(new QIntValidator(0, 1024, this));
-    ui->biformAngleLineEdit->setValidator(new QIntValidator(0, 1024, this));
-    ui->elbowAngleLineEdit->setValidator(new QIntValidator(0, 1024, this));
-
-    // SHOULD BE REPLACED BY POLLED VALUES
-    ui->baseAngleLineEdit->setText("0");
-    ui->biformAngleLineEdit->setText("0");
-    ui->elbowAngleLineEdit->setText("0");
+    arm_ritem = arm_qml->rootObject();
 }
 
 ArmControlPanel::~ArmControlPanel()
@@ -79,47 +70,35 @@ void ArmControlPanel::showArmControl(bool en)
     }
 }
 
-// Poll the QML object and display to qDebug
-void ArmControlPanel::on_pollQML_clicked()
+// Poll the QML object and send data
+void ArmControlPanel::on_setArm_button_clicked()
 {
-    QObject* ritem = arm_qml->rootObject();
-    qDebug() << ritem->property("l1_ang");
-    qDebug() << ritem->property("l2_ang");
-    qDebug() << ritem->property("l3_ang");
-    qDebug() << ritem->property("w_ang");
-}
-
-// Sends kv pair to set arm base angle
-void ArmControlPanel::on_setBaseAngleBtn_clicked()
-{
-    int value = ui->baseAngleLineEdit->text().toInt();
+    int bicepAngle = arm_ritem->property("bicep_ang").toInt();
+    int biformAngle = arm_ritem->property("biform_ang").toInt();
+    int forearmAngle = arm_ritem->property("forearm_ang").toInt();
+    int wristAngle = arm_ritem->property("wrist_ang").toInt();
 
     transmit_command({
-                         rover_keys::ARM_BASE_ANGLE_UPPER, (uint8_t) ((value >> 8) & 0xFF),
-                         rover_keys::ARM_BASE_ANGLE_LOWER, (uint8_t) (value & 0xFF)
+                         rover_keys::ARM_BICEP_ANGLE_UPPER, (uint8_t) ((bicepAngle >> 8) & 0xFF),
+                         rover_keys::ARM_BICEP_ANGLE_LOWER, (uint8_t) (bicepAngle & 0xFF)
                      });
-}
-
-// Sends kv pair to set arm biform angle
-void ArmControlPanel::on_setBiformAngleBtn_clicked()
-{
-    int value = ui->biformAngleLineEdit->text().toInt();
 
     transmit_command({
-                         rover_keys::ARM_BIFORM_ANGLE_UPPER, (uint8_t) ((value >> 8) & 0xFF),
-                         rover_keys::ARM_BIFORM_ANGLE_LOWER, (uint8_t) (value & 0xFF)
+                         rover_keys::ARM_BIFORM_ANGLE_UPPER, (uint8_t) ((biformAngle >> 8) & 0xFF),
+                         rover_keys::ARM_BIFORM_ANGLE_LOWER, (uint8_t) (biformAngle & 0xFF)
                      });
-}
-
-// Sends kv pair to set arm elbow angle
-void ArmControlPanel::on_setElbowAngleBtn_clicked()
-{
-    int value = ui->elbowAngleLineEdit->text().toInt();
 
     transmit_command({
-                         rover_keys::ARM_ELBOW_ANGLE_UPPER, (uint8_t) ((value >> 8) & 0xFF),
-                         rover_keys::ARM_ELBOW_ANGLE_LOWER, (uint8_t) (value & 0xFF)
+                         rover_keys::ARM_FOREARM_ANGLE_UPPER, (uint8_t) ((forearmAngle >> 8) & 0xFF),
+                         rover_keys::ARM_FOREARM_ANGLE_LOWER, (uint8_t) (forearmAngle & 0xFF)
                      });
+
+    transmit_command({
+                         rover_keys::ARM_WRIST_ANGLE_UPPER, (uint8_t) ((wristAngle >> 8) & 0xFF),
+                         rover_keys::ARM_WRIST_ANGLE_LOWER, (uint8_t) (wristAngle & 0xFF)
+                     });
+
+    qDebug() << bicepAngle << " " << biformAngle << " " << forearmAngle << " " << wristAngle;
 }
 
 // Emits the kv pairs to be sent to the server (and then to rover)

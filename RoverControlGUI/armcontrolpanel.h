@@ -26,16 +26,13 @@ public slots:
     void enableArmControl(bool en);
     void showArmControl(bool en);
 
-    void on_pollQML_clicked();
-
 private slots:
-    void on_setBaseAngleBtn_clicked();
-    void on_setBiformAngleBtn_clicked();
-    void on_setElbowAngleBtn_clicked();
+    void on_setArm_button_clicked();
 
 private:
     Ui::ArmControlPanel *ui;
     QQuickView *arm_qml;
+    QObject *arm_ritem;
 
     bool isEnabled;
 

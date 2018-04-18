@@ -57,12 +57,10 @@ Item {
     id: main
     objectName: "main"
 
-    property real rotationValue: 0
-
-    property real l1_ang: rotation_limb1.value
-    property real l2_ang: rotation_limb2.value// + l1_ang
-    property real l3_ang: rotation_limb3.value// + l2_ang
-    property real w_ang: rotation_wrist.value// + l3_ang
+    property real bicep_ang: rotation_bicep.value
+    property real biform_ang: rotation_biform.value// + l1_ang
+    property real forearm_ang: rotation_forearm.value// + l2_ang
+    property real wrist_ang: rotation_wrist.value// + l3_ang
 
     Scene3D {
         id: scene3D
@@ -93,46 +91,86 @@ Item {
         Text { text: "Rotation" }
 
         RowLayout {
-            Text { text: "L1" }
+            Text { text: "Bicep" }
             Slider {
-                id: rotation_limb1
+                id: rotation_bicep
                 Layout.fillWidth: true
-                minimumValue: -90
-                maximumValue: 90
-                value: rotationValue
+                minimumValue: 25
+                maximumValue: 120
+                value: 45
             }
         }
 
         RowLayout {
-            Text { text: "L2" }
-            Slider {
-                id: rotation_limb2
+            TextInput {
+                id: rotation_bicep_text
                 Layout.fillWidth: true
-                minimumValue: -90
-                maximumValue: 90
-                value: rotationValue
+                horizontalAlignment: TextInput.AlignRight
+                readOnly: true
+                text: Math.round(rotation_bicep.value * 100) / 100
             }
         }
 
         RowLayout {
-            Text { text: "L3" }
+            Text { text: "Biform" }
             Slider {
-                id: rotation_limb3
+                id: rotation_biform
                 Layout.fillWidth: true
-                minimumValue: -90
-                maximumValue: 90
-                value: rotationValue
+                minimumValue: -45
+                maximumValue: 120
+                value: 0
             }
         }
 
         RowLayout {
-            Text { text: "W" }
+            TextInput {
+                id: rotation_biform_text
+                Layout.fillWidth: true
+                horizontalAlignment: TextInput.AlignRight
+                readOnly: true
+                text: Math.round(rotation_biform.value * 100) / 100
+            }
+        }
+
+        RowLayout {
+            Text { text: "Forearm" }
+            Slider {
+                id: rotation_forearm
+                Layout.fillWidth: true
+                minimumValue: -90
+                maximumValue: 90
+                value: -45
+            }
+        }
+
+        RowLayout {
+            TextInput {
+                id: rotation_forearm_text
+                Layout.fillWidth: true
+                horizontalAlignment: TextInput.AlignRight
+                readOnly: true
+                text: Math.round(rotation_forearm.value * 100) / 100
+            }
+        }
+
+        RowLayout {
+            Text { text: "Wrist" }
             Slider {
                 id: rotation_wrist
                 Layout.fillWidth: true
                 minimumValue: -90
                 maximumValue: 90
-                value: rotationValue
+                value: 0
+            }
+        }
+
+        RowLayout {
+            TextInput {
+                id: rotation_wrist_text
+                Layout.fillWidth: true
+                horizontalAlignment: TextInput.AlignRight
+                readOnly: true
+                text: Math.round(rotation_wrist.value * 100) / 100
             }
         }
     }

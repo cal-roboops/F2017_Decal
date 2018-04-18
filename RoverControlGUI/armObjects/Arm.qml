@@ -57,25 +57,25 @@ Entity {
     id: sceneRoot
     objectName: "sceneRoot"
 
-    property real l1_hyp: 2.203604
-    property real l2_hyp: 3.57407
-    property real l3_hyp: 3.74676
+    property real bicep_hyp: 2.203604
+    property real biform_hyp: 3.57407
+    property real forearm_hyp: 3.74676
 
-    property real l1_sx: 0.161196
-    property real l1_sy: 0.379887
+    property real base_sx: 0.161196
+    property real base_sy: 0.379887
 
-    property real l1_rad: (Math.PI*l1_ang)/180.0
-    property real l2_rad: (Math.PI*l2_ang)/180.0
-    property real l3_rad: (Math.PI*l3_ang)/180.0
+    property real bicep_rad: (Math.PI*bicep_ang)/180.0
+    property real biform_rad: (Math.PI*biform_ang)/180.0
+    property real forearm_rad: (Math.PI*forearm_ang)/180.0
 
-    property real l1_xcos: l1_hyp*Math.cos(l1_rad) + l1_sx
-    property real l1_ysin: l1_hyp*Math.sin(l1_rad) + l1_sy
+    property real bicep_xcos: bicep_hyp*Math.cos(bicep_rad) + base_sx
+    property real bicep_ysin: bicep_hyp*Math.sin(bicep_rad) + base_sy
 
-    property real l2_xcos: l2_hyp*Math.cos(l2_rad) + l1_xcos
-    property real l2_ysin: l2_hyp*Math.sin(l2_rad) + l1_ysin
+    property real biform_xcos: biform_hyp*Math.cos(biform_rad) + bicep_xcos
+    property real biform_ysin: biform_hyp*Math.sin(biform_rad) + bicep_ysin
 
-    property real l3_xcos: l3_hyp*Math.cos(l3_rad) + l2_xcos
-    property real l3_ysin: l3_hyp*Math.sin(l3_rad) + l2_ysin
+    property real forearm_xcos: forearm_hyp*Math.cos(forearm_rad) + biform_xcos
+    property real forearm_ysin: forearm_hyp*Math.sin(forearm_rad) + biform_ysin
 
     Camera {
         id: camera
@@ -109,29 +109,29 @@ Entity {
 
     /* h = 2.203604 */
     Transform {
-        id: armFirstTransform
-        rotation: fromEulerAngles(0, 0, l1_ang)
-        translation: Qt.vector3d(l1_sx, l1_sy, -0.301277)
+        id: bicepTransform
+        rotation: fromEulerAngles(0, 0, bicep_ang)
+        translation: Qt.vector3d(base_sx, base_sy, -0.301277)
     }
 
     /* h = 3.57407 */
     Transform {
-        id: armSecondTransform
-        rotation: fromEulerAngles(0, 0, l2_ang)
-        translation: Qt.vector3d(l1_xcos, l1_ysin, -0.016362)
+        id: biformTransform
+        rotation: fromEulerAngles(0, 0, biform_ang)
+        translation: Qt.vector3d(bicep_xcos, bicep_ysin, -0.016362)
     }
 
     /* h = 3.74676 */
     Transform {
-        id: armThirdTransform
-        rotation: fromEulerAngles(0, 0, l3_ang)
-        translation: Qt.vector3d(l2_xcos, l2_ysin, 0.128035)
+        id: forearmTransform
+        rotation: fromEulerAngles(0, 0, forearm_ang)
+        translation: Qt.vector3d(biform_xcos, biform_ysin, 0.128035)
     }
 
     Transform {
         id: wristTransform
-        rotation: fromEulerAngles(0, 0, w_ang)
-        translation: Qt.vector3d(l3_xcos, l3_ysin, 0.15835)
+        rotation: fromEulerAngles(0, 0, wrist_ang)
+        translation: Qt.vector3d(forearm_xcos, forearm_ysin, 0.15835)
     }
 
     Mesh {
@@ -141,20 +141,20 @@ Entity {
 
     /* Rotation point located at (0.161196, -0.301277, 0.379887) */
     Mesh {
-        id: armFirstMesh
-        source: "armFirstEntity.obj"
+        id: bicepMesh
+        source: "bicepEntity.obj"
     }
 
     /* Rotation point located at (2.3648, -0.016362, 0.379215) */
     Mesh {
-        id: armSecondMesh
-        source: "armSecondEntity.obj"
+        id: biformMesh
+        source: "biformEntity.obj"
     }
 
     /* Rotation point located at (5.93887, 0.128035, 0.374635) */
     Mesh {
-        id: armThirdMesh
-        source: "armThirdEntity.obj"
+        id: forearmMesh
+        source: "forearmEntity.obj"
     }
 
     /* Rotation point located at (9.68563, 0.15835, 0.37591) */
@@ -171,17 +171,17 @@ Entity {
 
     Entity {
         id: firstLinkEntity
-        components: [ armFirstMesh, material, armFirstTransform]
+        components: [ bicepMesh, material, bicepTransform]
     }
 
     Entity {
         id: secondLinkEntity
-        components: [ armSecondMesh, material, armSecondTransform]
+        components: [ biformMesh, material, biformTransform]
     }
 
     Entity {
         id: thirdLinkEntity
-        components: [ armThirdMesh, material, armThirdTransform]
+        components: [ forearmMesh, material, forearmTransform]
     }
 
     Entity {
