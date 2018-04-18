@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QCloseEvent>
+#include <QQuickView>
 
 namespace Ui {
 class ArmControlPanel;
@@ -32,6 +33,8 @@ private slots:
 
 private:
     Ui::ArmControlPanel *ui;
+    QQuickView *arm_qml;
+
     bool isEnabled;
 
     void transmit_command(std::list<uint8_t> kv);

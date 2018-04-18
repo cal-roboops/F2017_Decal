@@ -10,6 +10,13 @@ ArmControlPanel::ArmControlPanel(QWidget *parent) :
     ui->setupUi(this);
     enableArmControl(false);
 
+    // Set arm model
+    arm_qml = new QQuickView();
+    QWidget *container = QWidget::createWindowContainer(arm_qml, this);
+    arm_qml->setResizeMode(QQuickView::SizeRootObjectToView);
+    arm_qml->setSource(QUrl("qrc:/main.qml"));
+    ui->armLayout->addWidget(container);
+
     // Setup input validators for the text boxes
     ui->baseAngleLineEdit->setValidator(new QIntValidator(0, 1024, this));
     ui->biformAngleLineEdit->setValidator(new QIntValidator(0, 1024, this));
@@ -23,6 +30,7 @@ ArmControlPanel::ArmControlPanel(QWidget *parent) :
 
 ArmControlPanel::~ArmControlPanel()
 {
+    delete arm_qml;
     delete ui;
 }
 

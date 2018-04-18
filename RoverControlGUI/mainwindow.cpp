@@ -219,10 +219,10 @@ void MainWindow::on_recvMSG()
                     case command_status::rover_not_ready:
                         servResp += "Rover not ready";
                         break;
-                    case command_status::connect:
+                    case command_status::connect_remote:
                         servResp += "Command connect";
                         break;
-                    case command_status::disconnect:
+                    case command_status::disconnect_remote:
                         servResp += "Command disconnect";
                         break;
                     case command_status::already_connected:

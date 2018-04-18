@@ -6,21 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>170</height>
+    <width>579</width>
+    <height>636</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Arm Control</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLineEdit" name="baseAngleLineEdit">
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>50</y>
+      <y>530</y>
       <width>121</width>
-      <height>31</height>
+      <height>33</height>
      </rect>
     </property>
    </widget>
@@ -28,9 +28,9 @@
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>50</y>
+      <y>530</y>
       <width>121</width>
-      <height>31</height>
+      <height>33</height>
      </rect>
     </property>
    </widget>
@@ -38,9 +38,9 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>50</y>
+      <y>530</y>
       <width>121</width>
-      <height>31</height>
+      <height>33</height>
      </rect>
     </property>
    </widget>
@@ -48,9 +48,9 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>20</y>
+      <y>500</y>
       <width>71</width>
-      <height>16</height>
+      <height>18</height>
      </rect>
     </property>
     <property name="text">
@@ -61,9 +61,9 @@
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>20</y>
+      <y>500</y>
       <width>81</width>
-      <height>16</height>
+      <height>18</height>
      </rect>
     </property>
     <property name="text">
@@ -74,9 +74,9 @@
     <property name="geometry">
      <rect>
       <x>440</x>
-      <y>20</y>
+      <y>500</y>
       <width>81</width>
-      <height>16</height>
+      <height>18</height>
      </rect>
     </property>
     <property name="text">
@@ -87,9 +87,9 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>100</y>
+      <y>580</y>
       <width>121</width>
-      <height>28</height>
+      <height>30</height>
      </rect>
     </property>
     <property name="text">
@@ -100,9 +100,9 @@
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>100</y>
+      <y>580</y>
       <width>121</width>
-      <height>28</height>
+      <height>30</height>
      </rect>
     </property>
     <property name="text">
@@ -113,14 +113,25 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>100</y>
+      <y>580</y>
       <width>121</width>
-      <height>28</height>
+      <height>30</height>
      </rect>
     </property>
     <property name="text">
      <string>Set Elbow Angle</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>20</y>
+      <width>521</width>
+      <height>461</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="armLayout"/>
    </widget>
   </widget>
  </widget>

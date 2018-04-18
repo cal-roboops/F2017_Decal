@@ -114,8 +114,8 @@ typedef enum {
     invalid,
     not_controller,
     rover_not_ready,
-    connect,
-    disconnect,
+    connect_remote,
+    disconnect_remote,
     already_connected
 } command_status;
 

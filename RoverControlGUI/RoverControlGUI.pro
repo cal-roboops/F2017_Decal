@@ -4,9 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets charts
+QT       += core gui network 3dextras qml quick widgets charts
 
 TARGET = RoverControlGUI
 TEMPLATE = app
@@ -43,3 +41,10 @@ FORMS += \
     armcontrolpanel.ui \
     drivecontrolpanel.ui \
     datavisualizer.ui
+
+DISTFILES += \
+    armObjects/Arm.qml \
+    armObjects/main.qml
+
+RESOURCES += \
+    armObjects/arm.qrc
