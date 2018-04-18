@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>baseEntity.obj</file>
+        <file>armFirstEntity.obj</file>
+        <file>armSecondEntity.obj</file>
+        <file>armThirdEntity.obj</file>
+        <file>wristEntity.obj</file>
+        <file>Arm.qml</file>
+        <file>main.qml</file>
+    </qresource>
+</RCC>
