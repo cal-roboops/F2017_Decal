@@ -55,6 +55,7 @@ import Qt3D.Extras 2.0
 
 Entity {
     id: sceneRoot
+    objectName: "sceneRoot"
 
     property real l1_hyp: 2.203604
     property real l2_hyp: 3.57407
@@ -62,11 +63,6 @@ Entity {
 
     property real l1_sx: 0.161196
     property real l1_sy: 0.379887
-
-    property real l1_ang: rotation_limb1.value
-    property real l2_ang: rotation_limb2.value// + l1_ang
-    property real l3_ang: rotation_limb3.value// + l2_ang
-    property real w_ang: rotation_wrist.value// + l3_ang
 
     property real l1_rad: (Math.PI*l1_ang)/180.0
     property real l2_rad: (Math.PI*l2_ang)/180.0

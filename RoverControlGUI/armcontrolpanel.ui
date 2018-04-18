@@ -133,6 +133,19 @@
     </property>
     <layout class="QVBoxLayout" name="armLayout"/>
    </widget>
+   <widget class="QPushButton" name="pollQML">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>530</y>
+      <width>41</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Poll</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

@@ -3,6 +3,12 @@
 
 #include "../RoverSharedGlobals/rover_json.h"
 
+#include <QDebug>
+
+#include <QQuickItem>
+#include <QQmlProperty>
+#include <QQmlContext>
+
 ArmControlPanel::ArmControlPanel(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ArmControlPanel)
@@ -45,6 +51,7 @@ void ArmControlPanel::closeEvent(QCloseEvent *event)
 void ArmControlPanel::enableArmControl(bool en)
 {
     // Set class indicator (for transmit enable/disable)
+    en = true;
     this->isEnabled = en;
 
     // Find all widgets in drive GUI
@@ -70,6 +77,16 @@ void ArmControlPanel::showArmControl(bool en)
     {
         this->hide();
     }
+}
+
+// Poll the QML object and display to qDebug
+void ArmControlPanel::on_pollQML_clicked()
+{
+    QObject* ritem = arm_qml->rootObject();
+    qDebug() << ritem->property("l1_ang");
+    qDebug() << ritem->property("l2_ang");
+    qDebug() << ritem->property("l3_ang");
+    qDebug() << ritem->property("w_ang");
 }
 
 // Sends kv pair to set arm base angle

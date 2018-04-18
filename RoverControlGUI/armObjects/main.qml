@@ -55,11 +55,19 @@ import QtQuick.Layouts 1.2
 
 Item {
     id: main
+    objectName: "main"
 
     property real rotationValue: 0
 
+    property real l1_ang: rotation_limb1.value
+    property real l2_ang: rotation_limb2.value// + l1_ang
+    property real l3_ang: rotation_limb3.value// + l2_ang
+    property real w_ang: rotation_wrist.value// + l3_ang
+
     Scene3D {
         id: scene3D
+        objectName: "scene3D"
+
         anchors.fill: parent
         anchors.verticalCenter: parent.verticalCenter
         focus: true
@@ -67,6 +75,7 @@ Item {
 
         Arm {
             id: arm_graphic
+            objectName: "arm_graphic"
         }
     }
 
