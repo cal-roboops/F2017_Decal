@@ -201,7 +201,7 @@ void RoverThread::setup_socket()
     switch (key)
     {
         case rover_keys::COMM_CONN:
-            if (!this->roverComm && (value == command_status::connect))
+            if (!this->roverComm && (value == command_status::connect_remote))
             {
                 success = true;
                 this->roverComm = socket;
@@ -209,7 +209,7 @@ void RoverThread::setup_socket()
             }
             break;
         case rover_keys::EMERG_CONN:
-            if (!this->roverEmerg && (value == command_status::connect))
+            if (!this->roverEmerg && (value == command_status::connect_remote))
             {
                 success = true;
                 this->roverEmerg = socket;

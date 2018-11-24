@@ -97,7 +97,7 @@ Entity {
         RenderSettings {
             activeFrameGraph: ForwardRenderer {
                 camera: camera
-                clearColor: "white"
+                clearColor: "black"
             }
         }
     ]
@@ -106,7 +106,7 @@ Entity {
         id: material
         ambient: Qt.rgba( 128/255, 128/255, 128/255, 1.0 )
 //        diffuse: Qt.rgba( 0.1, 0.0, 0.1, 0.5 )
-//        shininess: shining.value
+  //      shininess: shining.value
     }
 
     /* Axis we are working with: (X, Z, Y), NOT (X, Y, Z) */
